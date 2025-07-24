@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "nom": "SP_AG",
+    "blocs": null
+  },
+  {
+    "id": 2,
+    "nom": "SP_FE",
+    "blocs": null
+  },
+  {
+    "id": 3,
+    "nom": "SP_MK",
+    "blocs": null
+  },
+  {
+    "id": 4,
+    "nom": "SP_CA_MK",
+    "blocs": null
+  },
+  {
+    "id": 5,
+    "nom": "SP_CA_AS",
+    "blocs": null
+  },
+  {
+    "id": 6,
+    "nom": "SP_JD",
+    "blocs": null
+  },
+  {
+    "id": 7,
+    "nom": "SP_KN",
+    "blocs": null
+  },
+  {
+    "id": 8,
+    "nom": "SP_CA_RN",
+    "blocs": null
+  },
+  {
+    "id": 9,
+    "nom": "SP_MH",
+    "blocs": null
+  },
+  {
+    "id": 10,
+    "nom": "SP_RB",
+    "blocs": null
+  },
+  {
+    "id": 11,
+    "nom": "SP_OJ",
+    "blocs": null
+  },
+  {
+    "id": 12,
+    "nom": "CWS",
+    "blocs": null
+  }
+]

@@ -47,8 +47,6 @@ public class VehicleService {
     }
 
 
-    public boolean existsByVin(String vin) {
-        return VehicleRepository.existsByVin(vin);
-    }
+
 
 }

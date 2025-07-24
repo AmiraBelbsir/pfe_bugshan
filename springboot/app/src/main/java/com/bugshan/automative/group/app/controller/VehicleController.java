@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/vehicles")
@@ -26,12 +27,12 @@ public class VehicleController {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    // Get all vehicles
     @GetMapping
-    public List<Vehicle> getAllVehicles() {
-        return vehicleService.findAllVehicles();
+    public List<VehicleDTO> getVehicles() {
+        return vehicleService.findAllVehicles().stream()
+                .map(VehicleDTO::new)
+                .collect(Collectors.toList());
     }
-
     // Get vehicle by ID
     @GetMapping("/{id}")
     public ResponseEntity<Vehicle> getVehicleById(@PathVariable Long id) {
@@ -60,11 +61,7 @@ public class VehicleController {
                                                     @RequestParam("fuelType") String fuelType,
                                                     @RequestParam("transmissionType") String transmissionType) {
 
-        // Check for unique VIN
-        if (vehicleService.existsByVin(vin)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("field", "vin", "message", "Un véhicule portant le même VIN existe déjà."));
-        }
+
 
         // Create the Vehicle object
         Vehicle vehicle = new Vehicle();
@@ -73,17 +70,14 @@ public class VehicleController {
         vehicle.setQuantity(quantity);
         vehicle.setYear(year);
         vehicle.setColor(color);
-        vehicle.setVin(vin);
-        vehicle.setMileage(mileage);
         vehicle.setSeats(seats);
         vehicle.setVehicleType(VehicleType.valueOf(vehicleType.toUpperCase()));
         vehicle.setRetailPrice(retailPrice);
         vehicle.setLocation(location);
-        vehicle.setInsured(insured);
         vehicle.setFuelLevel(fuelLevel);
         vehicle.setFuelType(FuelType.valueOf(fuelType.toUpperCase()));
         vehicle.setTransmissionType(TransmissionType.valueOf(transmissionType.toUpperCase()));
-        vehicle.setVehicleCondition(VehicleCondition.valueOf(vehicleCondition.toUpperCase()));
+
 
         try {
             // Handle main image upload
@@ -132,14 +126,10 @@ public class VehicleController {
                                            @RequestParam(value = "quantity", required = false) int quantity,
                                            @RequestParam(value = "year", required = false) Integer year,
                                            @RequestParam(value = "color", required = false) String color,
-                                           @RequestParam(value = "vin", required = false) String vin,
-                                           @RequestParam(value = "mileage", required = false) Integer mileage,
                                            @RequestParam(value = "seats", required = false) Integer seats,
                                            @RequestParam(value = "vehicleType", required = false) String vehicleType,
-                                           @RequestParam(value=  "vehicleCondition", required = false) String vehicleCondition,
                                            @RequestParam(value = "retailPrice", required = false) Double retailPrice,
                                            @RequestParam(value = "location", required = false) String location,
-                                           @RequestParam(value = "insured", required = false) Boolean insured,
                                            @RequestParam(value = "fuelLevel", required = false) Double fuelLevel,
                                            @RequestParam(value = "fuelType", required = false) String fuelType,
                                            @RequestParam(value = "transmissionType", required = false) String transmissionType) {
@@ -151,13 +141,7 @@ public class VehicleController {
 
         Vehicle existingVehicle = existingVehicleOpt.get();
 
-        // If license plate has changed, check if it exists already
-        if (vin != null && !existingVehicle.getVin().equals(vin)) {
-            if (vehicleRepository.findByVin(vin).isPresent()) {
-                return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body(Map.of("field", "vin", "message", "Un véhicule portant le même VIN existe déjà."));
-            }
-        }
+
 
         // Update the vehicle with the new values, only if they were provided
         if (make != null) existingVehicle.setMake(make);
@@ -165,17 +149,14 @@ public class VehicleController {
         if (model != null) existingVehicle.setQuantity(quantity);
         if (year != null) existingVehicle.setYear(year);
         if (color != null) existingVehicle.setColor(color);
-        if (vin != null) existingVehicle.setVin(vin);
-        if (mileage != null) existingVehicle.setMileage(mileage);
         if (seats != null) existingVehicle.setSeats(seats);
         if (vehicleType != null) existingVehicle.setVehicleType(VehicleType.valueOf(vehicleType.toUpperCase()));
         if (retailPrice != null) existingVehicle.setRetailPrice(retailPrice);
         if (location != null) existingVehicle.setLocation(location);
-        if (insured != null) existingVehicle.setInsured(insured);
         if (fuelLevel != null) existingVehicle.setFuelLevel(fuelLevel);
         if (fuelType != null) existingVehicle.setFuelType(FuelType.valueOf(fuelType.toUpperCase()));
         if (transmissionType != null) existingVehicle.setTransmissionType(TransmissionType.valueOf(transmissionType.toUpperCase()));
-        if (vehicleCondition != null) existingVehicle.setVehicleCondition(VehicleCondition.valueOf(vehicleCondition.toUpperCase()));
+
 
         // Handle image upload if provided
         if (file != null && !file.isEmpty()) {

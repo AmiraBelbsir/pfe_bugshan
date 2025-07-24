@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
@@ -30,8 +31,10 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.findAllUsers();
+    public List<UserDTO> getUsers() {
+        return userService.findAllUsers().stream()
+                .map(UserDTO::new)
+                .collect(Collectors.toList());
     }
 
     // Get user by ID

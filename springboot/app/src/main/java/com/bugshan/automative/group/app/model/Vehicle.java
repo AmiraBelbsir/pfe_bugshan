@@ -26,20 +26,15 @@ public class Vehicle {
     private int quantity;
     private int year;                  // Année de fabrication
     private String color;              // Couleur du véhicule
-    private String vin;                // Numéro de série (VIN)
-    private int mileage;               // Kilométrage
     private int seats;                 // Nombre de sièges
     private double retailPrice;        // Prix par jour
     private boolean available = true;  // Disponibilité du véhicule
     private String location;           // Emplacement actuel (coordonnées GPS)
-    private boolean insured;           // Si le véhicule est assuré
     private double fuelLevel;          // Niveau de carburant
 
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;  // Type de véhicule (par exemple, berline, SUV, etc.)
 
-    @Enumerated(EnumType.STRING)
-    private VehicleCondition vehicleCondition;  // Condition du véhicule
 
     @Enumerated(EnumType.STRING)
     private FuelType fuelType;        // Type de carburant

@@ -19,15 +19,13 @@ public class VehicleDTO {
     private String model;           // Modèle du véhicule
     private int year;               // Année de fabrication
     private String color;           // Couleur du véhicule
-    private String vin;             // Numéro de série (VIN)
     private int mileage;            // Kilométrage
     private int seats;              // Nombre de sièges
     private VehicleType vehicleType; // Type de véhicule
     private double retailPrice;     // Prix par jour
     private boolean available;      // Disponibilité du véhicule
     private String location;        // Emplacement actuel
-    private boolean insured;        // Si le véhicule est assuré
-    private VehicleCondition vehicleCondition; // Condition du véhicule
+
     private double fuelLevel;       // Niveau de carburant
     private FuelType fuelType;      // Type de carburant
     private TransmissionType transmissionType; // Type de transmission
@@ -41,15 +39,11 @@ public class VehicleDTO {
         this.model = vehicle.getModel();
         this.year = vehicle.getYear();
         this.color = vehicle.getColor();
-        this.vin = vehicle.getVin();
-        this.mileage = vehicle.getMileage();
         this.seats = vehicle.getSeats();
         this.vehicleType = vehicle.getVehicleType();
         this.retailPrice = vehicle.getRetailPrice();
         this.available = vehicle.isAvailable();
         this.location = vehicle.getLocation();
-        this.insured = vehicle.isInsured();
-        this.vehicleCondition = vehicle.getVehicleCondition();
         this.fuelLevel = vehicle.getFuelLevel();
         this.fuelType = vehicle.getFuelType();
         this.transmissionType = vehicle.getTransmissionType();

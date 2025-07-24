@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d9b51aee-26b5-4318-ab2b-56e2ac30967a" name="Changes" comment="First commit">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Amira.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/VehicleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/VehicleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/VehicleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/VehicleDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Vehicle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/VehicleCondition.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/repository/VehicleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/repository/VehicleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/service/VehicleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/service/VehicleService.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Adnane &lt;belbsiramira@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AmiraBelbsir&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AmiraBelbsir/pfe_bugshan.git&quot;,
+    &quot;accountId&quot;: &quot;be7309e5-c7e1-45af-8fe0-5c475d946e42&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2xBROQoqsSVbZrWy8z4XXdejXWS" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.AppApplication.executor": "Run",
+    "HTTP Request.generated-requests | #4.executor": "Run",
+    "Maven.app [clean].executor": "Run",
+    "Maven.app [install].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.AppApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/pfe_bugshan/springboot",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "ts.external.directory.path": "C:\\pfe_bugshan\\client_angular\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\pfe_bugshan\springboot" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.AppApplication">
+    <configuration name="generated-requests | #4" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" executionIdentifier="#4" index="4" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="AppApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="app" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.bugshan.automative.group.app.AppApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP Request.generated-requests | #4" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d9b51aee-26b5-4318-ab2b-56e2ac30967a" name="Changes" comment="" />
+      <created>1747409447926</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1747409447926</updated>
+      <workItem from="1747409449081" duration="356000" />
+      <workItem from="1747637668631" duration="18650000" />
+      <workItem from="1747920950488" duration="43044000" />
+      <workItem from="1748265421979" duration="1636000" />
+      <workItem from="1748440679482" duration="18623000" />
+      <workItem from="1748871155045" duration="7235000" />
+      <workItem from="1748958627217" duration="17084000" />
+      <workItem from="1749337997389" duration="20337000" />
+      <workItem from="1750117080568" duration="140558000" />
+      <workItem from="1753315567608" duration="1357000" />
+      <workItem from="1753317038437" duration="31000" />
+      <workItem from="1753317267740" duration="473000" />
+      <workItem from="1753317840423" duration="51000" />
+      <workItem from="1753318625101" duration="1451000" />
+      <workItem from="1753320116016" duration="74000" />
+      <workItem from="1753320208471" duration="1712000" />
+    </task>
+    <task id="LOCAL-00001" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1753316172699</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1753316172699</updated>
+    </task>
+    <task id="LOCAL-00002" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1753316186591</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1753316186591</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="First commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="First commit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/client_angular/src/app/components/users/users-list/users-list.component.ts</url>
+          <line>214</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/client_angular/src/app/components/pieces/piece-list/piece-list.component.html</url>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/client_angular/src/app/components/admin/magasin-list/magasin-list.component.ts</url>
+          <line>72</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/client_angular/src/app/components/admin/magasin-list/magasin-list.component.html</url>
+          <line>78</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
