@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d9b51aee-26b5-4318-ab2b-56e2ac30967a" name="Changes" comment="First commit">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Amira.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/VehicleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/VehicleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/VehicleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/VehicleDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Vehicle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/VehicleCondition.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/repository/VehicleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/repository/VehicleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/service/VehicleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/service/VehicleService.java" afterDir="false" />
-    </list>
+    <list default="true" id="d9b51aee-26b5-4318-ab2b-56e2ac30967a" name="Changes" comment="First commit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -149,7 +135,7 @@
       <workItem from="1753317840423" duration="51000" />
       <workItem from="1753318625101" duration="1451000" />
       <workItem from="1753320116016" duration="74000" />
-      <workItem from="1753320208471" duration="1712000" />
+      <workItem from="1753320208471" duration="2069000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
