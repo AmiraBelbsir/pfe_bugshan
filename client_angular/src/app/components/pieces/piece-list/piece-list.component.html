@@ -1,0 +1,503 @@
+<div *ngIf="showAddPanel" class="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-50">
+  <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-4xl">
+    <div class="flex justify-between items-center mb-4">
+      <h4 class="text-xl font-semibold text-gray-700">Ajouter une Pièce</h4>
+      <button class="text-lg font-bold text-gray-600" (click)="togglePanel()">X</button>
+    </div>
+
+    <form (ngSubmit)="addPiece()" #pieceForm="ngForm" enctype="multipart/form-data">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <!-- Nom de la pièce -->
+        <div class="mb-4">
+          <label for="name" class="block text-gray-700 font-medium mb-1">
+            Nom de la pièce <span class="text-red-500">*</span>
+          </label>
+          <input type="text" id="name" [(ngModel)]="newPiece.nom" name="name" required #name="ngModel"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white text-gray-700">
+          <div *ngIf="name.invalid && name.touched" class="text-red-500 text-sm mt-1">
+            Le nom de la pièce est requis.
+          </div>
+        </div>
+
+        <!-- Référence -->
+        <div class="mb-4">
+          <label for="reference" class="block text-gray-700 font-medium mb-1">
+            Référence <span class="text-red-500">*</span>
+          </label>
+          <input type="text" id="reference" [(ngModel)]="newPiece.reference" name="reference" required #reference="ngModel"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white text-gray-700">
+          <div *ngIf="reference.invalid && reference.touched" class="text-red-500 text-sm mt-1">
+            La référence est requise.
+          </div>
+        </div>
+
+        <!-- Marque -->
+        <div class="mb-4">
+          <label for="marque" class="block text-gray-700 font-medium mb-1">
+            Marque <span class="text-red-500">*</span>
+          </label>
+          <input type="text" id="marque" [(ngModel)]="newPiece.marque" name="marque" required #marque="ngModel"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white text-gray-700">
+          <div *ngIf="marque.invalid && marque.touched" class="text-red-500 text-sm mt-1">
+            La marque est requise.
+          </div>
+        </div>
+
+        <!-- Type -->
+        <div class="mb-4">
+          <label for="type" class="block text-gray-700 font-medium mb-1">
+            Type <span class="text-red-500">*</span>
+          </label>
+          <select id="type" [(ngModel)]="newPiece.type" name="type" required #type="ngModel"
+                  class="w-full py-2 px-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white text-gray-700">
+            <option value="" disabled selected>-- Choisir un type --</option>
+            <option value="Frein">Frein</option>
+            <option value="Moteur">Moteur</option>
+            <option value="Éclairage">Éclairage</option>
+            <option value="Filtre">Filtre</option>
+            <option value="Pneu">Pneu</option>
+            <option value="Accessoire">Accessoire</option>
+          </select>
+          <div *ngIf="type.invalid && type.touched" class="text-red-500 text-sm mt-1">
+            Le type est requis.
+          </div>
+        </div>
+        <!-- Sélection du Magasin -->
+        <div class="mb-4">
+          <label for="magasin" class="block text-gray-700 font-medium mb-1">
+            Magasin <span class="text-red-500">*</span>
+          </label>
+          <select id="magasin"
+                  [(ngModel)]="newPiece.magasinId"
+                  name="magasinId"
+                  (change)="onMagasinChange(newPiece.magasinId)"
+                  required
+                  class="w-full py-2 px-3 border border-gray-600 rounded-lg bg-white text-gray-700">
+            <option value="" disabled selected>-- Choisir un magasin --</option>
+            <option *ngFor="let magasin of magasins" [value]="magasin.id">{{ magasin.nom }}</option>
+          </select>
+        </div>
+
+        <!-- Sélection du Bloc associé -->
+        <div class="mb-4" *ngIf="blocs.length > 0">
+          <label for="bloc" class="block text-gray-700 font-medium mb-1">
+            Bloc <span class="text-red-500">*</span>
+          </label>
+          <select id="bloc"
+                  [(ngModel)]="newPiece.blocId"
+                  name="blocId"
+                  required
+                  class="w-full py-2 px-3 border border-gray-600 rounded-lg bg-white text-gray-700">
+            <option value="" disabled selected>-- Choisir un bloc --</option>
+            <option *ngFor="let bloc of blocs" [value]="bloc.id">{{ bloc.nom }}</option>
+          </select>
+        </div>
+        <!-- Prix -->
+        <div class="mb-4">
+          <label for="price" class="block text-gray-700 font-medium mb-1">
+            Prix <span class="text-red-500">*</span>
+          </label>
+          <input type="number" id="price" [(ngModel)]="newPiece.prix" name="price" required #price="ngModel" min="0"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white text-gray-700">
+          <div *ngIf="price.invalid && price.touched" class="text-red-500 text-sm mt-1">
+            Le prix est requis et doit être positif.
+          </div>
+        </div>
+
+        <!-- Quantité -->
+        <div class="mb-4">
+          <label for="quantity" class="block text-gray-700 font-medium mb-1">
+            Quantité <span class="text-red-500">*</span>
+          </label>
+          <input type="number" id="quantity" [(ngModel)]="newPiece.quantite" name="quantity" required #quantity="ngModel" min="0"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white text-gray-700">
+          <div *ngIf="quantity.invalid && quantity.touched" class="text-red-500 text-sm mt-1">
+            La quantité est requise et doit être positive.
+          </div>
+        </div>
+
+        <!-- Quantité Minimum -->
+        <div class="mb-4">
+          <label for="quantiteMinimum" class="block text-gray-700 font-medium mb-1">
+            Quantité Minimum <span class="text-red-500">*</span>
+          </label>
+          <input type="number" id="quantiteMinimum" [(ngModel)]="newPiece.quantiteMinimum" name="quantiteMinimum" required #quantiteMinimum="ngModel" min="0"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white text-gray-700">
+          <div *ngIf="quantiteMinimum.invalid && quantiteMinimum.touched" class="text-red-500 text-sm mt-1">
+            La quantité minimum est requise et doit être positive.
+          </div>
+        </div>
+
+        <!-- Date d'achat -->
+        <div class="mb-4">
+          <label for="dateAchat" class="block text-gray-700 font-medium mb-1">
+            Date d'achat <span class="text-red-500">*</span>
+          </label>
+          <input type="date" id="dateAchat" [(ngModel)]="newPiece.dateAchat" name="dateAchat" required #dateAchat="ngModel"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white text-gray-700">
+          <div *ngIf="dateAchat.invalid && dateAchat.touched" class="text-red-500 text-sm mt-1">
+            La date d'achat est requise.
+          </div>
+        </div>
+
+        <!-- Compatibilité -->
+        <div class="mb-4">
+          <label for="compatibilite" class="block text-gray-700 font-medium mb-1">
+            Compatibilité
+          </label>
+          <input type="text" id="compatibilite" [(ngModel)]="newPiece.compatibilite" name="compatibilite"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white text-gray-700">
+        </div>
+
+        <!-- Description -->
+        <div class="mb-4">
+          <label for="description" class="block text-gray-700 font-medium mb-1">
+            Description
+          </label>
+          <textarea id="description" [(ngModel)]="newPiece.description" name="description"
+                    class="w-full py-2 px-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white text-gray-700"></textarea>
+        </div>
+
+        <!-- Image fichier -->
+        <div class="mb-4">
+          <label for="imageFile" class="block text-gray-700 font-medium mb-1">
+            Image de la pièce
+          </label>
+          <input type="file" id="imageFile" (change)="onFileSelected($event)" accept="image/*"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-700 bg-white text-gray-700">
+        </div>
+
+        <!-- Précommandable -->
+        <div class="mb-4 flex items-center space-x-2">
+          <input type="checkbox" id="precommandable" [(ngModel)]="newPiece.precommandable" name="precommandable" class="w-5 h-5">
+          <label for="precommandable" class="text-gray-700 font-medium">
+            Précommandable
+          </label>
+        </div>
+
+      </div>
+
+      <div class="flex justify-end mt-6">
+        <button type="submit" [disabled]="pieceForm.invalid" class="bg-gray-700 text-white py-2 px-4 rounded-md shadow-md hover:bg-gray-600">
+          Ajouter la pièce
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- Grid des pièces détachées -->
+<div class="container mx-auto p-8">
+  <div class="bg-gray-800 shadow-lg rounded-xl overflow-hidden p-6 border border-gray-600">
+
+    <h2 class="text-2xl font-bold text-white mb-4">Gestion des Pièces</h2>
+    <p class="text-gray-300 text-sm mb-6">Recherchez, triez et gérez facilement toutes les pièces du système.</p>
+    <!-- Contrôles de recherche et tri -->
+    <div class="flex flex-wrap justify-start gap-4 mb-6">
+      <div class="flex flex-wrap justify-start gap-4 mb-6">
+        <div class="w-full flex flex-wrap gap-4 mt-4">
+
+          <!-- Recherche par nom -->
+          <div class="flex-1 min-w-[150px] max-w-[200px]">
+            <div class="relative">
+              <input
+                type="text"
+                [(ngModel)]="searchTerm"
+                (input)="filterPieces()"
+                placeholder="Rechercher pièce"
+                class="w-full py-2 px-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+              />
+              <span class="absolute right-3 top-2 text-gray-400"><i class="fa fa-search"></i></span>
+            </div>
+          </div>
+
+          <!-- Filtrer par type -->
+          <div class="flex-1 min-w-[150px] max-w-[200px]">
+            <select
+              [(ngModel)]="selectedType"
+              (change)="filterPieces()"
+              class="w-full py-2 px-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+            >
+              <option value="">Tous les types</option>
+              <option value="Frein">Frein</option>
+              <option value="Moteur">Moteur</option>
+              <option value="Éclairage">Éclairage</option>
+              <option value="Filtre">Filtre</option>
+              <option value="Pneu">Pneu</option>
+              <option value="Accessoire">Accessoire</option>
+            </select>
+          </div>
+
+          <!-- Filtrer par date d'achat -->
+          <div class="flex-1 max-w-[170px]">
+            <input
+              type="date"
+              [(ngModel)]="startDate"
+              (change)="filterPieces()"
+              class="w-full py-2 px-3 border border-gray-600 bg-gray-700 text-white rounded-lg"
+            />
+          </div>
+          <div class="flex-1 max-w-[170px]">
+            <input
+              type="date"
+              [(ngModel)]="endDate"
+              (change)="filterPieces()"
+              class="w-full py-2 px-3 border border-gray-600 bg-gray-700 text-white rounded-lg"
+            />
+          </div>
+
+          <!-- Trier par nom -->
+          <div class="flex-1 max-w-[170px]">
+            <button
+              (click)="sortByName()"
+              class="w-full py-2 px-3 bg-white text-gray-900 font-medium rounded-lg hover:bg-gray-800 hover:text-white"
+            >
+              Trier par Nom
+              <i class="fa" [ngClass]="{'fa-sort-alpha-down': isSortedAZ, 'fa-sort-alpha-up': !isSortedAZ}"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="flex space-x-4 justify-end w-full sm:w-auto">
+        <button class="text-white hover:text-blue-500 transition duration-200" (click)="togglePanel()">
+          <i class="fas fa-plus fa-lg"></i>
+        </button>
+        <button class="text-white hover:text-green-500 transition duration-200">
+          <i class="fas fa-download fa-lg"></i>
+        </button>
+      </div>
+    </div>
+
+
+
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-6">
+  <div *ngFor="let piece of filteredPieces" class="bg-gray-700 p-6 border border-gray-600 rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl flex flex-col justify-between min-h-[300px]">
+
+    <!-- Image -->
+    <img
+      [src]="getImageUrl(piece.imageUrl)"
+      class="rounded mx-auto mb-4"
+      width="70"
+      height="70"
+      alt="Image indisponible"
+      style="object-fit: contain; width: 100px; height: 100px;"
+    >
+
+    <!-- Nom -->
+    <h5
+      class="text-lg font-semibold text-center text-white truncate max-w-full"
+      [title]="piece.nom"
+    >
+      {{ piece.nom }}
+    </h5>
+
+
+    <!-- Référence -->
+    <p class="text-gray-400 text-center truncate">
+      Réf: {{ piece.reference }}
+    </p>
+
+
+    <!-- Prix -->
+    <p class="text-white text-center font-bold">
+      {{ piece.prix }} MAD
+    </p>
+
+    <!-- Quantité -->
+    <p class="text-gray-300 text-center">
+      Quantité : {{ piece.quantite }}
+    </p>
+
+    <!-- Stock & précommandable -->
+    <p class="text-center mt-2" *ngIf="piece.quantite === 0">
+      <span class="text-red-500 font-bold">En rupture de stock</span><br>
+      <span *ngIf="piece.precommandable" class="text-green-400">✔️ Précommandable</span>
+    </p>
+
+    <!-- Bouton voir détails -->
+    <div class="mt-auto">
+      <button
+        (click)="viewDetails(piece.id)"
+        style="color: black; font-weight: bold"
+        class="ml-auto flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-100 hover:bg-gray-100 active:bg-gray-100 rounded-full shadow transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+      >
+        Voir détails
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</div>
+  </div>
+  <div *ngIf="showEditPanel" class="fixed inset-0 z-50 flex justify-end bg-gray-800 bg-opacity-50">
+    <div class="bg-white w-96 h-full shadow-lg transition-transform transform translate-x-full absolute right-0 top-0 rounded-l-2xl p-8 overflow-y-auto"
+         [ngClass]="{'translate-x-0': showEditPanel, 'translate-x-full': !showEditPanel}">
+
+      <!-- ❌ Bouton Fermer -->
+      <button class="absolute top-6 left-6 text-gray-600 hover:text-gray-700 text-2xl font-semibold transition-all duration-300"
+              (click)="closePanel()">
+        ✖
+      </button>
+
+      <h2 class="text-2xl font-semibold text-gray-800 mb-8 text-center">
+        Détails de la pièce
+      </h2>
+
+      <!-- 🧾 Affichage -->
+      <div *ngIf="!isEditing" class="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl mx-auto">
+
+        <!-- ✏️ Bouton Modifier -->
+        <button class="ml-auto bg-gray-700 text-white px-6 py-3 rounded-lg shadow-lg mb-6 transition-all duration-300 ease-in-out"
+                style="max-width: 3px; padding-left:2px; margin-left: 220px"
+                (click)="enableEditing()">
+          <i class="fa fa-pencil-alt mr-2"></i>
+        </button>
+
+        <!-- 📷 Image -->
+        <div class="flex justify-center mb-6">
+          <img [src]="getImageUrl(selectedPiece?.imageUrl)"
+               class="rounded border-4 border-gray-300 shadow-md"
+               width="120" height="120" alt="Image pièce">
+        </div>
+
+        <!-- 🧾 Infos pièce -->
+        <div class="space-y-4 text-gray-700">
+          <p><strong>Nom :</strong> {{ selectedPiece?.nom }}</p>
+          <p><strong>Référence :</strong> {{ selectedPiece?.reference }}</p>
+          <p><strong>Marque :</strong> {{ selectedPiece?.marque }}</p>
+          <p><strong>Prix :</strong> {{ selectedPiece?.prix }} MAD</p>
+          <p><strong>Quantité :</strong> {{ selectedPiece?.quantite }}</p>
+          <p><strong>Quantité Minimum :</strong> {{ selectedPiece?.quantiteMinimum }}</p>
+          <p><strong>Description :</strong> {{ selectedPiece?.description }}</p>
+          <p><strong>Compatibilité :</strong> {{ selectedPiece?.compatibilite }}</p>
+          <p><strong>Type :</strong> {{ selectedPiece?.type }}</p>
+          <p><strong>Date d'achat :</strong> {{ selectedPiece?.dateAchat }}</p>
+          <p><strong>Précommandable :</strong>
+            <span [ngClass]="selectedPiece?.precommandable ? 'text-green-600' : 'text-red-600'">
+            {{ selectedPiece?.precommandable ? 'Oui' : 'Non' }}
+          </span>
+          </p>
+          <p class="text-lg"><strong class="text-gray-600">Statut:</strong>
+            <span class="px-4 py-2 rounded-full text-white text-sm font-medium"
+                  [ngClass]="{'bg-green-500': selectedPiece?.active, 'bg-red-500': !selectedPiece?.active}">
+        {{ selectedPiece?.active ? 'Actif' : 'Inactif' }}
+      </span>
+          </p>
+          <p><strong>magasin  :</strong> {{ selectedPiece?.magasinNom }}</p>
+          <p><strong>bloc  :</strong> {{ selectedPiece?.blocNom }}</p>
+        </div>
+      </div>
+
+      <!-- ✏️ Formulaire d'édition -->
+      <div *ngIf="isEditing" class="space-y-4">
+        <label class="text-gray-700 font-semibold">Nom</label>
+        <input type="text" [(ngModel)]="selectedPiece!.nom" class="form-input">
+
+        <label class="text-gray-700 font-semibold">Référence</label>
+        <input type="text" [(ngModel)]="selectedPiece!.reference" class="form-input">
+
+        <label class="text-gray-700 font-semibold">Marque</label>
+        <input type="text" [(ngModel)]="selectedPiece!.marque" class="form-input">
+
+        <label class="text-gray-700 font-semibold">Prix</label>
+        <input type="number" [(ngModel)]="selectedPiece!.prix" class="form-input">
+
+        <label class="text-gray-700 font-semibold">Quantité</label>
+        <input type="number" [(ngModel)]="selectedPiece!.quantite" class="form-input">
+
+        <label class="text-gray-700 font-semibold">Quantité minimum</label>
+        <input type="number" [(ngModel)]="selectedPiece!.quantiteMinimum" class="form-input">
+
+        <label class="text-gray-700 font-semibold">Description</label>
+        <textarea [(ngModel)]="selectedPiece!.description" class="form-input"></textarea>
+
+        <label class="text-gray-700 font-semibold">Compatibilité</label>
+        <input type="text" [(ngModel)]="selectedPiece!.compatibilite" class="form-input">
+
+        <label class="text-gray-700 font-semibold">Type</label>
+        <select [(ngModel)]="selectedPiece!.type" class="form-input">
+          <option value="" disabled selected>-- Choisir un type --</option>
+          <option value="Frein">Frein</option>
+          <option value="Moteur">Moteur</option>
+          <option value="Éclairage">Éclairage</option>
+          <option value="Filtre">Filtre</option>
+          <option value="Pneu">Pneu</option>
+          <option value="Accessoire">Accessoire</option>
+        </select>
+
+
+        <label class="text-gray-700 font-semibold">Date d'achat</label>
+        <input type="date" [(ngModel)]="selectedPiece!.dateAchat" class="form-input">
+
+        <label class="text-gray-700 font-semibold">Précommandable</label>
+        <select [(ngModel)]="selectedPiece!.precommandable" class="form-input">
+          <option [value]="true">Oui</option>
+          <option [value]="false">Non</option>
+        </select>
+        <!-- Active Status -->
+        <label class="text-gray-700 font-semibold">Statut actif</label>
+        <div class="flex items-center">
+          <input type="checkbox" [(ngModel)]="selectedPiece!.active" class="mr-2 focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out">
+          <span class="text-gray-700">{{ selectedPiece!.active ? 'Actif' : 'Inactif' }}</span>
+        </div>
+        <!-- Magasin -->
+        <label class="text-gray-700 font-semibold">Magasin</label>
+        <select [(ngModel)]="selectedPiece!.magasinId"
+                (change)="onMagasinChange(selectedPiece!.magasinId)"
+                class="form-input">
+          <option value="" disabled>-- Choisir un magasin --</option>
+          <option *ngFor="let magasin of magasins" [value]="magasin.id">
+            {{ magasin.nom }}
+          </option>
+        </select>
+
+        <!-- Bloc -->
+        <label class="text-gray-700 font-semibold">Bloc</label>
+        <select [(ngModel)]="selectedPiece!.blocId" class="form-input">
+          <option value="" disabled>-- Choisir un bloc --</option>
+          <option *ngFor="let bloc of blocs" [value]="bloc.id">
+            {{ bloc.nom }}
+          </option>
+        </select>
+
+
+        <label class="text-gray-700 font-semibold">Image</label>
+        <input type="file" (change)="onFileChange($event)" class="form-input">
+
+        <!-- ✅ Boutons -->
+        <div class="flex justify-end space-x-4 mt-4">
+          <button class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700"
+                  (click)="isEditing = false">Annuler</button>
+          <button class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
+                  (click)="updatePiece()">Sauvegarder</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✨ Style rapide -->
+  <style>
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .form-input:focus {
+      border-color: #3b82f6;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
+    }
+  </style>
+
+</div>
+
+

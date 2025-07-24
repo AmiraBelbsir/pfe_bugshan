@@ -26,14 +26,10 @@ export class VehicleService {
     quantity: number,
     year: number,
     color: string,
-    vin: string,
-    mileage: number,
     seats: number,
     retailPrice: number,
     available: boolean,
     location: string,
-    insured: boolean,
-    vehicleCondition: string,
     fuelLevel: number,
     vehicleType: string,
     fuelType: string,
@@ -59,14 +55,11 @@ export class VehicleService {
     formData.append('quantity', vehicleData.quantity.toString());
     formData.append('year', vehicleData.year.toString());
     formData.append('color', vehicleData.color);
-    formData.append('vin', vehicleData.vin);
-    formData.append('mileage', vehicleData.mileage.toString());
     formData.append('seats', vehicleData.seats.toString());
     formData.append('retailPrice', vehicleData.retailPrice.toString());
     formData.append('available', vehicleData.available.toString());
     formData.append('location', vehicleData.location);
-    formData.append('insured', vehicleData.insured.toString());
-    formData.append('condition', vehicleData.vehicleCondition.toUpperCase());
+
     formData.append('fuelLevel', vehicleData.fuelLevel.toString());
     formData.append('vehicleType', vehicleData.vehicleType.toUpperCase());
     formData.append('fuelType', vehicleData.fuelType.toUpperCase());
@@ -81,14 +74,10 @@ export class VehicleService {
     quantity: number,
     year: number,
     color: string,
-    vin: string,
-    mileage: number,
     seats: number,
     retailPrice: number,
     available: boolean,
     location: string,
-    insured: boolean,
-    vehicleCondition: string,
     fuelLevel: number,
     vehicleType: string,
     fuelType: string,
@@ -114,14 +103,10 @@ export class VehicleService {
     formData.append('quantity', vehicleData.quantity.toString());
     formData.append('year', vehicleData.year.toString());
     formData.append('color', vehicleData.color);
-    formData.append('vin', vehicleData.vin);
-    formData.append('mileage', vehicleData.mileage.toString());
     formData.append('seats', vehicleData.seats.toString());
     formData.append('retailPrice', vehicleData.retailPrice.toString());
     formData.append('available', vehicleData.available.toString());
     formData.append('location', vehicleData.location);
-    formData.append('insured', vehicleData.insured.toString());
-    formData.append('condition', vehicleData.vehicleCondition.toUpperCase());
     formData.append('fuelLevel', vehicleData.fuelLevel.toString());
     formData.append('vehicleType', vehicleData.vehicleType.toUpperCase());
     formData.append('fuelType', vehicleData.fuelType.toUpperCase());

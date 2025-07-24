@@ -18,6 +18,7 @@ export class UserService {
   getUserById(id: number): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
+
   createUserWithImage(userData: {
     fullName: string,
     email: string,

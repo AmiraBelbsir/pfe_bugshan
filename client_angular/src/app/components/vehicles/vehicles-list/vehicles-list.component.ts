@@ -22,8 +22,8 @@ export class VehiclesListComponent implements OnInit {
   successMessage: string = '';
   filteredVehicles = [...this.vehicles];
   imageError: string | null = null;
-  vinTaken: boolean = false;
   currentImage: string | undefined;
+
   newVehicle: Vehicle = {
     id: 0,
     imageUrl: "",
@@ -32,14 +32,10 @@ export class VehiclesListComponent implements OnInit {
     quantity: 0,
     year: 0,
     color: "",
-    vin: "",
-    mileage: 0,
     seats: 0,
     retailPrice: 0,
     available: false,
     location: "",
-    insured: false,
-    vehicleCondition: "",
     fuelLevel: 0,
     vehicleType: "",
     fuelType: "",
@@ -107,14 +103,10 @@ export class VehiclesListComponent implements OnInit {
       quantity: 0,
       year: 0,
       color: "",
-      vin: "",
-      mileage: 0,
       seats: 0,
       retailPrice: 0,
       available: false,
       location: "",
-      insured: false,
-      vehicleCondition: "",
       fuelLevel: 0,
       vehicleType: "",
       fuelType: "",
@@ -135,14 +127,6 @@ export class VehiclesListComponent implements OnInit {
   }
 
 
-  validateVIN(vin: string) {
-    const vinRegex = /^[A-HJ-NPR-Z0-9]{17}$/;
-    if (!vinRegex.test(vin.trim())) {
-      this.errorMessage = "Le VIN doit contenir exactement 17 caractères alphanumériques sans les lettres I, O et Q.";
-      return false;
-    }
-    return true;
-  }
 
   validateFuelLevel(level: number) {
     if (level < 0 || level > 100) {
@@ -237,14 +221,10 @@ export class VehiclesListComponent implements OnInit {
       quantity: this.newVehicle.quantity,
       year: this.newVehicle.year,
       color: this.newVehicle.color,
-      vin: this.newVehicle.vin,
-      mileage: this.newVehicle.mileage,
       seats: this.newVehicle.seats,
       retailPrice: this.newVehicle.retailPrice,
       available: this.newVehicle.available,
       location: this.newVehicle.location,
-      insured: this.newVehicle.insured,
-      vehicleCondition: this.newVehicle.vehicleCondition.toUpperCase(),
       fuelLevel: this.newVehicle.fuelLevel,
       vehicleType: this.newVehicle.vehicleType.toUpperCase(),
       fuelType: this.newVehicle.fuelType.toUpperCase(),
@@ -275,9 +255,6 @@ export class VehiclesListComponent implements OnInit {
           const field = error.error.field;
           const message = error.error.message;
 
-          if (field === 'vin') {
-            this.vinTaken = true;
-          }
           this.errorMessage = message;
         }
         else {
@@ -315,14 +292,10 @@ export class VehiclesListComponent implements OnInit {
       quantity: this.newVehicle.quantity,
       year: this.selectedVehicle.year,
       color: this.selectedVehicle.color,
-      vin: this.selectedVehicle.vin,
-      mileage: this.selectedVehicle.mileage,
       seats: this.selectedVehicle.seats,
       retailPrice: this.selectedVehicle.retailPrice,
       available: this.selectedVehicle.available,
       location: this.selectedVehicle.location,
-      insured: this.selectedVehicle.insured,
-      vehicleCondition: this.selectedVehicle.vehicleCondition,
       fuelLevel: this.selectedVehicle.fuelLevel,
       vehicleType: this.selectedVehicle.vehicleType,
       fuelType: this.selectedVehicle.fuelType,
@@ -355,9 +328,6 @@ export class VehiclesListComponent implements OnInit {
           const field = error.error.field;
           const message = error.error.message;
 
-          if (field === 'vin') {
-            this.vinTaken = true;
-          }
           this.errorMessage = message;
         }
         else {
@@ -408,15 +378,6 @@ export class VehiclesListComponent implements OnInit {
   }
 
 
-  conditionToLabel(condition?: string): string {
-    const map: { [key: string]: string } = {
-      EXCELLENT: 'Excellent',
-      GOOD: 'Bon',
-      FAIR: 'Moyen',
-      NEEDS_MAINTENANCE: 'Nécessite un entretien'
-    };
-    return condition ? map[condition] || condition : 'Inconnu';
-  }
 
 
   onAdditionalPhotosChange(event: Event) {

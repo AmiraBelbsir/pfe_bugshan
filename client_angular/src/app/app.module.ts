@@ -10,19 +10,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavigationMenuComponent } from './components/navigation/navigation-menu/navigation-menu.component';
 import {FormsModule} from "@angular/forms";
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { PieceListComponent } from './components/pieces/piece-list/piece-list.component';
+import { MagasinListComponent } from './components/admin/magasin-list/magasin-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersListComponent,
     VehiclesListComponent,
-    SignUpComponent
+    SignUpComponent,
+    MagasinListComponent,
   ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
         LoginComponent,
+      PieceListComponent,
         NavigationMenuComponent,
         FormsModule
     ],

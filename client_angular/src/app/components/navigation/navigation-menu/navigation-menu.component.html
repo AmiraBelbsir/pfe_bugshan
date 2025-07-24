@@ -66,12 +66,12 @@
             <i class="fas fa-list text-sm text-white"></i>
             <span *ngIf="!isSidebarCollapsed" class="text-white">Liste des véhicules</span>
           </a>
-          <a [ngClass]="{'bg-gray-800 text-white': isActive('/vehicules/categories')}"
+         <!-- <a [ngClass]="{'bg-gray-800 text-white': isActive('/vehicules/categories')}"
              routerLink="/vehicules/categories"
              class="flex items-center space-x-3 py-2 px-4 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300">
             <i class="fas fa-folder text-sm text-white"></i>
             <span *ngIf="!isSidebarCollapsed" class="text-white">Catégories des véhicules</span>
-          </a>
+          </a>-->
         </div>
       </div>
 
@@ -99,6 +99,31 @@
         </div>
       </div>
 
+      <!-- Separator -->
+      <div *ngIf="user?.role === 'ADMIN'" class="border-t border-gray-200 my-2"></div>
+      <!-- Gestion des magasins avec sous-menu -->
+      <div *ngIf="user?.role === 'ADMIN'" class="w-full">
+        <!-- Bouton principal du menu -->
+        <button class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300"
+                (click)="toggleSubmenu('magasins')">
+          <div class="flex items-center space-x-3">
+            <i class="fas fa-warehouse text-xl text-white"></i>
+            <span *ngIf="!isSidebarCollapsed" class="font-medium text-white">Gestion des magasins</span>
+          </div>
+          <i class="fas text-white"
+             [ngClass]="{'fa-chevron-down': !isSubmenuOpen('magasins'), 'fa-chevron-up': isSubmenuOpen('magasins')}"></i>
+        </button>
+
+        <!-- Sous-menu -->
+        <div *ngIf="isSubmenuOpen('magasins')" class="ml-6 mt-2 space-y-2 border-l-2 border-gray-300 pl-3">
+          <a [ngClass]="{'bg-gray-800 text-white': isActive('/magasins/liste')}"
+             routerLink="/magasins/liste"
+             class="flex items-center space-x-3 py-2 px-4 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300">
+            <i class="fas fa-list text-sm text-white"></i>
+            <span *ngIf="!isSidebarCollapsed" class="text-white">Liste des magasins</span>
+          </a>
+        </div>
+      </div>
       <!-- Separator -->
       <div *ngIf="user?.role === 'ADMIN'" class="border-t border-gray-200 my-2"></div>
 
@@ -150,12 +175,12 @@
             <i class="fas fa-list text-sm text-white"></i>
             <span *ngIf="!isSidebarCollapsed" class="text-white">Liste des paiements</span>
           </a>
-          <a [ngClass]="{'bg-gray-800 text-white': isActive('/paiements/factures')}"
+         <!-- <a [ngClass]="{'bg-gray-800 text-white': isActive('/paiements/factures')}"
              routerLink="/paiements/factures"
              class="flex items-center space-x-3 py-2 px-4 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300">
             <i class="fas fa-file-invoice text-sm text-white"></i>
             <span *ngIf="!isSidebarCollapsed" class="text-white">Factures des locations</span>
-          </a>
+          </a>!-->
         </div>
       </div>
 

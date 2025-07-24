@@ -1,0 +1,245 @@
+<!-- Gestion des magasins -->
+<div class="container mx-auto p-8">
+  <div class="bg-gray-800 shadow-lg rounded-xl overflow-hidden p-6 border border-gray-600">
+
+    <h2 class="text-2xl font-bold text-white mb-4">Gestion des Magasins</h2>
+    <p class="text-gray-300 text-sm mb-6">Consultez, recherchez et gérez vos magasins facilement.</p>
+
+    <!-- Contrôles de recherche -->
+    <div class="flex flex-wrap justify-start gap-4 mb-6">
+      <!-- 🔍 Recherche par nom -->
+      <div class="flex-1 min-w-[200px] max-w-[300px]">
+        <div class="relative">
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            (input)="filterMagasins()"
+            placeholder="Rechercher par nom"
+            class="w-full py-2 px-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+          />
+          <span class="absolute right-3 top-2 text-gray-400">
+            <i class="fa fa-search"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- Bouton "+" pour ouvrir le formulaire d'ajout -->
+    <div class="flex justify-end mb-4">
+      <button
+        (click)="togglePanel()"
+        class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold px-4 py-2 rounded-full shadow-md flex items-center justify-center"
+        title="Ajouter un utilisateur"
+      >
+        <span class="text-2xl">+</span>
+      </button>
+    </div>
+
+    <!-- 🧱 Liste des magasins -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+      <div
+        *ngFor="let magasin of filteredMagasins"
+        class="bg-gray-700 p-6 border border-gray-600 rounded-xl shadow-lg hover:shadow-xl transition-transform transform hover:scale-105"
+      >
+        <h3 class="text-xl font-semibold text-white mb-2 truncate" [title]="magasin.nom">{{ magasin.nom }}</h3>
+        <p class="text-gray-300 mb-1 truncate" [title]="magasin.adresse"><strong>Adresse :</strong> {{ magasin.adresse }}</p>
+
+        <p class="mt-2">
+          <span
+            class="px-3 py-1 rounded-full text-sm font-medium"
+            [ngClass]="magasin.actif ? 'bg-green-500 text-white' : 'bg-red-500 text-white'"
+          >
+            {{ magasin.actif ? 'Actif' : 'Inactif' }}
+          </span>
+          /<!-- ✏️ Icône Modifier -->
+          <button
+            class="absolute top-2 right-2 text-white hover:text-yellow-400"
+            title="Modifier"
+            (click)="editMagasin(magasin)"
+          >
+            <i class="fas fa-edit fa-lg"></i>
+          </button>
+
+          <!-- Icône afficher les blocs -->
+          <button
+            class="px-3 py-3 text-sm rounded-lg bg-white text-gray-800 font-semibold hover:bg-gray-100"
+            (click)="openBlocPanel(magasin)"
+            title="Afficher les blocs"
+          >
+            Voir blocs
+          </button>
+
+        </p>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Panel modification magasin -->
+<div *ngIf="showEditPanel" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-md">
+    <h2 class="text-xl font-bold mb-4">Modifier le magasin</h2>
+
+    <!-- ✅ Formulaire Angular avec référence locale -->
+    <form #formRef="ngForm" (ngSubmit)="updateMagasin()" *ngIf="selectedMagasinToEdit">
+      <!-- Nom -->
+      <label class="block mb-2 text-gray-700">Nom :</label>
+      <input
+        type="text"
+        [(ngModel)]="selectedMagasinToEdit.nom"
+        name="nom"
+        required
+        class="w-full border px-3 py-2 rounded mb-4"
+      />
+
+      <!-- Adresse -->
+      <label class="block mb-2 text-gray-700">Adresse :</label>
+      <input
+        type="text"
+        [(ngModel)]="selectedMagasinToEdit.adresse"
+        name="adresse"
+        required
+        class="w-full border px-3 py-2 rounded mb-4"
+      />
+      <!-- ✅ Statut actif -->
+      <label class="text-gray-700 font-semibold">Statut actif</label>
+      <div class="flex items-center mb-4">
+        <input
+          type="checkbox"
+          [(ngModel)]="selectedMagasinToEdit!.actif"
+          name="actif"
+          class="mr-2 focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
+        >
+        <span class="text-gray-700">
+    {{ selectedMagasinToEdit!.actif ? 'Actif' : 'Inactif' }}
+  </span>
+      </div>
+
+      <!-- Boutons -->
+      <div class="flex justify-end space-x-3">
+        <button
+          type="button"
+          (click)="cancelEdit()"
+          class="px-4 py-2 bg-gray-400 text-white rounded"
+        >
+          Annuler
+        </button>
+
+        <!-- ✅ Enregistrer en vert -->
+        <button
+          type="submit"
+          class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded"
+          [disabled]="formRef.invalid"
+        >
+          Enregistrer
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- 🔲 Panneau des blocs -->
+<div *ngIf="showBlocPanel" class="fixed inset-0 z-50 flex justify-end bg-black bg-opacity-50">
+  <div class="bg-white w-[400px] h-full shadow-lg transition-transform transform translate-x-full absolute right-0 top-0 rounded-l-2xl p-6 overflow-y-auto"
+       [ngClass]="{ 'translate-x-0': showBlocPanel, 'translate-x-full': !showBlocPanel }">
+
+    <!-- ❌ Fermer -->
+    <button class="absolute top-4 left-4 text-gray-600 hover:text-red-500 text-2xl" (click)="closeBlocPanel()">
+      ✖
+    </button>
+
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">
+      Blocs de {{ selectedMagasin?.nom }}
+    </h2>
+    <!-- Bouton ajouter un bloc -->
+    <button
+      (click)="toggleAddBlocForm()"
+      class="bg-green-600 hover:bg-green-700 text-white rounded-full w-8 h-8 flex items-center justify-center text-2xl font-bold"
+      title="Ajouter un bloc"
+    >
+      +
+    </button>
+    <!-- Formulaire ajout bloc -->
+    <div *ngIf="showAddBlocForm" class="mb-6 bg-gray-50 p-4 rounded shadow">
+      <h3 class="text-lg font-semibold mb-2">Ajouter un nouveau bloc</h3>
+
+      <form (ngSubmit)="addBloc()" #blocForm="ngForm">
+        <!-- Nom -->
+        <label class="block mb-1 font-medium" for="blocNom">Nom :</label>
+        <input
+          id="blocNom"
+          name="nom"
+          type="text"
+          [(ngModel)]="newBloc.nom"
+          required
+          class="w-full border px-3 py-2 rounded mb-3"
+        />
+
+        <!-- Description -->
+        <label class="block mb-1 font-medium" for="blocDescription">Description :</label>
+        <textarea
+          id="blocDescription"
+          name="description"
+          [(ngModel)]="newBloc.description"
+          class="w-full border px-3 py-2 rounded mb-3"
+        ></textarea>
+
+        <div class="flex space-x-3 justify-end">
+          <button type="button" (click)="cancelAddBloc()" class="px-4 py-2 bg-gray-400 rounded text-white">Annuler</button>
+          <button
+            type="submit"
+            class="px-4 py-2 bg-green-600 rounded text-white hover:bg-green-700"
+            [disabled]="blocForm.invalid"
+          >
+            Ajouter
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- 🧱 Liste des blocs -->
+    <ul class="space-y-4">
+      <div *ngIf="blocs.length === 0" class="text-gray-500 italic text-center p-4">
+        Aucun bloc n’est disponible pour le moment.
+      </div>
+
+      <li *ngFor="let bloc of blocs" class="bg-gray-100 p-4 rounded-lg shadow">
+        <p><strong>Nom du bloc :</strong> {{ bloc.nom}}</p>
+      </li>
+    </ul>
+
+  </div>
+
+
+</div>
+
+
+<div *ngIf="showAddPanel" class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+  <div class="bg-white rounded-xl p-6 shadow-2xl w-full max-w-md">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold text-gray-800">Ajouter un magasin</h2>
+      <button (click)="togglePanel()" class="text-gray-600 hover:text-red-600 text-lg font-bold">X</button>
+    </div>
+
+    <form (ngSubmit)="addMagasin()">
+      <div class="mb-4">
+        <label class="block font-medium text-gray-700 mb-1">Nom <span class="text-red-500">*</span></label>
+        <input type="text" [(ngModel)]="newMagasin.nom" name="nom" required
+               class="w-full border border-gray-400 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
+      </div>
+
+      <div class="mb-4">
+        <label class="block font-medium text-gray-700 mb-1">Adresse <span class="text-red-500">*</span></label>
+        <textarea [(ngModel)]="newMagasin.adresse" name="adresse" required
+                  class="w-full border border-gray-400 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+      </div>
+
+      <div class="flex justify-end">
+        <button type="submit"
+                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md shadow-md">
+          Ajouter
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

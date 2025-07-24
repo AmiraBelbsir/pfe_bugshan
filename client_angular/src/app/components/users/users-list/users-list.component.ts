@@ -369,6 +369,7 @@ export class UsersListComponent implements OnInit{
     const passwordField = document.getElementById('password') as HTMLInputElement;
     if (passwordField) {
       passwordField.type = this.passwordVisible ? 'text' : 'password';
+      passwordField.type = this.passwordVisible ? 'text' : 'password';
     }
   }
 

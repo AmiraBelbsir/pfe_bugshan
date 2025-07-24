@@ -1,15 +1,16 @@
+
+
+<div *ngIf="userAdded" class="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-3 z-50">
+  <i class="fas fa-check-circle text-2xl"></i>
+  <span class="font-semibold">{{ successMessage }}</span>
+</div>
+
+<div *ngIf="userUpdated" class="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-3 z-50">
+  <i class="fas fa-check-circle text-2xl"></i>
+  <span class="font-semibold">{{ successMessage }}</span>
+</div>
+
 <div *ngIf="showAddPanel" class="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-50">
-
-
-  <div *ngIf="userAdded" class="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-3 z-50">
-    <i class="fas fa-check-circle text-2xl"></i>
-    <span class="font-semibold">{{ successMessage }}</span>
-  </div>
-
-  <div *ngIf="userUpdated" class="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-3 z-50">
-    <i class="fas fa-check-circle text-2xl"></i>
-    <span class="font-semibold">{{ successMessage }}</span>
-  </div>
 
   <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-4xl">
     <div class="flex justify-between items-center mb-4">
@@ -241,10 +242,10 @@
         >
 
         <!-- Nom avec troncature si trop long -->
-        <h5 *ngIf="user.gender === 'MALE'" class="text-lg font-semibold text-center text-white truncate max-w-full">
+        <h5 *ngIf="user.gender === 'MALE'" [title]="user.fullName" class="text-lg font-semibold text-center text-white truncate max-w-full">
           M. {{ user.fullName }}
         </h5>
-        <h5 *ngIf="user.gender === 'FEMALE'" class="text-lg font-semibold text-center text-white truncate max-w-full">
+        <h5 *ngIf="user.gender === 'FEMALE'" [title]="user.fullName" class="text-lg font-semibold text-center text-white truncate max-w-full">
           Mme. {{ user.fullName }}
         </h5>
 

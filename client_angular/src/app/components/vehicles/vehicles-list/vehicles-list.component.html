@@ -8,15 +8,6 @@
     <form (ngSubmit)="addVehicle()" #vehicleForm="ngForm">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        <!-- VIN -->
-        <div class="mb-4">
-          <label for="vin" class="block text-gray-700 font-medium mb-1">VIN <span class="text-red-500">*</span></label>
-          <input type="text" id="vin" [(ngModel)]="newVehicle.vin" name="vin" required #vin="ngModel"
-                 (ngModelChange)="validateVIN(newVehicle.vin)"
-                 class="w-full py-2 px-3 border border-gray-600 rounded-lg">
-          <div *ngIf="vin.invalid && vin.touched" class="text-red-500 text-sm mt-1">Le VIN est invalide.</div>
-          <div *ngIf="vinTaken" class="text-red-500 text-sm mt-1">{{errorMessage}}</div>
-        </div>
 
         <!-- Marque -->
         <div class="mb-4">
@@ -87,41 +78,7 @@
           <div *ngIf="location.invalid && location.touched" class="text-red-500 text-sm mt-1">L'emplacement est obligatoire.</div>
         </div>
 
-        <!-- Assurance -->
-        <div class="mb-4">
-          <label for="insured" class="block text-gray-700 font-medium mb-1">Assurance<span class="text-red-500">*</span></label>
 
-          <div class="flex items-center">
-            <span class="text-gray-600 mr-4">Non assuré</span>
-            <label for="insured" class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" id="insured" [(ngModel)]="newVehicle.insured" name="insured" #insured="ngModel"
-                     class="sr-only">
-              <span class="w-12 h-6 bg-gray-300 rounded-full relative transition-colors duration-300 ease-in-out">
-        <span class="w-6 h-6 bg-white rounded-full absolute left-0 top-0 transition-transform duration-300 ease-in-out"
-              [class.translate-x-6]="newVehicle.insured"></span>
-      </span>
-            </label>
-            <span class="text-gray-600 ml-4">Assuré</span>
-          </div>
-        </div>
-
-
-        <!-- Condition -->
-        <div class="mb-4">
-          <label for="condition" class="block text-gray-700 font-medium mb-1">Etat <span class="text-red-500">*</span></label>
-
-          <select id="condition" [(ngModel)]="newVehicle.vehicleCondition" name="condition" #condition="ngModel"
-                  class="w-full py-2 px-3 border border-gray-600 rounded-lg">
-            <option value="">Sélectionnez</option>
-            <option value="EXCELLENT">Excellent</option>
-            <option value="GOOD">Bon</option>
-            <option value="FAIR">Moyen</option>
-            <option value="NEEDS_MAINTENANCE">Nécessite un entretien</option>
-          </select>
-          <div *ngIf="condition.invalid && condition.touched" class="text-red-500 text-sm mt-1">
-            L'état du véhicule est obligatoire.
-          </div>
-        </div>
 
 
         <!-- Type de véhicule -->
@@ -352,13 +309,10 @@
         <p><strong class="text-gray-600">Marque:</strong> {{ selectedVehicle?.make }}</p>
         <p><strong class="text-gray-600">Modèle:</strong> {{ selectedVehicle?.model }}</p>
         <p><strong class="text-gray-600">Type:</strong> {{ vehicleTypeToLabel(selectedVehicle?.vehicleType!) }}</p>
-        <p><strong class="text-gray-600">Condition:</strong> {{ conditionToLabel(selectedVehicle?.vehicleCondition!) }}</p>
         <p><strong class="text-gray-600">Carburant:</strong> {{ fuelTypeToLabel(selectedVehicle?.fuelType!) }}</p>
         <p><strong class="text-gray-600">Prix de vente (MAD):</strong> {{ selectedVehicle?.retailPrice }}</p>
         <p><strong class="text-gray-600">Couleur:</strong> {{ selectedVehicle?.color }}</p>
         <p><strong class="text-gray-600">Année:</strong> {{ selectedVehicle?.year }}</p>
-        <p><strong class="text-gray-600">VIN:</strong> {{ selectedVehicle?.vin }}</p>
-        <p><strong class="text-gray-600">Kilométrage:</strong> {{ selectedVehicle?.mileage }} km</p>
         <p><strong class="text-gray-600">Nombre de sièges:</strong> {{ selectedVehicle?.seats }}</p>
         <p><strong class="text-gray-600">Transmission:</strong> {{ transmissionTypeToLabel(selectedVehicle?.transmissionType!) }}</p>
         <p><strong class="text-gray-600">Statut:</strong>
@@ -368,7 +322,7 @@
       </span>
         </p>
         <p><strong class="text-gray-600">Emplacement:</strong> {{ selectedVehicle?.location }}</p>
-        <p><strong class="text-gray-600">Assurance:</strong> {{ selectedVehicle?.insured ? 'Oui' : 'Non' }}</p>
+
       </div>
 
     </div>
@@ -408,17 +362,6 @@
         </select>
         <div *ngIf="vehicleType.invalid && vehicleType.touched" class="text-red-500 text-sm mt-1">Le type de véhicule est obligatoire.</div>
 
-        <!-- Condition du véhicule -->
-        <label class="text-gray-700 font-semibold">Etat du véhicule</label>
-        <select [(ngModel)]="selectedVehicle!.vehicleCondition" name="vehicleCondition" required #vehicleCondition="ngModel"
-                class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
-          <option value="">Sélectionnez</option>
-          <option value="EXCELLENT">Excellent</option>
-          <option value="GOOD">Bon</option>
-          <option value="FAIR">Moyen</option>
-          <option value="NEEDS_MAINTENANCE">Nécessite un entretien</option>
-        </select>
-        <div *ngIf="vehicleCondition.invalid && vehicleCondition.touched" class="text-red-500 text-sm mt-1">L'état du véhicule est obligatoire.</div>
 
         <!-- Type de carburant -->
         <label class="text-gray-700 font-semibold">Type de carburant</label>
@@ -456,18 +399,6 @@
                class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
         <div *ngIf="year.invalid && year.touched" class="text-red-500 text-sm mt-1">L'année est obligatoire.</div>
 
-        <!-- VIN -->
-        <label class="text-gray-700 font-semibold">VIN</label>
-        <input type="text" [(ngModel)]="selectedVehicle!.vin" name="vin" required #vin="ngModel"
-               class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
-        <div *ngIf="vin.invalid && vin.touched" class="text-red-500 text-sm mt-1">Le VIN est obligatoire.</div>
-        <div *ngIf="vinTaken" class="text-red-500 text-sm mt-1">{{ errorMessage }}</div>
-
-        <!-- Kilométrage -->
-          <label class="text-gray-700 font-semibold">Kilométrage</label>
-          <input type="number" [(ngModel)]="selectedVehicle!.mileage" name="mileage" required #mileage="ngModel"
-                 class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
-          <div *ngIf="mileage.invalid && mileage.touched" class="text-red-500 text-sm mt-1">Le kilométrage est obligatoire.</div>
 
         <!-- Sièges -->
           <label class="text-gray-700 font-semibold">Nombre de sièges</label>
@@ -485,22 +416,6 @@
           <option value="AUTOMATIC">Automatique</option>
         </select>
         <div *ngIf="transmissionType.invalid && transmissionType.touched" class="text-red-500 text-sm mt-1">Le type de transmission est obligatoire.</div>
-
-        <!-- Assurance -->
-          <label for="insured2" class="block text-gray-700 font-medium mb-1">Assurance <span class="text-red-500">*</span></label>
-          <div class="flex items-center">
-            <span class="text-gray-600 mr-4">Non assuré</span>
-            <label for="insured2" class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" id="insured2" [(ngModel)]="selectedVehicle!.insured" name="insured" #insured="ngModel" required
-                     class="sr-only">
-              <span class="w-12 h-6 bg-gray-300 rounded-full relative transition-colors duration-300 ease-in-out">
-        <span class="w-6 h-6 bg-white rounded-full absolute left-0 top-0 transition-transform duration-300 ease-in-out"
-              [class.translate-x-6]="selectedVehicle!.insured"></span>
-      </span>
-            </label>
-            <span class="text-gray-600 ml-4">Assuré</span>
-          </div>
-          <div *ngIf="insured.invalid && insured.touched" class="text-red-500 text-sm mt-1">L'assurance est obligatoire.</div>
 
 
         <label for="status" class="block text-gray-700 font-medium mb-1">Statut <span class="text-red-500">*</span></label>
