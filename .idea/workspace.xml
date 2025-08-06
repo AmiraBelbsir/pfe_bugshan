@@ -5,100 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9b51aee-26b5-4318-ab2b-56e2ac30967a" name="Changes" comment="First commit">
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/interfaces_communes/avis-clients/avis-clients.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/interfaces_communes/avis-clients/avis-clients.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/interfaces_communes/avis-clients/avis-clients.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/interfaces_communes/login/login.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/interfaces_communes/sign-up/sign-up.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/interfaces_communes/sign-up/sign-up.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/models/avis.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/models/utilisateur.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/models/vehicule.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/services/avis.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/services/vehicule.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/assets/bg.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/assets/parking.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/AvisController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/VehiculeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/AvisDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/PhotoVehiculeDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/UtilisateurDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/VehiculeDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Avis.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/TypeCarburant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/TypeTransmission.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/TypeVehicule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Utilisateur.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Vehicule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/repository/AvisRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/service/AvisService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/service/VehiculeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uploads/2999e410-54c7-4a2d-8149-e7239afd6283_pfp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uploads/frein.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/login/login.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/interfaces_communes/avis-clients/avis-clients.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/login/login.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/login/login.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/interfaces_communes/login/login.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/interfaces_communes/login/login.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/navigation/navigation-menu/navigation-menu.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/navigation/navigation-menu/navigation-menu.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/navigation/navigation-menu/navigation-menu.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/navigation/navigation-menu/navigation-menu.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/pieces/piece-list/piece-list.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/piece-list/piece-list.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/pieces/piece-list/piece-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/piece-list/piece-list.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/pieces/piece-list/piece-list.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/piece-list/piece-list.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/pieces/piece-list/piece-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/piece-list/piece-list.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/sign-up/sign-up.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/interfaces_communes/login/login.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/sign-up/sign-up.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/sign-up/sign-up.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/interfaces_communes/sign-up/sign-up.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/sign-up/sign-up.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/interfaces_communes/sign-up/sign-up.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/users/users-list/users-list.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/users-list/users-list.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/users/users-list/users-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/users-list/users-list.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/users/users-list/users-list.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/users-list/users-list.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/users/users-list/users-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/users-list/users-list.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/vehicles/vehicles-list/vehicles-list.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/vehicles-list/vehicles-list.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/vehicles/vehicles-list/vehicles-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/vehicles-list/vehicles-list.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/vehicles/vehicles-list/vehicles-list.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/vehicles-list/vehicles-list.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/vehicles/vehicles-list/vehicles-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/vehicles-list/vehicles-list.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/guards/auth.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/guards/auth.guard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/models/city.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/models/ville.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/models/piece.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/models/piece.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/models/user.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/models/vehicle.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/services/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/services/bloc.service.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/services/piece.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/services/piece.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/services/utilisateur.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/services/vehicle.service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/PieceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/PieceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/VehicleController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/PieceDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/PieceDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/UserDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/VehicleDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/VehiclePhotoDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Bloc.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Bloc.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Ville.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/FuelType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Gender.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Sexe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Magasin.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Magasin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Piece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/TransmissionType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/Vehicle.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/VehiclePhoto.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/PhotoVehicule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/VehicleType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/repository/PieceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/repository/PieceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/repository/UtilisateurRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/repository/VehicleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/repository/VehiculeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/service/PieceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/service/PieceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/service/UtilisateurService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/service/VehicleService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/28c5e806-ba9e-4c5c-8c0d-cfb0b8659271_pfp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/6f1a1344-13be-497a-8b2e-b0355df145de_Rrrrrrrrrrrrr.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -259,7 +166,7 @@
       <workItem from="1754171284045" duration="14595000" />
       <workItem from="1754232583658" duration="25517000" />
       <workItem from="1754346189180" duration="9658000" />
-      <workItem from="1754430105956" duration="8541000" />
+      <workItem from="1754430105956" duration="9715000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
