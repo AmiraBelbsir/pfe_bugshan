@@ -5,20 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9b51aee-26b5-4318-ab2b-56e2ac30967a" name="Changes" comment="First commit">
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/historique-rendez-vous-list/historique-rendez-vous-list.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/historique-rendez-vous-list/historique-rendez-vous-list.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/historique-rendez-vous-list/historique-rendez-vous-list.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/historique-rendez-vous-list/historique-rendez-vous-list.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/rendez-vous-list/rendez-vous-list.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/rendez-vous-list/rendez-vous-list.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/rendez-vous-list/rendez-vous-list.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/rendez-vous-list/rendez-vous-list.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/models/rendezVous.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client_angular/src/app/services/rendezVous.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/navigation/navigation-menu/navigation-menu.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/navigation/navigation-menu/navigation-menu.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/controller/RendezVousController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/dto/RendezVousDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/model/RendezVous.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/repository/RendezVousRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/springboot/app/src/main/java/com/bugshan/automative/group/app/service/RendezVousService.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,16 +207,6 @@
           <url>file://$PROJECT_DIR$/client_angular/src/app/components/admin/users-list/users-list.component.ts</url>
           <line>214</line>
           <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/client_angular/src/app/components/admin/magasin-list/magasin-list.component.ts</url>
-          <line>72</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/client_angular/src/app/components/admin/magasin-list/magasin-list.component.html</url>
-          <line>78</line>
-          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
