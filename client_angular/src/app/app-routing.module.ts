@@ -16,6 +16,10 @@ import {ListeVehiculesComponent} from "./components/interfaces_communes/liste-ve
 import {ContactComponent} from "./components/interfaces_communes/contact/contact.component";
 import {AProposComponent} from "./components/interfaces_communes/a-propos/a-propos.component";
 import {AvisClientsComponent} from "./components/interfaces_communes/avis-clients/avis-clients.component";
+import {RendezVousListComponent} from "./components/admin/rendez-vous-list/rendez-vous-list.component";
+import {
+  HistoriqueRendezVousListComponent
+} from "./components/admin/historique-rendez-vous-list/historique-rendez-vous-list.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/accueil', pathMatch: 'full' },
@@ -25,6 +29,8 @@ const routes: Routes = [
   { path: 'vehicules/liste', component: VehiclesListComponent, canActivate: [AuthGuard], data: { roles: ['ADMINISTRATEUR'] } },
   { path: 'magasins/liste', component: MagasinListComponent, canActivate: [AuthGuard], data: { roles: ['ADMINISTRATEUR'] } },
   { path: 'pieces/liste', component: PieceListComponent, canActivate: [AuthGuard], data: { roles: ['ADMINISTRATEUR'] } },
+  { path: 'rendezvous/liste', component: RendezVousListComponent, canActivate: [AuthGuard], data: { roles: ['ADMINISTRATEUR'] } },
+  { path: 'rendezvous/historique/liste', component: HistoriqueRendezVousListComponent, canActivate: [AuthGuard], data: { roles: ['ADMINISTRATEUR'] } },
   { path: 'accueil', component: AcceuilComponent},
   { path: 'vehicules', component: ListeVehiculesComponent },
   { path: 'contact', component: ContactComponent },

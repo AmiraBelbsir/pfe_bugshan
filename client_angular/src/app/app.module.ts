@@ -29,6 +29,8 @@ import {ListePiecesComponent} from "./components/interfaces_communes/liste-piece
 import {
   NavigationGeneraleComponent
 } from "./components/interfaces_communes/navigation-generale/navigation-generale.component";
+import { RendezVousListComponent } from './components/admin/rendez-vous-list/rendez-vous-list.component';
+import { HistoriqueRendezVousListComponent } from './components/admin/historique-rendez-vous-list/historique-rendez-vous-list.component';
 
 @NgModule({
     declarations: [
@@ -46,7 +48,9 @@ import {
         AvisClientsComponent,
       LoginComponent,
       PrendreRendezVousComponent,
-      ListePiecesComponent
+      ListePiecesComponent,
+      RendezVousListComponent,
+      HistoriqueRendezVousListComponent
     ],
   imports: [
     BrowserModule,

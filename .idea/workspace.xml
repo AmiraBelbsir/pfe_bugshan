@@ -5,7 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9b51aee-26b5-4318-ab2b-56e2ac30967a" name="Changes" comment="First commit">
+      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/historique-rendez-vous-list/historique-rendez-vous-list.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/historique-rendez-vous-list/historique-rendez-vous-list.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/historique-rendez-vous-list/historique-rendez-vous-list.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/historique-rendez-vous-list/historique-rendez-vous-list.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/rendez-vous-list/rendez-vous-list.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/rendez-vous-list/rendez-vous-list.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/rendez-vous-list/rendez-vous-list.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_angular/src/app/components/admin/rendez-vous-list/rendez-vous-list.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_angular/src/app/models/rendezVous.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_angular/src/app/services/rendezVous.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_angular/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/app-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_angular/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_angular/src/app/components/navigation/navigation-menu/navigation-menu.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client_angular/src/app/components/navigation/navigation-menu/navigation-menu.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
