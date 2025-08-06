@@ -3,7 +3,7 @@ package com.bugshan.automative.group.app.repository;
 
 
 import com.bugshan.automative.group.app.model.Piece;
-import com.bugshan.automative.group.app.model.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

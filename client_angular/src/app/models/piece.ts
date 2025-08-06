@@ -1,21 +1,30 @@
 export interface Piece {
-  id: number; // facultatif (généré automatiquement par le backend)
+  id: number;
   nom: string;
   reference: string;
   marque: string;
   prix: number;
   quantite: number;
+  quantiteMinimum: number;
   imageUrl: string;
   type: 'Frein' | 'Moteur' | 'Éclairage' | 'Filtre' | 'Pneu' | 'Accessoire';
-  dateAchat: string; // ou Date si tu veux le type Date
-  quantiteMinimum: number;
+  dateAchat: string; // ISO string (ex: '2025-08-05')
   description: string;
-  compatibilite: string;
   precommandable: boolean;
   active: boolean;
+
+  // Magasin
   magasinId: number;
-  blocId: number;
   magasinNom: string;
+
+  // Bloc
+  blocId: number;
   blocNom: string;
 
+  // Fournisseur
+  fournisseurId: number;
+  fournisseurNom: string;
+
+  // Véhicules compatibles (juste les IDs)
+  vehiculeIds: number[];
 }

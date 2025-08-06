@@ -1,4 +1,4 @@
-<section *ngIf="!isLoginPage && !isSignUpPage"
+<section  *ngIf="!isLoginPage && !isSignUpPage && isAdmin"
          style="
     display: grid;
     grid-template-columns: 20% 80%;
@@ -16,6 +16,17 @@
     <router-outlet></router-outlet>
   </div>
 </section>
+<section *ngIf="!isLoginPage && !isSignUpPage && !isAdmin" class="w-full min-h-screen flex flex-col">
+  <app-navigation-generale *ngIf="shouldShowNavbar"></app-navigation-generale>
+
+  <main class="flex-grow overflow-y-auto">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer appears only when scroll hits bottom -->
+  <app-footer *ngIf="isBottom"></app-footer>
+</section>
+
 
 <!-- Show router-outlet for login and signup pages -->
 <router-outlet *ngIf="isLoginPage || isSignUpPage"></router-outlet>

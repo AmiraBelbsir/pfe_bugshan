@@ -1,0 +1,124 @@
+<nav class="fixed top-0 left-0 w-full z-50 backdrop-blur-lg bg-white/5 text-white shadow-sm transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+
+      <!-- Logo -->
+      <a routerLink="/" class="text-2xl font-bold text-white hover:text-yellow-400 tracking-wide">
+        <img src="../../../../assets/logo2.png" alt="Hospital Logo" class="w-2/4 max-w-xs">
+      </a>
+
+      <!-- Desktop links -->
+      <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+        <!-- Accueil avec sous-menu -->
+        <div class="group relative">
+          <a routerLink="/accueil" routerLinkActive="text-yellow-400 border-b border-yellow-400"
+             class="hover:text-yellow-300 transition pb-1 flex items-center">
+            Accueil
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+
+          <div class="absolute left-0 mt-2 w-56 bg-black/80 backdrop-blur-md rounded-md shadow-lg py-1 z-50
+              opacity-0 group-hover:opacity-100 transition-opacity duration-200 invisible group-hover:visible">
+            <a [routerLink]="['/']" [fragment]="'a-propos'" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">À propos</a>
+            <a [routerLink]="['/accueil']" [fragment]="'avis'" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Avis clients</a>
+            <a [routerLink]="['/accueil']" [fragment]="'contact'" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Contactez-nous</a>
+          </div>
+        </div>
+
+        <!-- Véhicules avec sous-menu -->
+        <div class="group relative">
+          <a routerLink="/vehicules" routerLinkActive="text-yellow-400 border-b border-yellow-400"
+             class="hover:text-yellow-300 transition pb-1 flex items-center">
+            Véhicules
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+          <div class="absolute left-0 mt-2 w-48 bg-black/80 backdrop-blur-md rounded-md shadow-lg py-1 z-50
+                     opacity-0 group-hover:opacity-100 transition-opacity duration-200 invisible group-hover:visible">
+          </div>
+        </div>
+
+        <!-- Réservation avec sous-menu -->
+        <div class="group relative">
+          <a routerLink="/reservation" routerLinkActive="text-yellow-400 border-b border-yellow-400"
+             class="hover:text-yellow-300 transition pb-1 flex items-center">
+            Réservation
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+          <div class="absolute left-0 mt-2 w-48 bg-black/80 backdrop-blur-md rounded-md shadow-lg py-1 z-50
+                     opacity-0 group-hover:opacity-100 transition-opacity duration-200 invisible group-hover:visible">
+            <a routerLink="/reservation/essai" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Demande d'essai</a>
+            <a routerLink="/reservation/configurateur" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Configurateur</a>
+            <a routerLink="/reservation/financement" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Options de financement</a>
+          </div>
+        </div>
+
+        <!-- Mon compte avec sous-menu -->
+        <div class="group relative">
+          <a routerLink="/mon-compte" routerLinkActive="text-yellow-400 border-b border-yellow-400"
+             class="hover:text-yellow-300 transition pb-1 flex items-center">
+            Mon compte
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+          <div class="absolute left-0 mt-2 w-48 bg-black/80 backdrop-blur-md rounded-md shadow-lg py-1 z-50
+                     opacity-0 group-hover:opacity-100 transition-opacity duration-200 invisible group-hover:visible">
+            <a routerLink="/mon-compte/profil" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Mon profil</a>
+            <a routerLink="/mon-compte/commandes" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Mes commandes</a>
+            <a routerLink="/mon-compte/favoris" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Mes favoris</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action button - Changes based on auth status -->
+      <div class="hidden md:flex items-center gap-4">
+        <ng-container *ngIf="user==null; else userProfile">
+          <button (click)="openLogin()" class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold transition">
+            Connexion
+          </button>
+        </ng-container>
+
+        <ng-template #userProfile>
+          <div class="group relative">
+            <div class="flex items-center gap-2 cursor-pointer">
+              <img [src]="getImageUrl(user.urlImage)|| 'assets/default-profile.png'"
+                   alt="Profile"
+                   class="w-8 h-8 rounded-full object-cover border border-yellow-400">
+              <span class="text-white">{{ user.nomUtilisateur }}</span>
+              <svg class="w-4 h-4 ml-1 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </div>
+
+            <div class="absolute right-0 mt-2 w-48 bg-black/80 backdrop-blur-md rounded-md shadow-lg py-1 z-50
+                       opacity-0 group-hover:opacity-100 transition-opacity duration-200 invisible group-hover:visible">
+              <a routerLink="/mon-compte/profil" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Mon profil</a>
+              <a routerLink="/mon-compte/commandes" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Mes réservations</a>
+              <button (click)="logout()" class="w-full text-left px-4 py-2 hover:bg-white/10 hover:text-yellow-400">
+                Déconnexion
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Burger menu -->
+      <div class="md:hidden">
+        <button (click)="toggleMenu()" class="focus:outline-none">
+          <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+               viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<app-login *ngIf="showLoginModal"></app-login>

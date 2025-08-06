@@ -13,8 +13,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { email, password }, { headers: new HttpHeaders() })
+  login(email: string, motDePasse: string): Observable<any> {
+    return this.http.post<any>(this.apiUrl, { email, motDePasse }, { headers: new HttpHeaders() })
       .pipe(
         tap(user => {
           localStorage.setItem('user', JSON.stringify(user));

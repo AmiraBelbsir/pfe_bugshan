@@ -1,0 +1,240 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 overflow-hidden relative">
+
+  <!-- Vidéo de fond avec image de secours -->
+  <div class="absolute inset-0 z-0">
+    <video autoplay loop muted playsinline class="w-full h-full object-cover">
+      <source src="assets/bg2.mp4" type="video/mp4" />
+      <!-- Image de secours -->
+      <img src="assets/bg-fallback.jpg" alt="Arrière-plan" class="w-full h-full object-cover" />
+    </video>
+    <!-- Dégradé de superposition -->
+    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-gray-900/30"></div>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <br><br>
+
+    <!-- Contrôles de recherche et tri -->
+    <div class="mb-8 bg-white/5 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-yellow-500/20">
+      <div class="flex flex-wrap items-center gap-4">
+        <!-- Barre de recherche -->
+        <div class="flex-1 min-w-[200px]">
+          <label class="block text-sm font-medium text-yellow-100 mb-1">Rechercher</label>
+          <div class="relative">
+            <input
+              [(ngModel)]="searchTerm"
+              (input)="filterVehicles()"
+              type="text"
+              class="w-full py-2 px-3 pl-10 border border-yellow-500/30 bg-white/10 text-white placeholder-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-200"
+              placeholder="Marque, modèle..."
+            >
+            <span class="absolute left-3 top-2.5 text-yellow-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- Filtrer par type -->
+        <div class="flex-1 min-w-[200px]">
+          <label class="block text-sm font-medium text-yellow-100 mb-1">Type</label>
+          <select
+            [(ngModel)]="selectedFilterType"
+            (change)="filterVehicles()"
+            class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-200"
+          >
+            <option value="">Tous</option>
+            <option value="BERLINE" class="bg-gray-800">Berline</option>
+            <option value="SUV" class="bg-gray-800">SUV</option>
+            <option value="COUPE" class="bg-gray-800">Coupé</option>
+            <option value="CABRIOLET" class="bg-gray-800">Cabriolet</option>
+            <option value="CAMION" class="bg-gray-800">Camion</option>
+            <option value="FOURGONNETTE" class="bg-gray-800">Fourgonnette</option>
+            <option value="BREAK" class="bg-gray-800">Break</option>
+            <option value="ELECTRIQUE" class="bg-gray-800">Électrique</option>
+            <option value="HYBRIDE" class="bg-gray-800">Hybride</option>
+            <option value="PICKUP" class="bg-gray-800">Pickup</option>
+            <option value="MOTO" class="bg-gray-800">Moto</option>
+            <option value="MINIBUS" class="bg-gray-800">Minibus</option>
+          </select>
+        </div>
+
+        <!-- Filtrer par transmission -->
+        <div class="flex-1 min-w-[200px]">
+          <label class="block text-sm font-medium text-yellow-100 mb-1">Transmission</label>
+          <select
+            [(ngModel)]="selectedFilterTransmission"
+            (change)="filterVehicles()"
+            class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-200"
+          >
+            <option value="">Tous</option>
+            <option value="AUTOMATIQUE" class="bg-gray-800">Automatique</option>
+            <option value="MANUELLE" class="bg-gray-800">Manuelle</option>
+          </select>
+        </div>
+
+        <!-- Filtrer par carburant -->
+        <div class="flex-1 min-w-[200px]">
+          <label class="block text-sm font-medium text-yellow-100 mb-1">Carburant</label>
+          <select
+            [(ngModel)]="selectedFilterFuel"
+            (change)="filterVehicles()"
+            class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-200"
+          >
+            <option value="">Tous</option>
+            <option value="ESSENCE" class="bg-gray-800">Essence</option>
+            <option value="DIESEL" class="bg-gray-800">Diesel</option>
+            <option value="ELECTRIQUE" class="bg-gray-800">Électrique</option>
+            <option value="HYBRIDE" class="bg-gray-800">Hybride</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grille de véhicules -->
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div
+        *ngFor="let vehicle of filteredVehicles"
+        class="group bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-700 hover:border-yellow-500/50 flex flex-col"
+      >
+        <!-- Image avec effet hover -->
+        <div class="relative w-full aspect-video overflow-hidden">
+          <img
+            [src]="getImageUrl(vehicle.urlImage)"
+            [alt]="vehicle.marque + ' ' + vehicle.modele"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          <!-- Badges -->
+          <div class="absolute top-3 left-3 flex gap-2">
+            <span class="text-xs font-semibold px-2 py-1 rounded-full bg-yellow-600 text-gray-900">
+              {{ vehicle.annee }}
+            </span>
+            <span [class]="vehicle.disponible ? 'bg-green-600' : 'bg-red-600'" class="text-xs font-semibold px-2 py-1 rounded-full text-white">
+              {{ vehicle.disponible ? 'Disponible' : 'Indisponible' }}
+            </span>
+          </div>
+          <div class="absolute bottom-3 right-3">
+            <span class="text-xs font-semibold px-2 py-1 rounded-full bg-black/70 text-yellow-400 backdrop-blur-sm">
+              {{ vehicle.niveauCarburant }}% Carburant
+            </span>
+          </div>
+        </div>
+
+        <!-- Détails du véhicule -->
+        <div class="p-5 flex flex-col flex-grow">
+          <div class="mb-3">
+            <h3 class="text-xl font-bold text-white truncate">
+              {{ vehicle.marque }} {{ vehicle.modele }}
+            </h3>
+            <p class="text-yellow-400">{{ vehicle.emplacement }}</p>
+          </div>
+
+          <!-- Spécifications -->
+          <div class="grid grid-cols-2 gap-3 mt-2 text-sm text-gray-300">
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18"></path>
+              </svg>
+              {{ vehicle.typeVehicule }}
+            </div>
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+              </svg>
+              {{ vehicle.typeTransmission }}
+            </div>
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+              </svg>
+              {{ vehicle.typeCarburant }}
+            </div>
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+              {{ vehicle.sieges }} sièges
+            </div>
+          </div>
+
+          <!-- Prix et CTA -->
+          <div class="mt-4 pt-4 border-t border-gray-700 flex justify-between items-center">
+            <div>
+              <p class="text-sm text-yellow-100">Prix net</p>
+              <p class="text-2xl font-bold text-white">
+                {{ vehicle.prix | currency:'MAD':'symbol':'1.0-0' }}K
+              </p>
+              <p class="text-xs text-gray-400 mt-1">
+                {{ vehicle.disponible ? 'Disponible immédiatement' : 'Réservation en attente' }}
+              </p>
+            </div>
+            <a
+              role="button"
+              (click)="handleReservation(vehicle.id)"
+              [title]="vehicle.disponible ? 'Réserver ce véhicule' : 'Indisponible'"
+              class="px-4 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              [class]="vehicle.disponible ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-gray-900 hover:shadow-lg hover:from-yellow-400 hover:to-yellow-500' : 'bg-gray-700 text-gray-400'"
+            >
+              Réserver
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- État vide -->
+    <div *ngIf="vehicules.length === 0" class="text-center py-16">
+      <div class="mx-auto max-w-md">
+        <svg class="mx-auto h-16 w-16 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <h3 class="mt-4 text-lg font-medium text-white">Aucun véhicule trouvé</h3>
+        <p class="mt-2 text-sm text-gray-400">Ajustez vos filtres ou revenez plus tard</p>
+        <div class="mt-6">
+          <button (click)="resetFilters()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-900 bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+            Réinitialiser
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Prompt Modal -->
+    <div *ngIf="showLogin" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+      <div class="bg-gray-800 rounded-xl p-6 w-full max-w-md border border-yellow-500/30">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-white">Connexion requise</h3>
+          <button (click)="showLogin = false" class="text-gray-400 hover:text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <p class="text-gray-300 mb-6">
+          Vous devez être connecté pour réserver un véhicule. Veuillez vous connecter ou créer un compte.
+        </p>
+
+        <div class="flex flex-col space-y-3">
+          <button
+            (click)="openLogin()"
+            class="w-full py-3 bg-yellow-500 text-gray-900 font-bold rounded-lg hover:bg-yellow-600 transition-colors"
+          >
+            Se connecter
+          </button>
+          <button
+            (click)="openRegister()"
+            class="w-full py-3 border border-yellow-500 text-yellow-500 font-bold rounded-lg hover:bg-yellow-500/10 transition-colors"
+          >
+            Créer un compte
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-login *ngIf="loginOpened"></app-login>
+<app-sign-up *ngIf="signUpOpened"></app-sign-up>

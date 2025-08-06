@@ -25,13 +25,13 @@ public class Bloc {
 
     // 🔗 Chaque bloc appartient à un seul magasin
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference
+    @JsonBackReference("bloc-magasin")
     @JoinColumn(name = "magasin_id")
     private Magasin magasin;
 
     // 🔗 Chaque bloc peut contenir plusieurs pièces
-    @OneToMany(mappedBy = "bloc", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "bloc",cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonManagedReference("bloc-piece")
     private List<Piece> pieces;
 }
 

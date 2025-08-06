@@ -1,12 +1,11 @@
 package com.bugshan.automative.group.app.dto;
 
-
 import com.bugshan.automative.group.app.model.*;
 import lombok.*;
-import org.springframework.beans.PropertyValue;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -18,23 +17,28 @@ public class PieceDTO {
     private String marque;
     private double prix;
     private int quantite;
+    private int quantiteMinimum;
     private String imageUrl;
     private TypePiece type;
-    private LocalDate DateAchat;
-    private int quantiteMinimum;
+    private LocalDate dateAchat;
     private String description;
-    private String compatibilite;
     private boolean precommandable;
     private boolean active;
+
+    // Magasin + Bloc
     private Long magasinId;
-    private Long blocId;
     private String magasinNom;
+    private Long blocId;
     private String blocNom;
 
+    // Fournisseur (Utilisateur)
+    private Long fournisseurId;
+    private String fournisseurNom;
 
+    // Liste des IDs de véhicules compatibles
+    private List<Long> vehiculeIds;
 
-
-    // Constructeur
+    // Constructeur à partir de l’entité Piece
     public PieceDTO(Piece piece) {
         this.id = piece.getId();
         this.nom = piece.getNom();
@@ -42,21 +46,38 @@ public class PieceDTO {
         this.marque = piece.getMarque();
         this.prix = piece.getPrix();
         this.quantite = piece.getQuantite();
+        this.quantiteMinimum = piece.getQuantiteMinimum();
         this.imageUrl = piece.getImageUrl();
         this.type = piece.getType();
-        this.DateAchat = piece.getDateAchat();
-        this.quantiteMinimum = piece.getQuantiteMinimum();
+        this.dateAchat = piece.getDateAchat();
         this.description = piece.getDescription();
-        this.compatibilite = piece.getCompatibilite();
         this.precommandable = piece.isPrecommandable();
         this.active = piece.isActive();
-        // ✅ Récupérer les ID du magasin et du bloc depuis l'entité
-        this.magasinId = (piece.getMagasin() != null) ? piece.getMagasin().getId() : null;
-        this.blocId = (piece.getBloc() != null) ? piece.getBloc().getId() : null;
-        this.magasinNom = piece.getMagasin().getNom();
-        this.blocNom = piece.getBloc().getNom();
+
+        if (piece.getMagasin() != null) {
+            this.magasinId = piece.getMagasin().getId();
+            this.magasinNom = piece.getMagasin().getNom();
+        }
+
+        if (piece.getBloc() != null) {
+            this.blocId = piece.getBloc().getId();
+            this.blocNom = piece.getBloc().getNom();
+        }
+
+        if (piece.getFournisseur() != null) {
+            this.fournisseurId = piece.getFournisseur().getId();
+            this.fournisseurNom = piece.getFournisseur().getNomComplet(); // ou getUsername() selon ta classe Utilisateur
+        }
+
+        if (piece.getVehiculesCompatibles() != null) {
+            this.vehiculeIds = piece.getVehiculesCompatibles()
+                    .stream()
+                    .map(Vehicule::getId)
+                    .collect(Collectors.toList());
+        }
     }
 
-    public PieceDTO(PropertyValue propertyValue) {
+    public PieceDTO(org.springframework.beans.PropertyValue propertyValue) {
+        // à supprimer si inutile
     }
 }

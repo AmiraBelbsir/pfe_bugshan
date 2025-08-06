@@ -1,13 +1,8 @@
 package com.bugshan.automative.group.app.service;
 
 import com.bugshan.automative.group.app.dto.PieceDTO;
-import com.bugshan.automative.group.app.model.Bloc;
-import com.bugshan.automative.group.app.model.Magasin;
-import com.bugshan.automative.group.app.model.Piece;
-import com.bugshan.automative.group.app.model.User;
-import com.bugshan.automative.group.app.repository.BlocRepository;
-import com.bugshan.automative.group.app.repository.MagasinRepository;
-import com.bugshan.automative.group.app.repository.PieceRepository;
+import com.bugshan.automative.group.app.model.*;
+import com.bugshan.automative.group.app.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +15,23 @@ public class PieceService {
     private final PieceRepository pieceRepository;
     private final MagasinRepository magasinRepository;
     private final BlocRepository blocRepository;
+    private final VehiculeRepository vehiculeRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
     @Autowired
     public PieceService(
             PieceRepository pieceRepository,
             MagasinRepository magasinRepository,
-            BlocRepository blocRepository
+            BlocRepository blocRepository,
+            VehiculeRepository vehiculeRepository,
+            UtilisateurRepository utilisateurRepository
+
     ) {
         this.pieceRepository = pieceRepository;
         this.magasinRepository = magasinRepository;
         this.blocRepository = blocRepository;
+        this.vehiculeRepository = vehiculeRepository;
+        this.utilisateurRepository = utilisateurRepository;
     }
 
     // ✅ Ajouter une pièce simple
@@ -37,7 +39,6 @@ public class PieceService {
         return pieceRepository.save(piece);
     }
 
-    // ✅ Ajouter une pièce avec Magasin + Bloc
     public Piece ajouterPieceAvecRelations(PieceDTO pieceDTO) {
         Piece piece = new Piece();
         piece.setNom(pieceDTO.getNom());
@@ -45,29 +46,37 @@ public class PieceService {
         piece.setMarque(pieceDTO.getMarque());
         piece.setPrix(pieceDTO.getPrix());
         piece.setQuantite(pieceDTO.getQuantite());
+        piece.setQuantiteMinimum(pieceDTO.getQuantiteMinimum());
         piece.setImageUrl(pieceDTO.getImageUrl());
         piece.setType(pieceDTO.getType());
         piece.setDescription(pieceDTO.getDescription());
-        piece.setCompatibilite(pieceDTO.getCompatibilite());
         piece.setPrecommandable(pieceDTO.isPrecommandable());
+        piece.setDateAchat(pieceDTO.getDateAchat());
+        piece.setActive(pieceDTO.isActive());
 
         // 🔎 Récupération du Magasin
-        Optional<Magasin> magasinOpt = magasinRepository.findById(pieceDTO.getMagasinId());
-        if (magasinOpt.isPresent()) {
-            piece.setMagasin(magasinOpt.get());
-        } else {
-            throw new RuntimeException("Magasin introuvable avec ID : " + pieceDTO.getMagasinId());
-        }
+        Magasin magasin = magasinRepository.findById(pieceDTO.getMagasinId())
+                .orElseThrow(() -> new RuntimeException("Magasin introuvable avec ID : " + pieceDTO.getMagasinId()));
+        piece.setMagasin(magasin);
 
         // 🔎 Récupération du Bloc
-        Optional<Bloc> blocOpt = blocRepository.findById(pieceDTO.getBlocId());
-        if (blocOpt.isPresent()) {
-            piece.setBloc(blocOpt.get());
-        } else {
-            throw new RuntimeException("Bloc introuvable avec ID : " + pieceDTO.getBlocId());
+        Bloc bloc = blocRepository.findById(pieceDTO.getBlocId())
+                .orElseThrow(() -> new RuntimeException("Bloc introuvable avec ID : " + pieceDTO.getBlocId()));
+        piece.setBloc(bloc);
+
+        // 🔎 Récupération du fournisseur (Utilisateur)
+        if (pieceDTO.getFournisseurId() != null) {
+            Utilisateur fournisseur = utilisateurRepository.findById(pieceDTO.getFournisseurId())
+                    .orElseThrow(() -> new RuntimeException("Utilisateur introuvable avec ID : " + pieceDTO.getFournisseurId()));
+            piece.setFournisseur(fournisseur);  // 👈 champ `fournisseur` de type Utilisateur dans Piece
         }
 
-        // 💾 Sauvegarde de la pièce
+        // 🔁 Récupération des véhicules compatibles
+        if (pieceDTO.getVehiculeIds() != null && !pieceDTO.getVehiculeIds().isEmpty()) {
+            List<Vehicule> vehicules = vehiculeRepository.findAllById(pieceDTO.getVehiculeIds());
+            piece.setVehiculesCompatibles(vehicules);
+        }
+
         return pieceRepository.save(piece);
     }
 
@@ -92,30 +101,44 @@ public class PieceService {
         piece.setQuantite(pieceDTO.getQuantite());
         piece.setQuantiteMinimum(pieceDTO.getQuantiteMinimum());
         piece.setDescription(pieceDTO.getDescription());
-        piece.setCompatibilite(pieceDTO.getCompatibilite());
         piece.setType(pieceDTO.getType());
         piece.setPrecommandable(pieceDTO.isPrecommandable());
         piece.setDateAchat(pieceDTO.getDateAchat());
         piece.setImageUrl(pieceDTO.getImageUrl());
+        piece.setActive(pieceDTO.isActive());
 
-        // 🔁 Mise à jour du magasin s'il est différent
+        // 🔁 Mise à jour du magasin
         if (pieceDTO.getMagasinId() != null) {
             Magasin magasin = magasinRepository.findById(pieceDTO.getMagasinId())
-                    .orElseThrow(() -> new RuntimeException("Magasin non trouvé"));
+                    .orElseThrow(() -> new RuntimeException("Magasin non trouvé avec ID : " + pieceDTO.getMagasinId()));
             piece.setMagasin(magasin);
         }
 
-        // 🔁 Mise à jour du bloc s'il est différent
+        // 🔁 Mise à jour du bloc
         if (pieceDTO.getBlocId() != null) {
             Bloc bloc = blocRepository.findById(pieceDTO.getBlocId())
-                    .orElseThrow(() -> new RuntimeException("Bloc non trouvé"));
+                    .orElseThrow(() -> new RuntimeException("Bloc non trouvé avec ID : " + pieceDTO.getBlocId()));
             piece.setBloc(bloc);
         }
 
-        // 💾 Enregistrer en base de données
+        // 🔁 Mise à jour du fournisseur (Utilisateur)
+        if (pieceDTO.getFournisseurId() != null) {
+            Utilisateur fournisseur = utilisateurRepository.findById(pieceDTO.getFournisseurId())
+                    .orElseThrow(() -> new RuntimeException("Utilisateur (fournisseur) non trouvé avec ID : " + pieceDTO.getFournisseurId()));
+            piece.setFournisseur(fournisseur);
+        } else {
+            piece.setFournisseur(null); // permet de supprimer le fournisseur s'il est retiré
+        }
+
+        // 🔁 Mise à jour des véhicules compatibles
+        if (pieceDTO.getVehiculeIds() != null) {
+            List<Vehicule> vehicules = vehiculeRepository.findAllById(pieceDTO.getVehiculeIds());
+            piece.setVehiculesCompatibles(vehicules);
+        }
+
+        // 💾 Enregistrer en base
         Piece updatedPiece = pieceRepository.save(piece);
 
-        // 🔁 Retourner un DTO mis à jour
         return new PieceDTO(updatedPiece);
     }
 

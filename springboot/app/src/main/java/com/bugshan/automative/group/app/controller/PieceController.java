@@ -2,14 +2,12 @@ package com.bugshan.automative.group.app.controller;
 
 
 import com.bugshan.automative.group.app.dto.PieceDTO;
-import com.bugshan.automative.group.app.dto.UserDTO;
+
 import com.bugshan.automative.group.app.model.*;
-import com.bugshan.automative.group.app.repository.BlocRepository;
-import com.bugshan.automative.group.app.repository.MagasinRepository;
-import com.bugshan.automative.group.app.repository.PieceRepository;
-import com.bugshan.automative.group.app.repository.UserRepository;
+import com.bugshan.automative.group.app.repository.*;
+
 import com.bugshan.automative.group.app.service.PieceService;
-import com.bugshan.automative.group.app.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -42,8 +40,10 @@ public class PieceController {
 
     @Autowired
     private BlocRepository blocRepository;
-
-
+    @Autowired
+    private  VehiculeRepository vehiculeRepository;
+    @Autowired
+    private  UtilisateurRepository utilisateurRepository;
     @GetMapping
     public List<PieceDTO> getAllPieces() {
         return pieceService.findAllPiece().stream()
@@ -58,28 +58,30 @@ public class PieceController {
             @RequestParam("marque") String marque,
             @RequestParam("prix") double prix,
             @RequestParam("quantite") int quantite,
-            @RequestParam(value = "imageUrl", required = false) String imageUrl, // optionnel
             @RequestParam("type") TypePiece type,
             @RequestParam("dateAchat") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateAchat,
             @RequestParam("quantiteMinimum") int quantiteMinimum,
             @RequestParam("description") String description,
-            @RequestParam("compatibilite") String compatibilite,
             @RequestParam("precommandable") boolean precommandable,
-            @RequestParam("magasinId") Long magasinId,       // <-- ajouté
-            @RequestParam("blocId") Long blocId              // <-- ajouté
+            @RequestParam("active") boolean active,
+            @RequestParam("magasinId") Long magasinId,
+            @RequestParam("blocId") Long blocId,
+            @RequestParam("fournisseurId") Long fournisseurId,
+            @RequestParam(value = "vehiculeIds", required = false) List<Long> vehiculeIds
     ) {
         try {
-            // Gestion du fichier image uploadé
+            String imageUrl = null;
+
+            // 📷 Gestion de l’image
             if (file != null && !file.isEmpty()) {
                 String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
                 Path filePath = Paths.get("uploads", fileName);
                 Files.createDirectories(filePath.getParent());
                 Files.write(filePath, file.getBytes());
-
-                imageUrl = fileName; // on remplace imageUrl par le nom du fichier uploadé
+                imageUrl = fileName;
             }
 
-            // Création de PieceDTO à partir des paramètres
+            // 🧱 Construction du DTO
             PieceDTO pieceDTO = new PieceDTO();
             pieceDTO.setNom(nom);
             pieceDTO.setReference(reference);
@@ -90,13 +92,15 @@ public class PieceController {
             pieceDTO.setDateAchat(dateAchat);
             pieceDTO.setQuantiteMinimum(quantiteMinimum);
             pieceDTO.setDescription(description);
-            pieceDTO.setCompatibilite(compatibilite);
             pieceDTO.setPrecommandable(precommandable);
             pieceDTO.setImageUrl(imageUrl);
+            pieceDTO.setActive(active);
             pieceDTO.setMagasinId(magasinId);
             pieceDTO.setBlocId(blocId);
+            pieceDTO.setFournisseurId(fournisseurId);
+            pieceDTO.setVehiculeIds(vehiculeIds);
 
-            // Appel du service avec DTO
+            // 💾 Création
             Piece savedPiece = pieceService.ajouterPieceAvecRelations(pieceDTO);
 
             return ResponseEntity.ok(savedPiece);
@@ -107,52 +111,46 @@ public class PieceController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erreur lors de la création de la pièce : " + e.getMessage());
         }
     }
-    @PutMapping("/{id}")  // Cette méthode sera appelée quand on fait une requête PUT sur /api/pieces/{id}
+
+    @PutMapping("/{id}")
     public ResponseEntity<?> updatePiece(
-            @PathVariable Long id,  // On récupère l’ID de la pièce à modifier
-            @RequestParam(value = "file", required = false) MultipartFile file,  // Image facultative
+            @PathVariable Long id,
+            @RequestParam(value = "file", required = false) MultipartFile file,
             @RequestParam(value = "nom", required = false) String nom,
             @RequestParam(value = "reference", required = false) String reference,
             @RequestParam(value = "marque", required = false) String marque,
             @RequestParam(value = "prix", required = false) Double prix,
             @RequestParam(value = "quantite", required = false) Integer quantite,
             @RequestParam(value = "description", required = false) String description,
-            @RequestParam(value = "compatibilite", required = false) String compatibilite,
             @RequestParam(value = "quantiteMinimum", required = false) Integer quantiteMinimum,
             @RequestParam(value = "type", required = false) TypePiece type,
             @RequestParam(value = "dateAchat", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateAchat,
             @RequestParam(value = "precommandable", required = false) Boolean precommandable,
             @RequestParam(value = "active", required = false) Boolean active,
-            @RequestParam(value = "magasinId", required = false) Long magasinId,  // ID du magasin associé
-            @RequestParam(value = "blocId", required = false) Long blocId , // ID du bloc associé
-            @RequestParam(value = "magasinNom", required = false) Long magasinNom ,
-            @RequestParam(value = "blocNom", required = false) Long blocNom
-
+            @RequestParam(value = "magasinId", required = false) Long magasinId,
+            @RequestParam(value = "blocId", required = false) Long blocId,
+            @RequestParam(value = "fournisseurId", required = false) Long fournisseurId,
+            @RequestParam(value = "vehiculeIds", required = false) List<Long> vehiculeIds
     ) {
-        // 1. On vérifie que la pièce avec l’ID existe
         Optional<Piece> optionalPiece = pieceRepository.findById(id);
         if (optionalPiece.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pièce non trouvée.");
         }
 
-        // 2. On récupère l’objet existant
         Piece piece = optionalPiece.get();
 
-        // 3. Mise à jour des champs si des nouvelles valeurs sont envoyées
         if (nom != null) piece.setNom(nom);
         if (reference != null) piece.setReference(reference);
         if (marque != null) piece.setMarque(marque);
         if (prix != null) piece.setPrix(prix);
         if (quantite != null) piece.setQuantite(quantite);
         if (description != null) piece.setDescription(description);
-        if (compatibilite != null) piece.setCompatibilite(compatibilite);
         if (quantiteMinimum != null) piece.setQuantiteMinimum(quantiteMinimum);
         if (active != null) piece.setActive(active);
-        if (type != null) piece.setType( type);
+        if (type != null) piece.setType(type);
         if (dateAchat != null) piece.setDateAchat(dateAchat);
         if (precommandable != null) piece.setPrecommandable(precommandable);
 
-        // 4. Mise à jour du magasin associé si l’ID est fourni
         if (magasinId != null) {
             Optional<Magasin> optionalMagasin = magasinRepository.findById(magasinId);
             if (optionalMagasin.isEmpty()) {
@@ -161,7 +159,6 @@ public class PieceController {
             piece.setMagasin(optionalMagasin.get());
         }
 
-        // 5. Mise à jour du bloc associé si l’ID est fourni
         if (blocId != null) {
             Optional<Bloc> optionalBloc = blocRepository.findById(blocId);
             if (optionalBloc.isEmpty()) {
@@ -170,36 +167,37 @@ public class PieceController {
             piece.setBloc(optionalBloc.get());
         }
 
-        // 6. Traitement du fichier image si une nouvelle image est envoyée
+        // ✅ Fournisseur (Utilisateur)
+        if (fournisseurId != null) {
+            Optional<Utilisateur> optionalFournisseur = utilisateurRepository.findById(fournisseurId);
+            if (optionalFournisseur.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fournisseur (utilisateur) non trouvé");
+            }
+            piece.setFournisseur(optionalFournisseur.get());
+        }
+
+        // ✅ Véhicules compatibles
+        if (vehiculeIds != null && !vehiculeIds.isEmpty()) {
+            List<Vehicule> vehicules = vehiculeRepository.findAllById(vehiculeIds);
+            piece.setVehiculesCompatibles(vehicules);
+        }
+
+        // 📷 Upload de l’image
         if (file != null && !file.isEmpty()) {
             try {
-                // On génère un nom de fichier unique
                 String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-
-                // On définit le chemin du dossier uploads
                 Path filePath = Paths.get("uploads", fileName);
-
-                // On crée les dossiers si nécessaire
                 Files.createDirectories(filePath.getParent());
-
-                // On écrit le fichier sur le disque
                 Files.write(filePath, file.getBytes());
-
-                // On enregistre le chemin de l’image dans la pièce
                 piece.setImageUrl(fileName);
-
             } catch (IOException e) {
-                // En cas d’erreur pendant l’upload
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Échec de l'upload de l'image.");
             }
         }
 
-        // 7. Enregistrement des modifications dans la base de données
+        // 💾 Sauvegarde
         Piece updated = pieceRepository.save(piece);
-
-        // 8. On retourne la pièce mise à jour en réponse
         return ResponseEntity.ok(new PieceDTO(updated));
-
     }
 
 
@@ -219,18 +217,38 @@ public class PieceController {
             dto.setQuantite(piece.getQuantite());
             dto.setQuantiteMinimum(piece.getQuantiteMinimum());
             dto.setDescription(piece.getDescription());
-            dto.setCompatibilite(piece.getCompatibilite());
             dto.setType(piece.getType());
             dto.setDateAchat(piece.getDateAchat());
             dto.setPrecommandable(piece.isPrecommandable());
             dto.setActive(piece.isActive());
             dto.setImageUrl(piece.getImageUrl());
-            dto.setMagasinId(piece.getMagasin() != null ? piece.getMagasin().getId() : null);
-            dto.setBlocId(piece.getBloc() != null ? piece.getBloc().getId() : null);
-            dto.setMagasinNom(piece.getMagasin().getNom());
-            dto.setBlocNom(piece.getBloc().getNom());
 
+            // Magasin
+            if (piece.getMagasin() != null) {
+                dto.setMagasinId(piece.getMagasin().getId());
+                dto.setMagasinNom(piece.getMagasin().getNom());
+            }
 
+            // Bloc
+            if (piece.getBloc() != null) {
+                dto.setBlocId(piece.getBloc().getId());
+                dto.setBlocNom(piece.getBloc().getNom());
+            }
+
+            // Fournisseur (Utilisateur)
+            if (piece.getFournisseur() != null) {
+                dto.setFournisseurId(piece.getFournisseur().getId());
+                dto.setFournisseurNom(piece.getFournisseur().getNomComplet()); // ou getUsername() selon ton modèle
+            }
+
+            // Véhicules compatibles
+            if (piece.getVehiculesCompatibles() != null && !piece.getVehiculesCompatibles().isEmpty()) {
+                List<Long> vehiculeIds = piece.getVehiculesCompatibles()
+                        .stream()
+                        .map(Vehicule::getId)
+                        .collect(Collectors.toList());
+                dto.setVehiculeIds(vehiculeIds);
+            }
 
             return ResponseEntity.ok(dto);
         } else {

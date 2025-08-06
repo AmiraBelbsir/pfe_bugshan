@@ -1,0 +1,466 @@
+<div *ngIf="showAddPanel" class="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-50">
+  <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-4xl" style="max-height: 80vh; overflow-y: auto;">
+    <div class="flex justify-between items-center mb-4">
+      <h4 class="text-xl font-semibold text-gray-700">Ajouter un Véhicule</h4>
+      <button class="text-lg font-bold text-gray-600" (click)="togglePanel()">X</button>
+    </div>
+
+    <form (ngSubmit)="addVehicle()" #vehicleForm="ngForm">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+
+        <!-- Marque -->
+        <div class="mb-4">
+          <label for="brand" class="block text-gray-700 font-medium mb-1">Marque <span class="text-red-500">*</span></label>
+          <input type="text" id="brand" [(ngModel)]="nouveauVehicule.marque" name="brand" required #brand="ngModel"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+          <div *ngIf="brand.invalid && brand.touched" class="text-red-500 text-sm mt-1">La marque est obligatoire.</div>
+        </div>
+
+        <!-- Modèle -->
+        <div class="mb-4">
+          <label for="model" class="block text-gray-700 font-medium mb-1">Modèle <span class="text-red-500">*</span></label>
+          <input type="text" id="model" [(ngModel)]="nouveauVehicule.modele" name="model" required #model="ngModel"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+          <div *ngIf="model.invalid && model.touched" class="text-red-500 text-sm mt-1">Le modèle est obligatoire.</div>
+        </div>
+
+        <!-- Année -->
+        <div class="mb-4">
+          <label for="year" class="block text-gray-700 font-medium mb-1">Année <span class="text-red-500">*</span></label>
+          <select id="year" [(ngModel)]="nouveauVehicule.annee" name="year" required #year="ngModel"
+                  class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+            <option value="">Sélectionnez l'année</option>
+            <!-- Generate the options dynamically for years -->
+            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+          </select>
+          <div *ngIf="year.invalid && year.touched" class="text-red-500 text-sm mt-1">
+            L'année est obligatoire.
+          </div>
+        </div>
+
+        <!-- Nombre de sièges -->
+        <div class="mb-4">
+          <label for="seats" class="block text-gray-700 font-medium mb-1">Nombre de sièges <span class="text-red-500">*</span></label>
+          <input min="0" type="number" id="seats" [(ngModel)]="nouveauVehicule.sieges" name="seats" required #seats="ngModel"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+          <div *ngIf="seats.invalid && seats.touched" class="text-red-500 text-sm mt-1">Le nombre de sièges est obligatoire.</div>
+        </div>
+
+        <!-- Niveau de carburant -->
+        <div class="mb-4">
+          <label for="fuelLevel" class="block text-gray-700 font-medium mb-1">Niveau de carburant (%) <span class="text-red-500">*</span></label>
+          <input min="0" max="100" type="number" id="fuelLevel" [(ngModel)]="nouveauVehicule.niveauCarburant" name="fuelLevel" required #fuelLevel="ngModel"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+          <div *ngIf="fuelLevel.invalid && fuelLevel.touched" class="text-red-500 text-sm mt-1">Le niveau de carburant est obligatoire.</div>
+        </div>
+
+        <!-- Prix par jour -->
+        <div class="mb-4">
+          <label for="retailPrice" class="block text-gray-700 font-medium mb-1">Prix de vente (MAD) <span class="text-red-500">*</span></label>
+          <input min="0" type="number" id="retailPrice" [(ngModel)]="nouveauVehicule.prix" name="retailPrice" required #retailPrice="ngModel"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+          <div *ngIf="retailPrice.invalid && retailPrice.touched" class="text-red-500 text-sm mt-1">Le prix de vente est obligatoire.</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="quantity" class="block text-gray-700 font-medium mb-1">Quantité en stock <span class="text-red-500">*</span></label>
+          <input min="0" type="number" id="quantity" [(ngModel)]="nouveauVehicule.quantite" name="quantity" required #quantity="ngModel"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+          <div *ngIf="quantity.invalid && quantity.touched" class="text-red-500 text-sm mt-1">La quantité en stock est obligatoire.</div>
+        </div>
+
+        <!-- Localisation -->
+        <div class="mb-4">
+          <label for="location" class="block text-gray-700 font-medium mb-1">Emplacement <span class="text-red-500">*</span></label>
+          <input type="text" id="location" [(ngModel)]="nouveauVehicule.emplacement" name="location" required #location="ngModel"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+          <div *ngIf="location.invalid && location.touched" class="text-red-500 text-sm mt-1">L'emplacement est obligatoire.</div>
+        </div>
+
+
+
+
+        <!-- Type de véhicule -->
+        <div class="mb-4">
+          <label for="vehicleType" class="block text-gray-700 font-medium mb-1">Type de véhicule <span class="text-red-500">*</span></label>
+          <select id="vehicleType" [(ngModel)]="nouveauVehicule.typeVehicule" name="vehicleType" required #vehicleType="ngModel"
+                  class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+            <option value="">Sélectionnez</option>
+            <option value="BERLINE">Berline</option>
+            <option value="SUV">Véhicule utilitaire sport</option>
+            <option value="COUPE">Coupé</option>
+            <option value="CABRIOLET">Cabriolet</option>
+            <option value="CAMION">Camion</option>
+            <option value="FOURGONNETTE">Fourgonnette</option>
+            <option value="BREAK">Break</option>
+            <option value="ELECTRIQUE">Électrique</option>
+            <option value="HYBRIDE">Hybride</option>
+            <option value="PICKUP">Pickup</option>
+            <option value="MOTO">Moto</option>
+            <option value="MINIBUS">Minibus</option>
+          </select>
+          <div *ngIf="vehicleType.invalid && vehicleType.touched" class="text-red-500 text-sm mt-1">Le type de véhicule est obligatoire.</div>
+        </div>
+
+        <!-- Type de carburant -->
+        <div class="mb-4">
+          <label for="fuelType" class="block text-gray-700 font-medium mb-1">Type de carburant <span class="text-red-500">*</span></label>
+          <select id="fuelType" [(ngModel)]="nouveauVehicule.typeCarburant" name="fuelType" required #fuelType="ngModel"
+                  class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+            <option value="">Sélectionnez</option>
+            <option value="ESSENCE">Essence</option>
+            <option value="DIESEL">Diesel</option>
+            <option value="ELECTRIQUE">Électrique</option>
+            <option value="HYBRIDE">Hybride</option>
+          </select>
+          <div *ngIf="fuelType.invalid && fuelType.touched" class="text-red-500 text-sm mt-1">Le type de carburant est obligatoire.</div>
+        </div>
+
+        <!-- Type de transmission -->
+        <div class="mb-4">
+          <label for="transmissionType" class="block text-gray-700 font-medium mb-1">Type de transmission <span class="text-red-500">*</span></label>
+          <select id="transmissionType" [(ngModel)]="nouveauVehicule.typeTransmission" name="transmissionType" required #transmissionType="ngModel"
+                  class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+            <option value="">Sélectionnez</option>
+            <option value="MANUELLE">Manuelle</option>
+            <option value="AUTOMATIQUE">Automatique</option>
+          </select>
+          <div *ngIf="transmissionType.invalid && transmissionType.touched" class="text-red-500 text-sm mt-1">Le type de transmission est obligatoire.</div>
+        </div>
+
+        <!-- Image principale (non requise) -->
+        <div class="mb-4">
+          <label for="vehicleImage" class="block text-gray-700 font-medium mb-1">Image du véhicule</label>
+          <input type="file" id="vehicleImage" class="hidden" (change)="onFileChange($event)">
+          <label for="vehicleImage" class="cursor-pointer bg-gray-700 text-white py-2 px-4 rounded-lg shadow-md hover:bg-gray-600">
+            Choisir un fichier
+          </label>
+          <div *ngIf="nouveauVehicule.urlImage" class="mt-2">
+            <img [src]="nouveauVehicule.urlImage" alt="Aperçu" class="w-20 h-20 object-cover rounded-lg">
+          </div>
+        </div>
+
+        <!-- Photos supplémentaires (non requises) -->
+        <div class="mb-4">
+          <label for="additionalPhotos" class="block text-gray-700 font-medium mb-1">Photos supplémentaires</label>
+          <input type="file" id="additionalPhotos" (change)="onAdditionalPhotosChange($event)" multiple
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+          <div class="mt-2 flex space-x-2">
+            <div *ngFor="let photo of nouveauVehicule.photosAdditionnelles" class="relative">
+              <img [src]="photo" alt="Aperçu supplémentaire" class="w-20 h-20 object-cover rounded-lg">
+              <button type="button" (click)="removeAdditionalPhoto(photo)" class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1">X</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="flex justify-end mt-6">
+        <button type="submit" class="bg-gray-700 text-white py-2 px-4 rounded-md shadow-md hover:bg-gray-600">Ajouter</button>
+      </div>
+    </form>
+
+
+
+  </div>
+</div>
+
+<div *ngIf="vehicleAdded" class="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-3 z-50">
+  <i class="fas fa-check-circle text-2xl"></i>
+  <span class="font-semibold">{{ successMessage }}</span>
+</div>
+
+<div *ngIf="vehicleUpdated" class="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-3 z-50">
+  <i class="fas fa-check-circle text-2xl"></i>
+  <span class="font-semibold">{{ successMessage }}</span>
+</div>
+
+
+<div class="container mx-auto p-8">
+  <div class="bg-gray-800 shadow-lg rounded-xl overflow-hidden p-6 border border-gray-600">
+    <h2 class="text-2xl font-bold text-white mb-4">Gestion des Véhicules</h2>
+    <p class="text-gray-300 text-sm mb-6">Recherchez, triez et gérez facilement tous les véhicules du système.</p>
+
+    <!-- Contrôles de recherche et tri -->
+    <div class="flex flex-wrap justify-start gap-4 mb-6">
+      <!-- Barre de recherche -->
+      <div class="w-full sm:w-1/4 md:w-1/5">
+        <div class="relative">
+          <input [(ngModel)]="searchTerm" (input)="filterVehicles()" type="text" class="w-full py-2 px-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white transition duration-200 ease-in-out" placeholder="Rechercher">
+          <span class="absolute right-3 top-2 text-gray-400"><i class="fa fa-search"></i></span>
+        </div>
+      </div>
+
+      <!-- Filtrer par type -->
+      <div class="w-full sm:w-1/4 md:w-1/5">
+        <select [(ngModel)]="selectedFilterType" (change)="filterVehicles()" class="w-full py-2 px-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white transition duration-200 ease-in-out">
+          <option value="">Sélectionnez</option>
+          <option value="BERLINE">Berline</option>
+          <option value="SUV">Véhicule utilitaire sport</option>
+          <option value="COUPE">Coupé</option>
+          <option value="CABRIOLET">Cabriolet</option>
+          <option value="CAMION">Camion</option>
+          <option value="FOURGONNETTE">Fourgonnette</option>
+          <option value="BREAK">Break</option>
+          <option value="ELECTRIQUE">Électrique</option>
+          <option value="HYBRIDE">Hybride</option>
+          <option value="PICKUP">Pickup</option>
+          <option value="MOTO">Moto</option>
+          <option value="MINIBUS">Minibus</option>
+        </select>
+      </div>
+
+      <!-- Filtrer par transmission -->
+      <div class="w-full sm:w-1/4 md:w-1/5">
+        <select [(ngModel)]="selectedFilterTransmission" (change)="filterVehicles()" class="w-full py-2 px-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white transition duration-200 ease-in-out">
+          <option value="">Type de transmission</option>
+          <option value="AUTOMATIQUE">Automatique</option>
+          <option value="MANUELLE">Manuelle</option>
+        </select>
+      </div>
+
+      <!-- Filtrer par transmission -->
+      <div class="w-full sm:w-1/4 md:w-1/5">
+        <select [(ngModel)]="selectedFilterFuel" (change)="filterVehicles()" class="w-full py-2 px-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white transition duration-200 ease-in-out">
+          <option value="">Type de carburant</option>
+          <option value="ESSENCE">Essence</option>
+          <option value="DIESEL">Diesel</option>
+          <option value="ELECTRIQUE">Électrique</option>
+          <option value="HYBRIDE">Hybride</option>
+        </select>
+      </div>
+
+
+      <div class="flex space-x-4 justify-end w-full sm:w-auto">
+        <button class="text-white hover:text-blue-500 transition duration-200" (click)="togglePanel()">
+          <i class="fas fa-plus fa-lg"></i>
+        </button>
+        <button class="text-white hover:text-green-500 transition duration-200">
+          <i class="fas fa-download fa-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Vehicle Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-6">
+      <div *ngFor="let vehicle of filteredVehicles" class="bg-gray-700 p-6 border border-gray-600 rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl">
+        <img
+          [src]="getImageUrl(vehicle.urlImage)"
+          class="mx-auto mb-4"
+          width="80"
+          height="80"
+          alt="Image indisponible"
+          style="object-fit: contain; width: 120px; height: 120px;"
+        >
+        <h5 class="text-lg font-semibold text-center text-white">{{ vehicle.marque }}</h5>
+        <h3 class="text-gray-400 font-semibold text-center">{{ vehicle.modele }}</h3>
+        <p class="text-gray-400 text-center">{{ vehicle.prix }}k MAD</p>
+        <div class="flex justify-between mt-6">
+          <button
+            (click)="viewDetails(vehicle.id)"
+            style="color: black; font-weight: bold"
+            class="ml-auto flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-100 hover:bg-gray-100 active:bg-gray-100 rounded-full shadow transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+          >
+            Voir détails
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="showEditPanel" class="fixed inset-0 z-50 flex justify-end bg-gray-800 bg-opacity-50">
+  <div class="bg-white w-96 h-full shadow-lg transition-transform transform translate-x-full absolute right-0 top-0 rounded-l-2xl p-8 overflow-y-auto"
+       [ngClass]="{'translate-x-0': showEditPanel, 'translate-x-full': !showEditPanel}">
+    <button class="absolute top-6 left-6 text-gray-600 hover:text-gray-700 text-2xl font-semibold transition-all duration-300"
+            (click)="closePanel()">
+      ✖
+    </button>
+    <h2 class="text-2xl font-semibold text-gray-800 mb-8 text-center">Détails du véhicule</h2>
+
+    <!-- Infos véhicule -->
+    <div *ngIf="!isEditing" class="bg-white p-6 rounded-lg shadow-lg">
+
+      <button style="max-width: 3px; padding-left:2px; margin-left: 220px" class="ml-auto bg-gray-700 text-white px-6 py-3 rounded-lg shadow-lg mb-6 transition-all duration-300 ease-in-out"
+              (click)="enableEditing()">
+        <i style="margin-left:4px" class="fa fa-pencil-alt mr-2"></i>
+      </button>
+      <div class="flex flex-col items-center mb-6 space-y-4">
+        <!-- Image principale -->
+        <img [src]="getImageUrl(currentImage)"
+             class="rounded-lg border-4 border-gray-300 shadow-md"
+             width="240" height="180" alt="Image véhicule sélectionnée">
+
+        <!-- Miniatures défilables -->
+        <div class="flex space-x-4 overflow-x-auto max-w-full px-2">
+          <img
+            *ngFor="let photo of selectedVehicle?.photosAdditionnelles"
+            [src]="getImageUrl(photo)"
+            (click)="setCurrentImage(photo)"
+            class="cursor-pointer w-24 h-16 object-cover rounded-md border-2"
+            [ngClass]="{'border-blue-500': photo === currentImage, 'border-gray-300': photo !== currentImage}">
+        </div>
+      </div>
+
+      <div class="space-y-4 text-gray-700">
+        <p><strong class="text-gray-600">Marque:</strong> {{ selectedVehicle?.marque }}</p>
+        <p><strong class="text-gray-600">Modèle:</strong> {{ selectedVehicle?.modele }}</p>
+        <p><strong class="text-gray-600">Type:</strong> {{ vehicleTypeToLabel(selectedVehicle?.typeVehicule!) }}</p>
+        <p><strong class="text-gray-600">Carburant:</strong> {{ fuelTypeToLabel(selectedVehicle?.typeCarburant!) }}</p>
+        <p><strong class="text-gray-600">Prix de vente (MAD):</strong> {{ selectedVehicle?.prix }}</p>
+        <p><strong class="text-gray-600">Couleur:</strong> {{ selectedVehicle?.couleur }}</p>
+        <p><strong class="text-gray-600">Année:</strong> {{ selectedVehicle?.annee }}</p>
+        <p><strong class="text-gray-600">Nombre de sièges:</strong> {{ selectedVehicle?.sieges }}</p>
+        <p><strong class="text-gray-600">Transmission:</strong> {{ transmissionTypeToLabel(selectedVehicle?.typeTransmission!) }}</p>
+        <p><strong class="text-gray-600">Statut:</strong>
+          <span class="px-4 py-1 rounded-full text-white text-sm font-medium"
+                [ngClass]="{'bg-green-500': selectedVehicle?.disponible, 'bg-red-500': !selectedVehicle?.disponible}">
+        {{ selectedVehicle?.disponible ? 'Disponible' : 'Indisponible' }}
+      </span>
+        </p>
+        <p><strong class="text-gray-600">Emplacement:</strong> {{ selectedVehicle?.emplacement }}</p>
+
+      </div>
+
+    </div>
+
+    <!-- Formulaire modification -->
+    <div *ngIf="isEditing" class="space-y-6">
+      <div class="space-y-4">
+        <!-- Modèle -->
+        <label class="text-gray-700 font-semibold">Modèle</label>
+        <input type="text" [(ngModel)]="selectedVehicle!.modele" name="model" required #model="ngModel"
+               class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
+        <div *ngIf="model.invalid && model.touched" class="text-red-500 text-sm mt-1">Le modèle est obligatoire.</div>
+
+        <!-- Marque -->
+        <label class="text-gray-700 font-semibold">Marque</label>
+        <input type="text" [(ngModel)]="selectedVehicle!.marque" name="marque" required #marque="ngModel"
+               class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
+        <div *ngIf="marque.invalid && marque.touched" class="text-red-500 text-sm mt-1">La marque est obligatoire.</div>
+
+        <!-- Type de véhicule -->
+        <label class="text-gray-700 font-semibold">Type de véhicule</label>
+        <select [(ngModel)]="selectedVehicle!.typeVehicule"
+                name="typeVehicule"
+                required
+                #typeVehicule="ngModel"
+                class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
+          <option value="">Sélectionnez</option>
+          <option value="BERLINE">Berline</option>
+          <option value="SUV">Véhicule utilitaire sport</option>
+          <option value="COUPE">Coupé</option>
+          <option value="CABRIOLET">Cabriolet</option>
+          <option value="CAMION">Camion</option>
+          <option value="FOURGONNETTE">Fourgonnette</option>
+          <option value="BREAK">Break</option>
+          <option value="ELECTRIQUE">Électrique</option>
+          <option value="HYBRIDE">Hybride</option>
+          <option value="PICKUP">Pickup</option>
+          <option value="MOTO">Moto</option>
+          <option value="MINIBUS">Minibus</option>
+        </select>
+
+        <div *ngIf="typeVehicule.invalid && typeVehicule.touched" class="text-red-500 text-sm mt-1">Le type de véhicule est obligatoire.</div>
+
+
+        <!-- Type de carburant -->
+        <label class="text-gray-700 font-semibold">Type de carburant</label>
+        <select [(ngModel)]="selectedVehicle!.typeCarburant" name="fuelType" required #fuelType="ngModel"
+                class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
+          <option value="">Sélectionnez</option>
+          <option value="ESSENCE">Essence</option>
+          <option value="DIESEL">Diesel</option>
+          <option value="ELECTRIQUE">Électrique</option>
+          <option value="HYBRIDE">Hybride</option>
+        </select>
+        <div *ngIf="fuelType.invalid && fuelType.touched" class="text-red-500 text-sm mt-1">Le type de carburant est obligatoire.</div>
+
+        <!-- Prix de vente -->
+        <label class="text-gray-700 font-semibold">Prix de vente (MAD)</label>
+        <input min="0" type="number" [(ngModel)]="selectedVehicle!.prix" name="retailPrice" required #retailPrice="ngModel"
+               class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
+        <div *ngIf="retailPrice.invalid && retailPrice.touched" class="text-red-500 text-sm mt-1">Le prix de vente est obligatoire.</div>
+
+        <label class="text-gray-700 font-semibold">Quantité en stock:</label>
+        <input min="0" type="number" [(ngModel)]="selectedVehicle!.quantite" name="quantity" required #quantity="ngModel"
+               class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
+        <div *ngIf="quantity.invalid && quantity.touched" class="text-red-500 text-sm mt-1">Le quantité en stock est obligatoire.</div>
+
+
+        <!-- Couleur -->
+        <label class="text-gray-700 font-semibold">Couleur</label>
+        <input type="text" [(ngModel)]="selectedVehicle!.couleur" name="color" required #color="ngModel"
+               class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
+        <div *ngIf="color.invalid && color.touched" class="text-red-500 text-sm mt-1">La couleur est obligatoire.</div>
+
+        <!-- Année -->
+        <label class="text-gray-700 font-semibold">Année</label>
+        <input type="number" [(ngModel)]="selectedVehicle!.annee" name="year" required #year="ngModel"
+               class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
+        <div *ngIf="year.invalid && year.touched" class="text-red-500 text-sm mt-1">L'année est obligatoire.</div>
+
+
+        <!-- Sièges -->
+          <label class="text-gray-700 font-semibold">Nombre de sièges</label>
+          <input type="number" [(ngModel)]="selectedVehicle!.sieges" name="seats" required #seats="ngModel"
+                 class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
+          <div *ngIf="seats.invalid && seats.touched" class="text-red-500 text-sm mt-1">Le nombre de sièges est obligatoire.</div>
+
+
+        <!-- Transmission -->
+        <label class="text-gray-700 font-semibold">Type de transmission</label>
+        <select [(ngModel)]="selectedVehicle!.typeTransmission" name="transmissionType" required #transmissionType="ngModel"
+                class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300 ease-in-out">
+          <option value="">Sélectionnez</option>
+          <option value="MANUELLE">Manuelle</option>
+          <option value="AUTOMATIQUE">Automatique</option>
+        </select>
+        <div *ngIf="transmissionType.invalid && transmissionType.touched" class="text-red-500 text-sm mt-1">Le type de transmission est obligatoire.</div>
+
+
+        <label for="status" class="block text-gray-700 font-medium mb-1">Statut <span class="text-red-500">*</span></label>
+        <div class="flex items-center">
+          <span class="text-gray-600 mr-4">Inactif</span>
+          <label for="status" class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="status" [(ngModel)]="selectedVehicle!.disponible" name="status" #status="ngModel"
+                   class="sr-only">
+            <span class="w-12 h-6 bg-gray-300 rounded-full relative transition-colors duration-300 ease-in-out">
+        <span class="w-6 h-6 bg-white rounded-full absolute left-0 top-0 transition-transform duration-300 ease-in-out"
+              [class.translate-x-6]="selectedVehicle!.disponible"></span>
+      </span>
+          </label>
+          <span class="text-gray-600 ml-4">Actif</span>
+        </div>
+        <div *ngIf="status.value === false && status.touched" class="text-red-500 text-sm mt-1">Le statut est obligatoire.</div>
+
+
+          <label for="location2" class="block text-gray-700 font-medium mb-1">Emplacement <span class="text-red-500">*</span></label>
+          <input type="text" id="location2" [(ngModel)]="selectedVehicle!.emplacement" name="location" required #location="ngModel"
+                 class="w-full py-2 px-3 border border-gray-600 rounded-lg">
+          <div *ngIf="location.invalid && location.touched" class="text-red-500 text-sm mt-1">L'emplacement est obligatoire.</div>
+
+
+
+        <!-- Actions -->
+        <div class="flex justify-end space-x-4 pt-4">
+          <button class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-all duration-300 ease-in-out"
+                  (click)="isEditing = false">
+            Annuler
+          </button>
+          <button class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-all duration-300 ease-in-out"
+                  (click)="updateVehicle()">
+            Sauvegarder
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

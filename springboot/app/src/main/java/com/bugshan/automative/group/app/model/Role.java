@@ -1,10 +1,10 @@
 package com.bugshan.automative.group.app.model;
 
 public enum Role {
-    ADMIN,
+    ADMINISTRATEUR,
     CLIENT,
-    MANAGER,
-    DELIVERY_MAN,
-    STOREKEEPER,
-    STOREKEEPER_ASSISTANT,
+    GERANT,
+    LIVREUR,
+    MAGASINIER,
+    AIDE_MAGASINIER
 }

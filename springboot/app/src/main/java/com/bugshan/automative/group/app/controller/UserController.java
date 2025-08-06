@@ -1,12 +1,14 @@
 package com.bugshan.automative.group.app.controller;
 
-import com.bugshan.automative.group.app.dto.UserDTO;
-import com.bugshan.automative.group.app.model.City;
-import com.bugshan.automative.group.app.model.Gender;
+import com.bugshan.automative.group.app.dto.UtilisateurDTO;
+
 import com.bugshan.automative.group.app.model.Role;
-import com.bugshan.automative.group.app.model.User;
-import com.bugshan.automative.group.app.repository.UserRepository;
-import com.bugshan.automative.group.app.service.UserService;
+import com.bugshan.automative.group.app.model.Sexe;
+import com.bugshan.automative.group.app.model.Utilisateur;
+import com.bugshan.automative.group.app.model.Ville;
+
+import com.bugshan.automative.group.app.repository.UtilisateurRepository;
+import com.bugshan.automative.group.app.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,173 +28,153 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UtilisateurService userService;
     @Autowired
-    private UserRepository userRepository;
+    private UtilisateurRepository userRepository;
 
     @GetMapping
-    public List<UserDTO> getUsers() {
+    public List<UtilisateurDTO> getUsers() {
         return userService.findAllUsers().stream()
-                .map(UserDTO::new)
+                .map(UtilisateurDTO::new)
                 .collect(Collectors.toList());
     }
 
     // Get user by ID
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> user = userService.findUserById(id);
+    public ResponseEntity<Utilisateur> getUserById(@PathVariable Long id) {
+        Optional<Utilisateur> user = userService.findUserById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<?> createUserWithImage(@RequestParam(value = "file", required = false) MultipartFile file,
-                                                 @RequestParam("fullName") String fullName,
-                                                 @RequestParam("email") String email,
-                                                 @RequestParam("username") String username,
-                                                 @RequestParam("password") String password,
-                                                 @RequestParam("phoneNumber") String phoneNumber,
-                                                 @RequestParam("gender") String gender,
-                                                 @RequestParam("role") String role,
-                                                 @RequestParam("city") String city,
-                                                 @RequestParam("address") String address) {
+    public ResponseEntity<?> creerUtilisateurAvecImage(
+            @RequestParam(value = "fichier", required = false) MultipartFile fichier,
+            @RequestParam("nomComplet") String nomComplet,
+            @RequestParam("email") String email,
+            @RequestParam("nomUtilisateur") String nomUtilisateur,
+            @RequestParam("motDePasse") String motDePasse,
+            @RequestParam("numeroTelephone") String numeroTelephone,
+            @RequestParam("sexe") String sexe,
+            @RequestParam("role") String role,
+            @RequestParam("ville") String ville,
+            @RequestParam("adresse") String adresse) {
 
-        if (userService.existsByUsername(username)) {
+        if (userService.existsByUsername(nomUtilisateur)) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("field", "username", "message", "Ce nom d'utilisateur est déjà utilisé."));
+                    .body(Map.of("champ", "nomUtilisateur", "message", "Ce nom d'utilisateur est déjà utilisé."));
         }
 
         if (userService.existsByEmail(email)) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("field", "email", "message", "Cet email est déjà utilisé."));
+                    .body(Map.of("champ", "email", "message", "Cet email est déjà utilisé."));
         }
 
-        if (userService.existsByPhone(phoneNumber)) {
+        if (userService.existsByPhone(numeroTelephone)) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(Map.of("field", "phoneNumber", "message", "Ce numéro est déjà utilisé."));
+                    .body(Map.of("champ", "numeroTelephone", "message", "Ce numéro est déjà utilisé."));
         }
 
-        // Create User object without hashing the password
-        User user = new User();
-        user.setFullName(fullName);
-        user.setEmail(email);
-        user.setUsername(username);
-        user.setPassword(password);  // Directly saving the password without hashing
-        user.setPhoneNumber(phoneNumber);
-        user.setGender(Gender.valueOf(gender.toUpperCase()));  // Enum handling
-        user.setRole(Role.valueOf(role.toUpperCase()));  // Enum handling
-        user.setCity(City.valueOf(city.toUpperCase()));  // Enum handling
-        user.setAddress(address);
-        user.setActive(true);  // Default to active
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setNomComplet(nomComplet);
+        utilisateur.setEmail(email);
+        utilisateur.setNomUtilisateur(nomUtilisateur);
+        utilisateur.setMotDePasse(motDePasse);  // mot de passe en clair
+        utilisateur.setNumeroTelephone(numeroTelephone);
+        utilisateur.setSexe(Sexe.valueOf(sexe.toUpperCase()));
+        utilisateur.setRole(Role.valueOf(role.toUpperCase()));
+        utilisateur.setVille(Ville.valueOf(ville.toUpperCase()));
+        utilisateur.setAdresse(adresse);
+        utilisateur.setActif(true);
 
         try {
-            if (file != null && !file.isEmpty()) {
-                // Handle image upload
-                String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-                Path filePath = Paths.get("uploads", fileName);
-                Files.createDirectories(filePath.getParent());
-                Files.write(filePath, file.getBytes());
-
-                // Set the image URL in the user
-                user.setImageUrl(fileName);
+            if (fichier != null && !fichier.isEmpty()) {
+                String nomFichier = UUID.randomUUID() + "_" + fichier.getOriginalFilename();
+                Path cheminFichier = Paths.get("uploads", nomFichier);
+                Files.createDirectories(cheminFichier.getParent());
+                Files.write(cheminFichier, fichier.getBytes());
+                utilisateur.setUrlImage(nomFichier);
             }
 
-            // Save the user to the database
-            User savedUser = userService.addUser(user);
-
-            // Return the saved user data as DTO
-            return ResponseEntity.ok(new UserDTO(savedUser));
+            Utilisateur utilisateurSauvegarde = userService.addUser(utilisateur);
+            return ResponseEntity.ok(new UtilisateurDTO(utilisateurSauvegarde));
 
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image upload failed");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Échec du téléchargement de l'image");
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(
+    public ResponseEntity<?> mettreAJourUtilisateur(
             @PathVariable Long id,
-            @RequestParam(value = "file", required = false) MultipartFile file,
-            @RequestParam(value = "fullName", required = false) String fullName,
+            @RequestParam(value = "fichier", required = false) MultipartFile fichier,
+            @RequestParam(value = "nomComplet", required = false) String nomComplet,
             @RequestParam(value = "email", required = false) String email,
-            @RequestParam(value = "username", required = false) String username,
-            @RequestParam(value = "password", required = false) String password,
-            @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
-            @RequestParam(value = "gender", required = false) String gender,
+            @RequestParam(value = "nomUtilisateur", required = false) String nomUtilisateur,
+            @RequestParam(value = "motDePasse", required = false) String motDePasse,
+            @RequestParam(value = "numeroTelephone", required = false) String numeroTelephone,
+            @RequestParam(value = "sexe", required = false) String sexe,
             @RequestParam(value = "role", required = false) String role,
-            @RequestParam(value = "city", required = false) String city,
-            @RequestParam(value = "address", required = false) String address,
-            @RequestParam(value = "active", required = false) Boolean active) {
+            @RequestParam(value = "ville", required = false) String ville,
+            @RequestParam(value = "adresse", required = false) String adresse,
+            @RequestParam(value = "actif", required = false) Boolean actif) {
 
-        // Fetch the current user from the database
-        Optional<User> existingUserOpt = userRepository.findById(id);
-        if (!existingUserOpt.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        Optional<Utilisateur> utilisateurOpt = userRepository.findById(id);
+        if (utilisateurOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilisateur non trouvé");
         }
 
-        User existingUser = existingUserOpt.get();
+        Utilisateur utilisateur = utilisateurOpt.get();
 
-        // Check if the username has changed and if the new username already exists
-        if (username != null && !existingUser.getUsername().equals(username)) {
-            if (userRepository.findByUsername(username).isPresent()) {
+        if (nomUtilisateur != null && !utilisateur.getNomUtilisateur().equals(nomUtilisateur)) {
+            if (userRepository.findByNomUtilisateur(nomUtilisateur).isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body(Map.of("field", "username", "message", "Ce nom d'utilisateur est déjà utilisé."));
+                        .body(Map.of("champ", "nomUtilisateur", "message", "Ce nom d'utilisateur est déjà utilisé."));
             }
         }
-
-        // Check if the email has changed and if the new email already exists
-        if (email != null && !existingUser.getEmail().equals(email)) {
+        if (email != null && !utilisateur.getEmail().equals(email)) {
             if (userRepository.findByEmail(email).isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body(Map.of("field", "email", "message", "Cet email est déjà utilisé."));
+                        .body(Map.of("champ", "email", "message", "Cet email est déjà utilisé."));
             }
         }
-
-        // Check if the phone number has changed and if it already exists
-        if (phoneNumber != null && !existingUser.getPhoneNumber().equals(phoneNumber)) {
-            if (userRepository.findByPhoneNumber(phoneNumber).isPresent()) {
+        if (numeroTelephone != null && !utilisateur.getNumeroTelephone().equals(numeroTelephone)) {
+            if (userRepository.findByNumeroTelephone(numeroTelephone).isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body(Map.of("field", "phoneNumber", "message", "Ce numéro de téléphone est déjà utilisé."));
+                        .body(Map.of("champ", "numeroTelephone", "message", "Ce numéro de téléphone est déjà utilisé."));
             }
         }
 
-        // Update the user with the new values, only if they were provided (no null checks)
-        if (fullName != null) existingUser.setFullName(fullName);
-        if (email != null) existingUser.setEmail(email);
-        if (username != null) existingUser.setUsername(username);
-        if (phoneNumber != null) existingUser.setPhoneNumber(phoneNumber);
-        if (password != null) existingUser.setPassword(password);  // Remember to hash the password before saving
-        if (role != null) existingUser.setRole(Role.valueOf(role.toUpperCase()));  // Enum handling
-        if (gender != null) existingUser.setGender(Gender.valueOf(gender.toUpperCase()));  // Enum handling
-        if (city != null) existingUser.setCity(City.valueOf(city.toUpperCase()));  // Enum handling
-        if (address != null) existingUser.setAddress(address);
-        if (active != null) existingUser.setActive(active);
+        if (nomComplet != null) utilisateur.setNomComplet(nomComplet);
+        if (email != null) utilisateur.setEmail(email);
+        if (nomUtilisateur != null) utilisateur.setNomUtilisateur(nomUtilisateur);
+        if (numeroTelephone != null) utilisateur.setNumeroTelephone(numeroTelephone);
+        if (motDePasse != null) utilisateur.setMotDePasse(motDePasse);  // mot de passe en clair
+        if (role != null) utilisateur.setRole(Role.valueOf(role.toUpperCase()));
+        if (sexe != null) utilisateur.setSexe(Sexe.valueOf(sexe.toUpperCase()));
+        if (ville != null) utilisateur.setVille(Ville.valueOf(ville.toUpperCase()));
+        if (adresse != null) utilisateur.setAdresse(adresse);
+        if (actif != null) utilisateur.setActif(actif);
 
-        // Handle image upload if provided
-        if (file != null && !file.isEmpty()) {
-            try {
-                String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-                Path filePath = Paths.get("uploads", fileName);
-                Files.createDirectories(filePath.getParent());
-                Files.write(filePath, file.getBytes());
-
-                // Set the image URL in the user
-                existingUser.setImageUrl(fileName);
-            } catch (IOException e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image upload failed");
+        try {
+            if (fichier != null && !fichier.isEmpty()) {
+                String nomFichier = UUID.randomUUID() + "_" + fichier.getOriginalFilename();
+                Path cheminFichier = Paths.get("uploads", nomFichier);
+                Files.createDirectories(cheminFichier.getParent());
+                Files.write(cheminFichier, fichier.getBytes());
+                utilisateur.setUrlImage(nomFichier);
             }
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Échec du téléchargement de l'image");
         }
 
-        // Save the updated user in the database
-        userRepository.save(existingUser);
-
-        // Return the updated user
-        return ResponseEntity.ok(existingUser);  // Return the updated user
+        userRepository.save(utilisateur);
+        return ResponseEntity.ok(new UtilisateurDTO(utilisateur));
     }
 
 
-
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User utilisateur) {
-        UserDTO foundUser = userService.findByEmailAndPassword(utilisateur.getEmail(), utilisateur.getPassword());
+    public ResponseEntity<?> login(@RequestBody Utilisateur utilisateur) {
+        UtilisateurDTO foundUser = userService.findByEmailAndPassword(utilisateur.getEmail(), utilisateur.getMotDePasse());
 
         if (foundUser != null) {
             // Return user type with the DTO
@@ -205,6 +187,6 @@ public class UserController {
 
     @GetMapping("/cities")
     public List<String> getAllCities() {
-        return Arrays.stream(City.values()).map(Enum::name).toList();
+        return Arrays.stream(Ville.values()).map(Enum::name).toList();
     }
 }

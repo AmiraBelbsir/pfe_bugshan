@@ -22,7 +22,6 @@ export class PieceService {
   getPieceById(id: number): Observable<Piece> {
     return this.http.get<Piece>(`${this.apiUrl}/${id}`);
   }
-  // Méthode pour créer une nouvelle pièce
   createPieceWithImage(pieceData: {
     nom: string,
     reference: string,
@@ -34,10 +33,11 @@ export class PieceService {
     dateAchat: string,
     quantiteMinimum: number,
     description: string,
-    compatibilite: string,
     precommandable: boolean,
     magasinId: number,
-    blocId: number
+    blocId: number,
+    fournisseurId?: number,
+    vehiculeIds?: number[]
   }, file?: File): Observable<any> {
     const formData = new FormData();
 
@@ -54,33 +54,45 @@ export class PieceService {
     formData.append('dateAchat', pieceData.dateAchat);
     formData.append('quantiteMinimum', pieceData.quantiteMinimum.toString());
     formData.append('description', pieceData.description);
-    formData.append('compatibilite', pieceData.compatibilite);
     formData.append('precommandable', pieceData.precommandable ? 'true' : 'false');
 
-
-    // ✅ Ajouter magasinId et blocId
     formData.append('magasinId', pieceData.magasinId.toString());
     formData.append('blocId', pieceData.blocId.toString());
 
+    // Ajout fournisseurId si présent
+    if (pieceData.fournisseurId != null) {
+      formData.append('fournisseurId', pieceData.fournisseurId.toString());
+    }
+
+    // Ajout des vehiculeIds si présents
+    if (pieceData.vehiculeIds && pieceData.vehiculeIds.length > 0) {
+      pieceData.vehiculeIds.forEach(id => {
+        formData.append('vehiculeIds', id.toString());
+      });
+    }
+
     return this.http.post<any>(this.apiUrl, formData);
   }
+
+
   updatePiece(
     pieceId: number,
     pieceData: {
       active: boolean;
-      nom: string,
-      reference: string,
-      marque: string,
-      prix: number,
-      quantite: number,
-      quantiteMinimum: number,
-      description: string,
-      compatibilite: string,
-      type: string,
-      dateAchat: string,
-      precommandable: boolean,
-      magasinId: number,
-      blocId: number
+      nom: string;
+      reference: string;
+      marque: string;
+      prix: number;
+      quantite: number;
+      quantiteMinimum: number;
+      description: string;
+      type: string;
+      dateAchat: string;
+      precommandable: boolean;
+      magasinId: number;
+      blocId: number;
+      fournisseurId?: number;          // optionnel selon ta logique
+      vehiculeIds?: number[];          // optionnel selon ta logique
     },
     imageFile?: File
   ): Observable<any> {
@@ -93,14 +105,23 @@ export class PieceService {
     formData.append('quantite', pieceData.quantite.toString());
     formData.append('quantiteMinimum', pieceData.quantiteMinimum.toString());
     formData.append('description', pieceData.description);
-    formData.append('compatibilite', pieceData.compatibilite);
-    formData.append('type', pieceData.type); // ✅ string déjà correct pour enum
+    formData.append('type', pieceData.type);
     formData.append('dateAchat', pieceData.dateAchat);
     formData.append('precommandable', pieceData.precommandable.toString());
-    formData.append('active', pieceData.active.toString());  // Convert boolean to string for the form data
+    formData.append('active', pieceData.active.toString());
 
     formData.append('magasinId', pieceData.magasinId.toString());
     formData.append('blocId', pieceData.blocId.toString());
+
+    if (pieceData.fournisseurId != null) {
+      formData.append('fournisseurId', pieceData.fournisseurId.toString());
+    }
+
+    if (pieceData.vehiculeIds && pieceData.vehiculeIds.length > 0) {
+      pieceData.vehiculeIds.forEach(id => {
+        formData.append('vehiculeIds', id.toString());
+      });
+    }
 
     if (imageFile) {
       formData.append('file', imageFile);

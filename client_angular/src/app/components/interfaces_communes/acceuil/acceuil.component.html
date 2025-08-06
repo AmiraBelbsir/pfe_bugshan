@@ -1,0 +1,21 @@
+<section class="relative h-[800px] overflow-hidden rounded-lg shadow-lg">
+  <video autoplay loop muted playsinline
+         class="absolute top-0 left-0 w-full h-full object-cover z-0">
+    <source src="../../../../assets/bg.mp4" type="video/mp4" />
+    Votre navigateur ne supporte pas la vidéo.
+  </video>
+
+  <div class="absolute inset-0 bg-black bg-opacity-60 z-10 flex flex-col justify-center items-center text-white text-center px-6">
+    <h1 class="text-4xl sm:text-5xl font-extrabold mb-4">Bienvenue chez Hyundai</h1>
+    <p class="text-lg sm:text-xl mb-6">Réservez la voiture idéale dès maintenant</p>
+    <a routerLink="/vehicules" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded shadow-lg">
+      Trouver ma voiture
+    </a>
+
+
+  </div>
+</section>
+
+<app-a-propos id="a-propos"></app-a-propos>
+<app-avis-clients id="avis"></app-avis-clients>
+<app-contact id="contact"></app-contact>

@@ -14,14 +14,14 @@
       <!-- Dashboard -->
       <a routerLink="/dashboard" class="flex items-center space-x-4 py-3 px-4 rounded-md hover:bg-gray-800 text-white hover:text-white transition-all ease-in-out duration-300"
          [ngClass]="{'bg-gray-800 text-white': isActive('/dashboard')}"
-         *ngIf="user?.role === 'ADMIN' || user?.role === 'RESPONSABLE'">
+         *ngIf="user?.role === 'ADMINISTRATEUR' || user?.role === 'RESPONSABLE'">
         <i class="fas fa-tachometer-alt text-xl text-white"></i>
         <span *ngIf="!isSidebarCollapsed" class="font-medium text-white">Dashboard</span>
       </a>
-      <div *ngIf="user?.role === 'ADMIN'" class="border-t border-gray-200 my-2"></div> <!-- Separator -->
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="border-t border-gray-200 my-2"></div> <!-- Separator -->
 
       <!-- Gestion des utilisateurs avec sous-menu -->
-      <div *ngIf="user?.role === 'ADMIN'" class="w-full">
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="w-full">
         <!-- Bouton principal du menu -->
         <button class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300"
                 (click)="toggleSubmenu('users')">
@@ -43,11 +43,11 @@
         </div>
       </div>
 
-      <div *ngIf="user?.role === 'ADMIN'" class="border-t border-gray-200 my-2"></div> <!-- Separator -->
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="border-t border-gray-200 my-2"></div> <!-- Separator -->
 
 
       <!-- Gestion des véhicules avec sous-menu -->
-      <div *ngIf="user?.role === 'ADMIN'" class="w-full">
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="w-full">
         <!-- Bouton principal du menu -->
         <button class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300"
                 (click)="toggleSubmenu('vehicules')">
@@ -76,10 +76,10 @@
       </div>
 
 
-      <div *ngIf="user?.role === 'ADMIN'" class="border-t border-gray-200 my-2"></div> <!-- Separator -->
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="border-t border-gray-200 my-2"></div> <!-- Separator -->
 
       <!-- Gestion des pièces avec sous-menu -->
-      <div *ngIf="user?.role === 'ADMIN'" class="w-full">
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="w-full">
         <button class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300"
                 (click)="toggleSubmenu('pieces')">
           <div class="flex items-center space-x-3">
@@ -100,9 +100,9 @@
       </div>
 
       <!-- Separator -->
-      <div *ngIf="user?.role === 'ADMIN'" class="border-t border-gray-200 my-2"></div>
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="border-t border-gray-200 my-2"></div>
       <!-- Gestion des magasins avec sous-menu -->
-      <div *ngIf="user?.role === 'ADMIN'" class="w-full">
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="w-full">
         <!-- Bouton principal du menu -->
         <button class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300"
                 (click)="toggleSubmenu('magasins')">
@@ -125,10 +125,10 @@
         </div>
       </div>
       <!-- Separator -->
-      <div *ngIf="user?.role === 'ADMIN'" class="border-t border-gray-200 my-2"></div>
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="border-t border-gray-200 my-2"></div>
 
       <!-- Gestion des réservations avec sous-menu -->
-      <div *ngIf="user?.role === 'ADMIN'" class="w-full">
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="w-full">
         <button class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300"
                 (click)="toggleSubmenu('reservations')">
           <div class="flex items-center space-x-3">
@@ -155,10 +155,10 @@
       </div>
 
       <!-- Separator -->
-      <div *ngIf="user?.role === 'ADMIN'" class="border-t border-gray-200 my-2"></div>
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="border-t border-gray-200 my-2"></div>
 
       <!-- Gestion des paiements avec sous-menu -->
-      <div *ngIf="user?.role === 'ADMIN'" class="w-full">
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="w-full">
         <button class="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300"
                 (click)="toggleSubmenu('paiements')">
           <div class="flex items-center space-x-3">
@@ -187,7 +187,7 @@
 
 
       <!-- Separator -->
-      <div *ngIf="user?.role === 'ADMIN'" class="border-t border-gray-200 my-2"></div>
+      <div *ngIf="user?.role === 'ADMINISTRATEUR'" class="border-t border-gray-200 my-2"></div>
 
       <!-- Settings -->
       <a routerLink="/parametres" class="flex items-center space-x-3 py-3 px-4 rounded-md hover:bg-gray-800 hover:text-white transition-all ease-in-out duration-300"
@@ -202,7 +202,7 @@
       <div class="flex items-center justify-between" [ngClass]="{'flex-col': isSidebarCollapsed, 'flex-row': !isSidebarCollapsed}">
         <!-- Profile Info -->
         <div class="flex items-center space-x-4" *ngIf="!isSidebarCollapsed">
-          <img [src]="getImageUrl(user.imageUrl)" alt="User Avatar" class="w-10 h-10 rounded-full">
+          <img [src]="getImageUrl(user.urlImage)" alt="User Avatar" class="w-10 h-10 rounded-full">
           <div class="flex flex-col">
             <span class="text-sm text-white font-semibold">{{ user?.username }}</span>
           </div>

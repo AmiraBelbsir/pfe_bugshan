@@ -1,0 +1,155 @@
+
+<div class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 overflow-hidden relative">
+
+  <!-- Video Background -->
+  <div class="absolute inset-0 z-0">
+    <video autoplay loop muted playsinline class="w-full h-full object-cover">
+      <source src="../../../../assets/bg2.mp4" type="video/mp4" />
+      <img src="assets/bg-fallback.jpg" alt="Background" class="w-full h-full object-cover" />
+    </video>
+    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-gray-900/30"></div>
+  </div>
+  <br><br>
+  <!-- Main Content -->
+  <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+
+    <!-- Rendez-vous Card -->
+    <div class="bg-white/5 backdrop-blur-sm rounded-xl shadow-lg border border-yellow-500/20 overflow-hidden">
+      <!-- Vehicle Header -->
+      <div class="p-6 border-b border-gray-700">
+        <h1 class="text-2xl md:text-3xl font-bold text-white">Prendre rendez-vous pour {{vehicle?.marque}} {{vehicle?.modele}}</h1>
+        <p class="text-yellow-400 mt-1">{{vehicle?.emplacement}}</p>
+      </div>
+
+      <!-- Vehicle Image -->
+      <div class="relative w-full aspect-video overflow-hidden">
+        <img
+          [src]="getImageUrl(vehicle?.urlImage) || 'assets/vehicle-placeholder.jpg'"
+          [alt]="vehicle?.marque + ' ' + vehicle?.modele"
+          class="w-full h-full object-cover"
+        />
+        <!-- Badges -->
+        <div class="absolute top-3 left-3 flex gap-2">
+          <span class="text-xs font-semibold px-2 py-1 rounded-full bg-yellow-600 text-gray-900">
+            {{ vehicle?.annee }}
+          </span>
+          <span [class]="vehicle?.disponible ? 'bg-green-600' : 'bg-red-600'"
+                class="text-xs font-semibold px-2 py-1 rounded-full text-white">
+            {{ vehicle?.disponible ? 'Disponible' : 'Indisponible' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Rendez-vous Form -->
+      <div class="p-6">
+        <form class="space-y-6">
+          <!-- N’oublie pas d’importer FormsModule pour utiliser ngModel -->
+
+          <div>
+            <h3 class="text-xl font-semibold text-white mb-4">Coordonnées</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-yellow-100 mb-1">Nom complet</label>
+                <input
+                  type="text"
+                  [(ngModel)]="currentUser.nomComplet"
+                  name="nomComplet"
+                  class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                >
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-yellow-100 mb-1">CIN</label>
+                <input
+                  type="text"
+                  name="cin"
+                  class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                >
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <label class="block text-sm font-medium text-yellow-100 mb-1">Email</label>
+              <input
+                type="email"
+                [(ngModel)]="currentUser.email"
+                name="email"
+                class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              >
+            </div>
+
+            <div class="mt-4">
+              <label class="block text-sm font-medium text-yellow-100 mb-1">Téléphone</label>
+              <input
+                type="tel"
+                [(ngModel)]="currentUser.numeroTelephone"
+                name="numeroTelephone"
+                class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              >
+            </div>
+          </div>
+
+          <!-- Rendez-vous Details -->
+          <div>
+            <h3 class="text-xl font-semibold text-white mb-4">Détails du rendez-vous</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-yellow-100 mb-1">Date souhaitée</label>
+                <input type="date" class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-yellow-100 mb-1">Heure</label>
+                <select class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                  <option value="09:00">09:00 - 10:00</option>
+                  <option value="10:00">10:00 - 11:00</option>
+                  <option value="11:00">11:00 - 12:00</option>
+                  <option value="14:00">14:00 - 15:00</option>
+                  <option value="15:00">15:00 - 16:00</option>
+                  <option value="16:00">16:00 - 17:00</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <label class="block text-sm font-medium text-yellow-100 mb-1">Lieu de rendez-vous</label>
+              <select class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                <option class="bg-gray-800" value="agence">Agence - {{vehicle?.emplacement}}</option>
+                <option class="bg-gray-800" value="zone_industrielle_sidi_maarouf">Zone Industrielle Sidi Maârouf</option>
+                <option class="bg-gray-800" value="centre_commercial_marjane">Centre Commercial Marjane</option>
+                <option class="bg-gray-800" value="gare_casablanca_port">Gare Casablanca Port</option>
+                <option class="bg-gray-800" value="autre">Autre lieu (préciser en commentaire)</option>
+              </select>
+            </div>
+
+
+            <div class="mt-4">
+              <label class="block text-sm font-medium text-yellow-100 mb-1">Commentaire (optionnel)</label>
+              <textarea class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" rows="3"></textarea>
+            </div>
+          </div>
+
+          <!-- Terms and Submit -->
+          <div class="flex items-start">
+            <div class="flex items-center h-5">
+              <input
+                type="checkbox"
+                id="terms"
+                class="h-4 w-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"
+              >
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="terms" class="text-white">J'accepte que mes données soient utilisées pour ce rendez-vous</label>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full py-3 bg-yellow-500 text-gray-900 font-bold rounded-lg hover:bg-yellow-600 transition-colors"
+          >
+            Confirmer le rendez-vous
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

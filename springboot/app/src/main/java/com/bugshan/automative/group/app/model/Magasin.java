@@ -1,6 +1,7 @@
 
 package com.bugshan.automative.group.app.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
         import lombok.*;
@@ -28,11 +29,11 @@ public class Magasin {
 
     // 🔗 Un magasin peut avoir plusieurs pièces
     @OneToMany(mappedBy = "magasin", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference("magasin-piece")
     private List<Piece> pieces;
 
     // 🔗 Un magasin peut avoir plusieurs blocs
     @OneToMany(mappedBy = "magasin", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference("bloc-magasin")
     private List<Bloc> blocs;
 }
