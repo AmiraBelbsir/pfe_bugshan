@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'vehicules/liste', component: VehiclesListComponent, canActivate: [AuthGuard], data: { roles: ['ADMINISTRATEUR'] } },
   { path: 'magasins/liste', component: MagasinListComponent, canActivate: [AuthGuard], data: { roles: ['ADMINISTRATEUR'] } },
   { path: 'pieces/liste', component: PieceListComponent, canActivate: [AuthGuard], data: { roles: ['ADMINISTRATEUR'] } },
-  { path: 'rendezvous/liste', component: RendezVousListComponent, canActivate: [AuthGuard], data: { roles: ['ADMINISTRATEUR'] } },
+  { path: 'rendezvous/liste', component: RendezVousListComponent},
   { path: 'rendezvous/historique/liste', component: HistoriqueRendezVousListComponent, canActivate: [AuthGuard], data: { roles: ['ADMINISTRATEUR'] } },
   { path: 'accueil', component: AcceuilComponent},
   { path: 'vehicules', component: ListeVehiculesComponent },

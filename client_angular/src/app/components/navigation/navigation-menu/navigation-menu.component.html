@@ -139,14 +139,14 @@
         </button>
 
         <div *ngIf="isSubmenuOpen('reservations')" class="ml-6 mt-2 space-y-2 border-l-2 border-gray-300 pl-3">
-          <a [ngClass]="{'bg-gray-800 text-white': isActive('/rdv/liste')}"
+          <a [ngClass]="{'bg-gray-800 text-white': isActive('/rendezvous/liste')}"
              routerLink="/rendezvous/liste"
              class="flex items-center space-x-3 py-2 px-4 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300">
             <i class="fas fa-list text-sm text-white "></i>
             <span *ngIf="!isSidebarCollapsed" class="text-white">Liste des rendez-vous</span>
           </a>
-          <a [ngClass]="{'bg-gray-800 text-white': isActive('/rdv/historique')}"
-             routerLink="/historique/liste"
+          <a [ngClass]="{'bg-gray-800 text-white': isActive('/historique/liste')}"
+             routerLink="/rendezvous/historique/liste"
              class="flex items-center space-x-3 py-2 px-4 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300">
             <i class="fas fa-history text-sm text-white"></i>
             <span *ngIf="!isSidebarCollapsed" class="text-white">Historique des rendez-vous</span>

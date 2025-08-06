@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import {ToastrService} from "ngx-toastr";
 import {RendezVous} from "../../../models/rendezVous";
 import {RendezVousService} from "../../../services/rendezVous.service";
 
@@ -14,7 +13,7 @@ export class RendezVousListComponent  implements OnInit {
   rendezVousList: RendezVous[] = [];
   searchTerm: string = '';  // Pour la recherche
 
-  constructor(private rdvService: RendezVousService , private toastr: ToastrService) {}
+  constructor(private rdvService: RendezVousService) {}
 
 
   searchClient: string = '';
@@ -91,7 +90,7 @@ export class RendezVousListComponent  implements OnInit {
       next: () => this.loadRendezVous(),
       error: (err) => console.error('Erreur maj RDV', err)
     });
-    this.toastr.success('Rendez-vous modifié avec succès', 'Succès');
+
 
   }
   selectedRdv: RendezVous | null = null;

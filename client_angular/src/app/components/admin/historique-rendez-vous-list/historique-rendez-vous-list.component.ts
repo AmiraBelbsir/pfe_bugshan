@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {RendezVousService} from "../../../services/rendezVous.service";
-import {ToastrService} from "ngx-toastr";
+
 import {RendezVous} from "../../../models/rendezVous";
 
 @Component({
@@ -12,7 +12,7 @@ export class HistoriqueRendezVousListComponent {
   rendezVousList: RendezVous[] = [];
   searchTerm: string = '';  // Pour la recherche
 
-  constructor(private rdvService: RendezVousService , private toastr: ToastrService) {}
+  constructor(private rdvService: RendezVousService) {}
 
 
   searchClient: string = '';
@@ -97,7 +97,6 @@ export class HistoriqueRendezVousListComponent {
       next: () => this.loadRendezVous(),
       error: (err) => console.error('Erreur maj RDV', err)
     });
-    this.toastr.success('Rendez-vous modifié avec succès', 'Succès');
 
   }
   selectedRdv: RendezVous | null = null;
