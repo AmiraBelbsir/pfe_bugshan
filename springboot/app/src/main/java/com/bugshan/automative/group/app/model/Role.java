@@ -6,5 +6,6 @@ public enum Role {
     GERANT,
     LIVREUR,
     MAGASINIER,
-    AIDE_MAGASINIER
+    AIDE_MAGASINIER,
+    COMMERCIAL
 }

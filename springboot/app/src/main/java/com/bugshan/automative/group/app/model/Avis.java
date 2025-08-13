@@ -21,6 +21,10 @@ public class Avis {
     @Column(length = 500)
     private String commentaire;
 
+    @OneToOne
+    @JoinColumn(name = "rdv_id") // nom de la colonne FK dans la table Avis
+    private RendezVous rdv;
+
     @Column(nullable = false)
     private int note;  // Entre 1 et 5
 

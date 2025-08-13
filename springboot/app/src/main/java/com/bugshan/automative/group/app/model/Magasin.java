@@ -25,6 +25,11 @@ public class Magasin {
     private String adresse;
 
 
+
+    @OneToMany(mappedBy = "magasin")
+    private List<RendezVous> rendezVousList;
+
+
     private boolean actif = true; // ➕ Champ pour activer/désactiver un magasin
 
     // 🔗 Un magasin peut avoir plusieurs pièces

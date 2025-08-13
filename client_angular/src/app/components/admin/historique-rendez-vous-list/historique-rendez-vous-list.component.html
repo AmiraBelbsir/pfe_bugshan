@@ -80,9 +80,12 @@
         <th class="border border-gray-600 px-4 py-2 text-left">Date</th>
         <th class="border border-gray-600 px-4 py-2 text-left">Heure</th>
         <th class="border border-gray-600 px-4 py-2 text-left">Client</th>
+        <th class="border border-gray-600 px-4 py-2 text-left">ShowRoom</th>
         <th class="border border-gray-600 px-4 py-2 text-left">Véhicule</th>
         <th class="border border-gray-600 px-4 py-2 text-left">Commercial</th>
         <th class="border border-gray-600 px-4 py-2 text-left">Statut</th>
+        <th class="border border-gray-600 px-4 py-2 text-left">Actions</th>
+
 
       </tr>
       </thead>
@@ -90,9 +93,11 @@
       <tr *ngFor="let rdv of filteredRendezVousList" class="hover:bg-gray-700">
         <td class="border border-gray-600 px-4 py-2">{{ rdv.date }}</td>
         <td class="border border-gray-600 px-4 py-2">{{ rdv.heure }}</td>
-        <td class="border border-gray-600 px-4 py-2">{{ rdv.clientNom }}</td>
-        <td class="border border-gray-600 px-4 py-2">{{ rdv.vehiculeNom }}</td>
-        <td class="border border-gray-600 px-4 py-2">{{ rdv.commercialNom || '-' }}</td>
+        <td class="border border-gray-600 px-4 py-2">{{ rdv.clientFullName}}</td>
+        <td class="border border-gray-600 px-4 py-2">{{ rdv.magasinNom}}</td>
+        <td class="border border-gray-600 px-4 py-2">{{ rdv.vehiculeMakeModel }}</td>
+        <td class="border border-gray-600 px-4 py-2">{{ rdv.commercialFullName || '-' }}</td>
+
         <td class="border border-gray-600 px-4 py-2">
   <span
     [ngClass]="{
@@ -106,7 +111,15 @@
     {{ rdv.statut.toLowerCase().replace('_', ' ') }}
   </span>
         </td>
-
+        <td class="border border-gray-600 px-4 py-2 text-center">
+          <button
+            (click)="openAvisPanel(rdv)"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded transition"
+            title="Voir avis"
+          >
+            <i class="fas fa-eye"></i> <!-- ou juste "Voir avis" -->
+          </button>
+        </td>
 
       </tr>
       </tbody>
@@ -205,3 +218,89 @@
     </div>
   </div>
 </div>
+<!-- Panel latéral affichage avis -->
+
+<div
+  *ngIf="showAvisPanel"
+  class="fixed inset-0 z-50 flex justify-end bg-black bg-opacity-50 backdrop-blur-sm"
+>
+  <!-- Panneau avec animation -->
+  <div
+    class="bg-white w-[420px] h-full shadow-2xl rounded-l-3xl flex flex-col animate-slideIn"
+  >
+    <!-- HEADER -->
+    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 rounded-tl-3xl">
+      <div class="flex justify-between items-center">
+        <h3 class="text-white text-2xl font-bold flex items-center gap-2">
+          <span class="material-icons">reviews</span>
+          Avis du rendez-vous
+        </h3>
+        <button
+          (click)="closeAvisPanel()"
+          class="text-white hover:text-gray-200 text-2xl transition"
+        >
+          ✖
+        </button>
+      </div>
+    </div>
+
+    <!-- CONTENU -->
+    <div class="p-6 space-y-6 overflow-y-auto">
+      <div *ngIf="selectedRdvForAvis" class="space-y-4">
+        <!-- Info Client -->
+        <div class="bg-gray-50 p-4 rounded-xl shadow-sm flex items-center gap-4">
+          <span class="material-icons text-indigo-500 text-3xl">person</span>
+          <div>
+            <p class="text-sm text-gray-500">Client</p>
+            <p class="font-semibold text-gray-800">{{ selectedRdvForAvis.clientFullName }}</p>
+          </div>
+        </div>
+
+        <!-- Date & Heure -->
+        <div class="bg-gray-50 p-4 rounded-xl shadow-sm flex gap-4">
+          <div class="flex items-center gap-2">
+            <span class="material-icons text-purple-500">event</span>
+            <span>{{ selectedRdvForAvis.date }}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-icons text-pink-500">schedule</span>
+            <span>{{ selectedRdvForAvis.heure }}</span>
+          </div>
+        </div>
+
+        <!-- Note avec étoiles -->
+        <div class="bg-gray-50 p-4 rounded-xl shadow-sm">
+          <p class="text-sm text-gray-500 mb-2">Note</p>
+          <div class="flex items-center gap-1">
+            <ng-container *ngIf="selectedRdvForAvis.avisNote; else noRating">
+              <ng-container *ngFor="let star of [].constructor(5); let i = index">
+                <span
+                  class="material-icons"
+                  [ngClass]="{
+                    'text-yellow-400': i < selectedRdvForAvis.avisNote!,
+                    'text-gray-300': i >= selectedRdvForAvis.avisNote!
+                  }"
+                >
+                  star
+                </span>
+              </ng-container>
+              <span class="ml-2 text-gray-600">{{ selectedRdvForAvis.avisNote }} / 5</span>
+            </ng-container>
+            <ng-template #noRating>
+              <span class="text-gray-400">Pas encore noté</span>
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- Commentaire -->
+        <div class="bg-white border border-gray-200 p-4 rounded-xl shadow-inner">
+          <p class="text-sm text-gray-500 mb-2">Commentaire</p>
+          <p class="text-gray-700 whitespace-pre-wrap">
+            {{ selectedRdvForAvis.avisCommentaire || 'Aucun commentaire' }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

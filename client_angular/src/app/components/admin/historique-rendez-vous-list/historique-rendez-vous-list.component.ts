@@ -57,9 +57,9 @@ export class HistoriqueRendezVousListComponent {
 
 
       // Conditions recherche texte et statut (à adapter selon ce que tu as)
-      const matchesClient = !this.searchClient || rdv.clientNom?.toLowerCase().includes(this.searchClient.toLowerCase());
-      const matchesVehicule = !this.searchVehicule || rdv.vehiculeNom?.toLowerCase().includes(this.searchVehicule.toLowerCase());
-      const matchesCommercial = !this.searchCommercial || rdv.commercialNom?.toLowerCase().includes(this.searchCommercial.toLowerCase());
+      const matchesClient = !this.searchClient || rdv.clientFullName?.toLowerCase().includes(this.searchClient.toLowerCase());
+      const matchesVehicule = !this.searchVehicule || rdv.vehiculeMakeModel?.toLowerCase().includes(this.searchVehicule.toLowerCase());
+      const matchesCommercial = !this.searchCommercial || rdv.commercialFullName?.toLowerCase().includes(this.searchCommercial.toLowerCase());
       const matchesStatut =
         this.selectedStatut
           ? rdv.statut === this.selectedStatut
@@ -123,5 +123,17 @@ export class HistoriqueRendezVousListComponent {
       error: (err) => console.error('Erreur sauvegarde RDV', err)
     });
   }
+  selectedRdvForAvis: RendezVous | null = null;
+  showAvisPanel: boolean = false;
 
+  openAvisPanel(rdv: RendezVous) {
+    this.selectedRdvForAvis = rdv;
+    this.showAvisPanel = true;
+    console.log("shg",this.selectedRdvForAvis);
+  }
+
+  closeAvisPanel() {
+    this.selectedRdvForAvis = null;
+    this.showAvisPanel = false;
+  }
 }
