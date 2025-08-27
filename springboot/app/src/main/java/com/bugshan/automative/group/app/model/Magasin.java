@@ -4,9 +4,9 @@ package com.bugshan.automative.group.app.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-        import lombok.*;
+import lombok.*;
 
-        import java.util.List;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +27,7 @@ public class Magasin {
 
 
     @OneToMany(mappedBy = "magasin")
+    @JsonManagedReference("magasin-rdv")
     private List<RendezVous> rendezVousList;
 
 

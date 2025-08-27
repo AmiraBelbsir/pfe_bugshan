@@ -1,8 +1,10 @@
 package com.bugshan.automative.group.app.dto;
 
 import com.bugshan.automative.group.app.model.*;
+import jakarta.persistence.Column;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,8 @@ public class UtilisateurDTO {
     private String nomUtilisateur;
     private String adresse;
     private Ville ville;
+    private LocalDateTime dateInscription;
+
 
     // ✅ Pièces fournies (sous forme de DTO simplifié)
     private List<PieceDTO> piecesFournies;
@@ -37,7 +41,7 @@ public class UtilisateurDTO {
         this.nomUtilisateur = utilisateur.getNomUtilisateur();
         this.adresse = utilisateur.getAdresse();
         this.ville = utilisateur.getVille();
-
+        this.dateInscription=utilisateur.getDateInscription();
         // ✅ Conversion des pièces fournies en DTOs
         if (utilisateur.getPieces() != null) {
             this.piecesFournies = utilisateur.getPieces().stream()

@@ -171,15 +171,18 @@
                 {{ vehicle.disponible ? 'Disponible immédiatement' : 'Réservation en attente' }}
               </p>
             </div>
-            <a
-              role="button"
-              (click)="handleReservation(vehicle.id)"
-              [title]="vehicle.disponible ? 'Réserver ce véhicule' : 'Indisponible'"
+          </div>
+          <br>
+          <div>
+            <button
+              (click)="handleFiche(vehicle.id)"
+              [title]="vehicle.disponible ? 'Prendre un rendez-vous' : 'Indisponible'"
               class="px-4 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               [class]="vehicle.disponible ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-gray-900 hover:shadow-lg hover:from-yellow-400 hover:to-yellow-500' : 'bg-gray-700 text-gray-400'"
             >
-              Réserver
-            </a>
+              <i class="fa-solid fa-file-lines"></i>
+              Consulter fiche technique
+            </button>
 
           </div>
         </div>

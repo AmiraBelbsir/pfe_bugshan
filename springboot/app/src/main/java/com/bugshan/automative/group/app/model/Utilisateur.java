@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -52,6 +53,10 @@ public class Utilisateur {
 
     @Enumerated(EnumType.STRING)
     private Ville ville;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dateInscription = LocalDateTime.now();
+
 
     @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference("user")

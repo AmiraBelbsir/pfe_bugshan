@@ -16,6 +16,7 @@ public class AvisDTO {
     private int note;
     private LocalDateTime dateCreation;
     private Long utilisateurId;
+    private Long rdvId;
     private String utilisateurNom;
     private Long vehiculeId;
     private String vehiculeMarque;
@@ -23,7 +24,7 @@ public class AvisDTO {
 
     public AvisDTO() {}
 
-    public AvisDTO(Long id, String commentaire, int note, LocalDateTime dateCreation, Long utilisateurId,String utilisateurNom, String vehiculeMarque,String vehiculeModele, Long vehiculeId) {
+    public AvisDTO(Long id,Long rdvId, String commentaire, int note, LocalDateTime dateCreation, Long utilisateurId,String utilisateurNom, String vehiculeMarque,String vehiculeModele, Long vehiculeId) {
         this.id = id;
         this.commentaire = commentaire;
         this.note = note;
@@ -33,6 +34,7 @@ public class AvisDTO {
         this.vehiculeId = vehiculeId;
         this.vehiculeMarque = vehiculeMarque;
         this.vehiculeModele = vehiculeModele;
+        this.rdvId= rdvId;
     }
 
     public AvisDTO(Avis avis) {

@@ -36,7 +36,7 @@ export class RendezVousListComponent implements OnInit {
       next: (data) => {
         this.rendezVousList = data.filter(rdv => rdv.statut === 'EN_ATTENTE');
         console.log('kk',this.rendezVousList);
-        },
+      },
 
 
       error: (err) => console.error('Erreur chargement RDV', err)

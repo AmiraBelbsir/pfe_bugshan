@@ -1,0 +1,136 @@
+<div class="flex h-full w-full" *ngIf="user?.role === 'ADMINISTRATEUR'">
+  <!-- Enhanced Sidebar Menu -->
+  <aside class="w-64 bg-gray-900 border-r border-gray-700 p-6">
+    <div class="flex items-center gap-3 mb-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      <h2 class="text-xl font-bold text-gray-100">Paramètres</h2>
+    </div>
+
+    <ul class="space-y-1">
+      <li
+        *ngFor="let param of parameterItems"
+        (click)="selectParameter(param.key)"
+        class="flex items-center gap-3 cursor-pointer px-4 py-3 rounded-lg transition group"
+        [ngClass]="{
+          'bg-gray-800 text-white border-l-4 border-emerald-400': selectedParam === param.key,
+          'text-gray-300 hover:bg-gray-800 hover:text-white': selectedParam !== param.key
+        }"
+      >
+        <i [class]="param.icon" class="text-lg group-hover:text-white transition-colors"
+           [ngClass]="{'text-white': selectedParam === param.key, 'text-gray-400': selectedParam !== param.key}"></i>
+        <span class="font-medium">{{ param.label }}</span>
+        <svg *ngIf="selectedParam === param.key" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-auto" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+        </svg>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Dynamic Content Area -->
+  <section class="flex-1 p-8 bg-gray-800 overflow-auto">
+    <div class="bg-gray-900 rounded-xl p-8 border border-gray-700 shadow-lg">
+      <div class="mb-6 flex items-center justify-between">
+        <h3 class="text-xl font-bold text-gray-100">
+          {{ getSelectedParamTitle() }}
+        </h3>
+        <div class="text-sm text-gray-400">
+          {{ getSelectedParamDescription() }}
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <ng-container [ngSwitch]="selectedParam">
+          <app-infos-utilisateurs *ngSwitchCase="'compte'" class="animate-fadeIn text-white"></app-infos-utilisateurs>
+          <app-change-password *ngSwitchCase="'securite'" class="animate-fadeIn"></app-change-password>
+          <div *ngSwitchDefault class="flex flex-col items-center justify-center py-16 text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <h4 class="text-lg font-medium text-gray-300 mb-2">Sélectionnez un paramètre</h4>
+            <p class="text-gray-500 max-w-md">Choisissez une option dans le menu de gauche pour afficher et modifier les paramètres correspondants.</p>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<div class="flex h-full w-full" [ngClass]="{'flex-col': user?.role === 'CLIENT'}">
+  <!-- Enhanced Sidebar Menu -->
+  <aside
+    class="border-gray-700 p-6"
+    [ngClass]="{
+      'w-64 bg-gray-900 border-r': user?.role !== 'CLIENT',
+      'w-full bg-gray-900 border-b': user?.role === 'CLIENT'
+    }"
+  >
+    <div class="flex items-center gap-3 mb-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      <h2 class="text-xl font-bold text-gray-100">Paramètres</h2>
+    </div>
+
+    <ul
+      class="space-y-1"
+      [ngClass]="{
+        'flex flex-wrap gap-2': user?.role === 'CLIENT',
+        'space-y-1': user?.role !== 'CLIENT'
+      }"
+    >
+      <li
+        *ngFor="let param of parameterItems"
+        (click)="selectParameter(param.key)"
+        class="flex items-center gap-3 cursor-pointer px-4 py-3 rounded-lg transition group"
+        [ngClass]="{
+          'bg-gray-800 text-white border-l-4 border-emerald-400': selectedParam === param.key && user?.role !== 'CLIENT',
+          'bg-gray-800 text-white border-b-4 border-emerald-400': selectedParam === param.key && user?.role === 'CLIENT',
+          'text-gray-300 hover:bg-gray-800 hover:text-white': selectedParam !== param.key
+        }"
+      >
+        <i [class]="param.icon" class="text-lg group-hover:text-white transition-colors"
+           [ngClass]="{'text-white': selectedParam === param.key, 'text-gray-400': selectedParam !== param.key}"></i>
+        <span class="font-medium">{{ param.label }}</span>
+        <svg *ngIf="selectedParam === param.key" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-auto" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+        </svg>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Dynamic Content Area -->
+  <section
+    class="p-8 bg-gray-800 overflow-auto"
+    [ngClass]="{'flex-1': user?.role !== 'CLIENT', 'w-full': user?.role === 'CLIENT'}"
+  >
+    <div class="bg-gray-900 rounded-xl p-8 border border-gray-700 shadow-lg">
+      <div class="mb-6 flex items-center justify-between">
+        <h3 class="text-xl font-bold text-gray-100">
+          {{ getSelectedParamTitle() }}
+        </h3>
+        <div class="text-sm text-gray-400">
+          {{ getSelectedParamDescription() }}
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <ng-container [ngSwitch]="selectedParam">
+          <app-infos-utilisateurs *ngSwitchCase="'compte'" class="animate-fadeIn text-white"></app-infos-utilisateurs>
+          <app-change-password *ngSwitchCase="'securite'" class="animate-fadeIn"></app-change-password>
+          <div *ngSwitchDefault class="flex flex-col items-center justify-center py-16 text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <h4 class="text-lg font-medium text-gray-300 mb-2">Sélectionnez un paramètre</h4>
+            <p class="text-gray-500 max-w-md">Choisissez une option dans le menu pour afficher et modifier les paramètres correspondants.</p>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+</div>

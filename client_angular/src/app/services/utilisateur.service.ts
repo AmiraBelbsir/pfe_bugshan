@@ -12,6 +12,14 @@ export class UtilisateurService {
   constructor(private http: HttpClient) {
   }
 
+  updateField(userId: number, field: keyof Utilisateur, value: any): Observable<Utilisateur> {
+    return this.http.patch<Utilisateur>(`${this.apiUrl}/${userId}`, { field, value });
+  }
+
+  deactivateUser(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/deactivate/${id}`, {});
+  }
+
   getAllUsers(): Observable<Utilisateur[]> {
     return this.http.get<Utilisateur[]>(this.apiUrl);
   }

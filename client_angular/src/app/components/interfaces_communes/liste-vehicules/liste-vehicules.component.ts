@@ -45,18 +45,16 @@ export class ListeVehiculesComponent implements OnInit {
     });
   }
 
-  handleReservation(vehicleId: number) {
-    const user = this.authService.getUser();
-    if (user) {
-      this.router.navigate(['/reservation', vehicleId]);
-    } else {
- this.showLogin=true;
-    }
-  }
 
 
   getImageUrl(imagePath: string | undefined): string {
     return `${environment.apiUrl}${imagePath}`;
+  }
+
+  handleFiche(vehicleId: number) {
+
+      this.router.navigate(['/fiche', vehicleId]);
+
   }
 
   currentIndex = 0;

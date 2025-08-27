@@ -17,7 +17,7 @@ public class PhotoVehicule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vehicule_id")
     private Vehicule vehicule;   // Référence au véhicule associé à cette photo
 

@@ -35,8 +35,9 @@ public class PieceDTO {
     private Long fournisseurId;
     private String fournisseurNom;
 
-    // Liste des IDs de véhicules compatibles
+    // Véhicules compatibles
     private List<Long> vehiculeIds;
+    private List<String> vehiculeModeles; // <- Ajouté
 
     // Constructeur à partir de l’entité Piece
     public PieceDTO(Piece piece) {
@@ -54,30 +55,39 @@ public class PieceDTO {
         this.precommandable = piece.isPrecommandable();
         this.active = piece.isActive();
 
+        // Magasin
         if (piece.getMagasin() != null) {
             this.magasinId = piece.getMagasin().getId();
             this.magasinNom = piece.getMagasin().getNom();
         }
 
+        // Bloc
         if (piece.getBloc() != null) {
             this.blocId = piece.getBloc().getId();
             this.blocNom = piece.getBloc().getNom();
         }
 
+        // Fournisseur
         if (piece.getFournisseur() != null) {
             this.fournisseurId = piece.getFournisseur().getId();
-            this.fournisseurNom = piece.getFournisseur().getNomComplet(); // ou getUsername() selon ta classe Utilisateur
+            this.fournisseurNom = piece.getFournisseur().getNomComplet();
         }
 
+        // Véhicules compatibles
         if (piece.getVehiculesCompatibles() != null) {
             this.vehiculeIds = piece.getVehiculesCompatibles()
                     .stream()
                     .map(Vehicule::getId)
                     .collect(Collectors.toList());
+
+            this.vehiculeModeles = piece.getVehiculesCompatibles()
+                    .stream()
+                    .map(v -> v.getMarque() + " " + v.getModele())
+                    .collect(Collectors.toList());
         }
     }
 
     public PieceDTO(org.springframework.beans.PropertyValue propertyValue) {
-        // à supprimer si inutile
+        // À supprimer si inutile
     }
 }

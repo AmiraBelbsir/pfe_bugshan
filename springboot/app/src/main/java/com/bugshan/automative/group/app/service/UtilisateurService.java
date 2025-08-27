@@ -7,6 +7,7 @@ import com.bugshan.automative.group.app.model.Utilisateur;
 
 import com.bugshan.automative.group.app.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,9 +29,15 @@ public class UtilisateurService {
     @Autowired
     private UtilisateurRepository userRepository;
 
-    public UtilisateurService(UtilisateurRepository userRepository) {
+    private final EmailService emailService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    public UtilisateurService(UtilisateurRepository userRepository, EmailService emailService) {
 
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     public Utilisateur addUser(Utilisateur user) {
@@ -75,5 +82,42 @@ public class UtilisateurService {
     public boolean existsByPhone(String gsm) {
         return userRepository.existsByNumeroTelephone(gsm);
     }
+
+
+    public Utilisateur updateUserField(Long id, String fieldName, String newValue) {
+        Utilisateur user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        switch (fieldName) {
+            case "nomComplet":
+                user.setNomComplet(newValue);
+                break;
+            case "email":
+                user.setEmail(newValue);
+                break;
+            case "numeroTelephone":
+                user.setNumeroTelephone(newValue);
+                break;
+            case "nomUtilisateur":
+                user.setNomUtilisateur(newValue);
+                break;
+            case "urlImage":
+                user.setUrlImage(newValue);
+                break;
+            default:
+                throw new IllegalArgumentException("Champ '" + fieldName + "' non supporté ou non modifiable.");
+        }
+
+        return userRepository.save(user);
+    }
+
+    public void deactivateAcc(Long id){
+        Utilisateur user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setActif(false);
+        userRepository.save(user);
+    }
+
 
 }

@@ -1,5 +1,7 @@
 package com.bugshan.automative.group.app.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +31,7 @@ public class RendezVous {
     // Relation vers le magasin
     @ManyToOne
     @JoinColumn(name = "magasin_id") // nom de la colonne dans la table rendez_vous
+    @JsonBackReference("magasin-rdv")
     private Magasin magasin;
 
     // Relation vers le client (utilisateur)
@@ -62,3 +65,4 @@ public class RendezVous {
         TERMINE
     }
 }
+

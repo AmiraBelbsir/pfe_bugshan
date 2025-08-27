@@ -36,12 +36,17 @@ public class VehiculeController {
                 .collect(Collectors.toList());
     }
 
-    // Récupérer un véhicule par ID
+    // Récupérer un véhicule par ID avec DTO
     @GetMapping("/{id}")
-    public ResponseEntity<Vehicule> getVehiculeParId(@PathVariable Long id) {
+    public ResponseEntity<VehiculeDTO> getVehiculeParId(@PathVariable Long id) {
         Optional<Vehicule> vehicule = vehiculeService.trouverVehiculeParId(id);
-        return vehicule.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+
+        return vehicule
+                .map(v -> ResponseEntity.ok(new VehiculeDTO(v))) // transformer en DTO
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+
 
     // Créer un nouveau véhicule avec image(s) optionnelle(s)
     @PostMapping

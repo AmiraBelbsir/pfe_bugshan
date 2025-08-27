@@ -19,12 +19,6 @@
             </svg>
           </a>
 
-          <div class="absolute left-0 mt-2 w-56 bg-black/80 backdrop-blur-md rounded-md shadow-lg py-1 z-50
-              opacity-0 group-hover:opacity-100 transition-opacity duration-200 invisible group-hover:visible">
-            <a [routerLink]="['/']" [fragment]="'a-propos'" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">À propos</a>
-            <a [routerLink]="['/accueil']" [fragment]="'avis'" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Avis clients</a>
-            <a [routerLink]="['/accueil']" [fragment]="'contact'" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Contactez-nous</a>
-          </div>
         </div>
 
         <!-- Véhicules avec sous-menu -->
@@ -36,44 +30,33 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
           </a>
-          <div class="absolute left-0 mt-2 w-48 bg-black/80 backdrop-blur-md rounded-md shadow-lg py-1 z-50
-                     opacity-0 group-hover:opacity-100 transition-opacity duration-200 invisible group-hover:visible">
-          </div>
+
         </div>
 
         <!-- Réservation avec sous-menu -->
         <div class="group relative">
-          <a routerLink="/reservation" routerLinkActive="text-yellow-400 border-b border-yellow-400"
+          <a routerLink="/reservations" routerLinkActive="text-yellow-400 border-b border-yellow-400"
              class="hover:text-yellow-300 transition pb-1 flex items-center">
             Réservation
             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
           </a>
-          <div class="absolute left-0 mt-2 w-48 bg-black/80 backdrop-blur-md rounded-md shadow-lg py-1 z-50
-                     opacity-0 group-hover:opacity-100 transition-opacity duration-200 invisible group-hover:visible">
-            <a routerLink="/reservation/essai" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Demande d'essai</a>
-            <a routerLink="/reservation/configurateur" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Configurateur</a>
-            <a routerLink="/reservation/financement" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Options de financement</a>
-          </div>
         </div>
 
-        <!-- Mon compte avec sous-menu -->
+        <!-- Réservation avec sous-menu -->
         <div class="group relative">
-          <a routerLink="/mon-compte" routerLinkActive="text-yellow-400 border-b border-yellow-400"
+          <a routerLink="/pieces" routerLinkActive="text-yellow-400 border-b border-yellow-400"
              class="hover:text-yellow-300 transition pb-1 flex items-center">
-            Mon compte
+            Pièces
             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
           </a>
-          <div class="absolute left-0 mt-2 w-48 bg-black/80 backdrop-blur-md rounded-md shadow-lg py-1 z-50
-                     opacity-0 group-hover:opacity-100 transition-opacity duration-200 invisible group-hover:visible">
-            <a routerLink="/mon-compte/profil" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Mon profil</a>
-            <a routerLink="/mon-compte/commandes" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Mes commandes</a>
-            <a routerLink="/mon-compte/favoris" class="block px-4 py-2 hover:bg-white/10 hover:text-yellow-400">Mes favoris</a>
-          </div>
+
         </div>
+
+
       </div>
 
       <!-- Action button - Changes based on auth status -->

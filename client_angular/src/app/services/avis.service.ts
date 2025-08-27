@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Bloc } from '../models/bloc';
 import {Avis} from "../models/avis";
@@ -18,4 +18,10 @@ export class AvisService {
   getAllAvis(): Observable<Avis[]> {
     return this.http.get<Avis[]>(this.apiUrl);
   }
+
+  addAvis(avis: Partial<Avis>): Observable<Avis> {
+    return this.http.post<Avis>(`${this.apiUrl}/add`, avis);
+  }
+
+
 }

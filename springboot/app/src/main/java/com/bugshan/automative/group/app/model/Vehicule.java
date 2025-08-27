@@ -1,6 +1,7 @@
 package com.bugshan.automative.group.app.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -44,7 +45,8 @@ public class Vehicule {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "vehicle_additional_photos", joinColumns = @JoinColumn(name = "vehicle_id"))
     @Column(name = "photo_url")
-    private List<String> photosAdditionnelles = new ArrayList<>(); // Liste de photos supplémentaires
+    @JsonProperty("photosAdditionnelles")
+    private List<String> photosAdditionnelles = new ArrayList<>();
 
     @OneToMany(mappedBy = "vehicule", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference("vehicle")

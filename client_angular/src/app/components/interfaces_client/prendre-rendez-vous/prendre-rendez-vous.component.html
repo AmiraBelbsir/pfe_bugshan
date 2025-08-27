@@ -44,112 +44,101 @@
       <!-- Rendez-vous Form -->
       <div class="p-6">
         <form class="space-y-6">
-          <!-- N’oublie pas d’importer FormsModule pour utiliser ngModel -->
+          <!-- ... autres champs ... -->
 
-          <div>
-            <h3 class="text-xl font-semibold text-white mb-4">Coordonnées</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-medium text-yellow-100 mb-1">Nom complet</label>
-                <input
-                  type="text"
-                  [(ngModel)]="currentUser.nomComplet"
-                  name="nomComplet"
-                  class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                >
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-yellow-100 mb-1">CIN</label>
-                <input
-                  type="text"
-                  name="cin"
-                  class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                >
-              </div>
-            </div>
-
-            <div class="mt-4">
-              <label class="block text-sm font-medium text-yellow-100 mb-1">Email</label>
-              <input
-                type="email"
-                [(ngModel)]="currentUser.email"
-                name="email"
-                class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              >
-            </div>
-
-            <div class="mt-4">
-              <label class="block text-sm font-medium text-yellow-100 mb-1">Téléphone</label>
-              <input
-                type="tel"
-                [(ngModel)]="currentUser.numeroTelephone"
-                name="numeroTelephone"
-                class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              >
-            </div>
-          </div>
-
-          <!-- Rendez-vous Details -->
           <div>
             <h3 class="text-xl font-semibold text-white mb-4">Détails du rendez-vous</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-yellow-100 mb-1">Date souhaitée</label>
-                <input type="date" class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                <input
+                  type="date"
+                  [(ngModel)]="selectedDate"
+                  name="date"
+                  [min]="today"
+                  class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                >
               </div>
+
               <div>
                 <label class="block text-sm font-medium text-yellow-100 mb-1">Heure</label>
-                <select class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                  <option value="09:00">09:00 - 10:00</option>
-                  <option value="10:00">10:00 - 11:00</option>
-                  <option value="11:00">11:00 - 12:00</option>
-                  <option value="14:00">14:00 - 15:00</option>
-                  <option value="15:00">15:00 - 16:00</option>
-                  <option value="16:00">16:00 - 17:00</option>
+                <select [(ngModel)]="selectedHeure"
+                        name="heure"
+                        class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                  <option class="bg-gray-700" *ngFor="let hour of availableHours" [value]="hour">
+                    {{ hour }}
+                  </option>
                 </select>
               </div>
             </div>
 
             <div class="mt-4">
               <label class="block text-sm font-medium text-yellow-100 mb-1">Lieu de rendez-vous</label>
-              <select class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                <option class="bg-gray-800" value="agence">Agence - {{vehicle?.emplacement}}</option>
-                <option class="bg-gray-800" value="zone_industrielle_sidi_maarouf">Zone Industrielle Sidi Maârouf</option>
-                <option class="bg-gray-800" value="centre_commercial_marjane">Centre Commercial Marjane</option>
-                <option class="bg-gray-800" value="gare_casablanca_port">Gare Casablanca Port</option>
-                <option class="bg-gray-800" value="autre">Autre lieu (préciser en commentaire)</option>
+              <select [(ngModel)]="selectedMagasinId"
+                      name="magasinId"
+                      class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                <option class="bg-gray-800" *ngFor="let m of magasins" [value]="m.id">
+                  {{ m.nom }} - {{ m.adresse }}
+                </option>
               </select>
             </div>
-
-
-            <div class="mt-4">
-              <label class="block text-sm font-medium text-yellow-100 mb-1">Commentaire (optionnel)</label>
-              <textarea class="w-full py-2 px-3 border border-yellow-500/30 bg-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" rows="3"></textarea>
-            </div>
           </div>
 
-          <!-- Terms and Submit -->
-          <div class="flex items-start">
-            <div class="flex items-center h-5">
-              <input
-                type="checkbox"
-                id="terms"
-                class="h-4 w-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500"
-              >
-            </div>
-            <div class="ml-3 text-sm">
-              <label for="terms" class="text-white">J'accepte que mes données soient utilisées pour ce rendez-vous</label>
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            class="w-full py-3 bg-yellow-500 text-gray-900 font-bold rounded-lg hover:bg-yellow-600 transition-colors"
-          >
+          <button type="button"
+                  (click)="openConfirmationPanel()"
+                  class="w-full py-3 bg-yellow-500 text-gray-900 font-bold rounded-lg hover:bg-yellow-600 transition-colors">
             Confirmer le rendez-vous
           </button>
+
+          <!-- Modal de confirmation -->
+          <div *ngIf="showConfirmationPanel"
+               class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+
+            <div class="bg-gray-800 text-white rounded-2xl shadow-xl w-96 p-6">
+              <h2 class="text-xl font-bold mb-4">Confirmation</h2>
+              <p class="mb-6">Voulez-vous vraiment confirmer ce rendez-vous ?</p>
+
+              <div class="flex justify-end gap-4">
+                <button type="button"
+                        (click)="closeConfirmationPanel()"
+                        class="px-4 py-2 rounded-lg bg-gray-600 hover:bg-gray-500 transition">
+                  Annuler
+                </button>
+                <button type="submit"
+                        (click)="confirmRendezVous()"
+                        class="px-4 py-2 rounded-lg bg-yellow-500 text-gray-900 font-bold hover:bg-yellow-600 transition">
+                  Confirmer
+                </button>
+              </div>
+            </div>
+          </div>
         </form>
+      </div>
+
       </div>
     </div>
   </div>
+<!-- Panel d'erreur stylé -->
+<div *ngIf="rdvExists"
+     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div class="bg-gray-900 text-white rounded-3xl shadow-2xl w-96 p-6 border-2 border-yellow-500 animate-fade-in">
+
+    <!-- Icône d'avertissement -->
+    <div class="flex items-center mb-4">
+      <div class="bg-yellow-500 text-gray-900 rounded-full w-10 h-10 flex items-center justify-center mr-3 shadow-lg">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h2 class="text-2xl font-bold">Erreur</h2>
+    </div>
+
+    <p class="mb-6 text-gray-200">{{ message }}</p>
+
+    <div class="flex justify-end">
+      <button (click)="closeErrorPanel()"
+              class="px-5 py-2 rounded-full bg-yellow-500 text-gray-900 font-semibold hover:bg-yellow-400 hover:shadow-lg transition-all duration-200">
+        Fermer
+      </button>
+    </div>
+  </div>
 </div>
+

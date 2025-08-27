@@ -9,6 +9,7 @@ import com.bugshan.automative.group.app.model.Ville;
 
 import com.bugshan.automative.group.app.repository.UtilisateurRepository;
 import com.bugshan.automative.group.app.service.UtilisateurService;
+import jdk.jshell.execution.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -188,5 +189,76 @@ public class UserController {
     @GetMapping("/cities")
     public List<String> getAllCities() {
         return Arrays.stream(Ville.values()).map(Enum::name).toList();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateUserField(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> update
+    ) {
+        String field = update.get("field");
+        String value = update.get("value");
+
+        if (field == null || value == null) {
+            return ResponseEntity.badRequest().body("Champ ou valeur manquant.");
+        }
+
+        Optional<Utilisateur> existingUserOpt = userRepository.findById(id);
+        if (existingUserOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilisateur non trouvé.");
+        }
+
+        Utilisateur existingUser = existingUserOpt.get();
+
+        switch (field) {
+            case "nomUtilisateur":
+                if (!existingUser.getNomUtilisateur().equals(value)) {
+                    Optional<Utilisateur> usernameExists = userRepository.findByNomUtilisateur(value);
+                    if (usernameExists.isPresent()) {
+                        return ResponseEntity.status(HttpStatus.CONFLICT)
+                                .body(Map.of("field", "nomUtilisateur", "message", "Ce nom d'utilisateur est déjà utilisé."));
+                    }
+                }
+                break;
+
+            case "email":
+                if (!existingUser.getEmail().equals(value)) {
+                    Optional<Utilisateur> emailExists = userRepository.findByEmail(value);
+                    if (emailExists.isPresent()) {
+                        return ResponseEntity.status(HttpStatus.CONFLICT)
+                                .body(Map.of("field", "email", "message", "Cet email est déjà utilisé."));
+                    }
+                }
+                break;
+
+            case "numeroTelephone":
+                if (!existingUser.getNumeroTelephone().equals(value)) {
+                    Optional<Utilisateur> gsmExists = userRepository.findByNumeroTelephone(value);
+                    if (gsmExists.isPresent()) {
+                        return ResponseEntity.status(HttpStatus.CONFLICT)
+                                .body(Map.of("field", "numeroTelephone", "message", "Ce numéro de téléphone est déjà utilisé."));
+                    }
+                }
+                break;
+
+
+
+
+        }
+
+        try {
+            Utilisateur updated = userService.updateUserField(id, field, value);
+            return ResponseEntity.ok(updated);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de la mise à jour.");
+        }
+    }
+
+
+    @PutMapping("/deactivate/{id}")
+    public void deactivateUser(@PathVariable Long id) {
+        userService.deactivateAcc(id);
     }
 }

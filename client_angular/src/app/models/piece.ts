@@ -25,6 +25,7 @@ export interface Piece {
   fournisseurId: number;
   fournisseurNom: string;
 
-  // Véhicules compatibles (juste les IDs)
-  vehiculeIds: number[];
+  // Véhicules compatibles
+  vehiculeIds: number[];           // IDs des véhicules compatibles
+  vehiculeModeles: string[];      // ✅ Ex: ["Toyota Corolla", "BMW X5"]
 }

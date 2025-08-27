@@ -11,4 +11,5 @@ export interface Utilisateur {
   nomUtilisateur: string;
   adresse: string;
   ville: string;
+  dateInscription?: string;
 }

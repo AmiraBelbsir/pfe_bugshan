@@ -20,6 +20,12 @@ import {RendezVousListComponent} from "./components/admin/rendez-vous-list/rende
 import {
   HistoriqueRendezVousListComponent
 } from "./components/admin/historique-rendez-vous-list/historique-rendez-vous-list.component";
+import {ListePiecesComponent} from "./components/interfaces_communes/liste-pieces/liste-pieces.component";
+import {AjouterAuPanierComponent} from "./components/interfaces_client/ajouter-au-panier/ajouter-au-panier.component";
+import {ParametresGenerauxComponent} from "./components/Parametres/parametres-generaux/parametres-generaux.component";
+import {ListeRendezVousComponent} from "./components/interfaces_client/liste-rendez-vous/liste-rendez-vous.component";
+import {FicheVehiculeComponent} from "./components/interfaces_communes/fiche-vehicule/fiche-vehicule.component";
+import {PanierComponent} from "./components/interfaces_client/panier/panier.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/accueil', pathMatch: 'full' },
@@ -36,7 +42,13 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'apropos', component: AProposComponent },
   { path: 'avis', component: AvisClientsComponent },
-  { path: 'reservation/:id', component: PrendreRendezVousComponent}
+  { path: 'fiche/:id', component: FicheVehiculeComponent},
+  { path: 'reservation/:id', component: PrendreRendezVousComponent},
+  { path: 'reservations', component: ListeRendezVousComponent},
+  { path: 'pieces', component: ListePiecesComponent},
+  { path: 'pieces/ajouterPanier/:id', component: AjouterAuPanierComponent, canActivate: [AuthGuard], data: { roles: ['CLIENT'] }},
+  { path: 'panier', component: PanierComponent},
+  { path: 'parametres', component: ParametresGenerauxComponent}
 
 ]
 @NgModule({

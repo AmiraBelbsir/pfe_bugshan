@@ -3,6 +3,7 @@ package com.bugshan.automative.group.app.dto;
 import com.bugshan.automative.group.app.model.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class VehiculeDTO {
     private double niveauCarburant;         // Niveau de carburant
     private TypeCarburant typeCarburant;    // Type de carburant
     private TypeTransmission typeTransmission; // Type de transmission
-    private List<PhotoVehiculeDTO> photosAdditionnelles; // Liste des photos supplémentaires
+    private List<String> photosAdditionnelles;
 
     // Constructeur personnalisé pour transformer une entité Vehicule en DTO
     public VehiculeDTO(Vehicule vehicule) {
@@ -46,9 +47,7 @@ public class VehiculeDTO {
         this.typeCarburant = vehicule.getTypeCarburant();
         this.typeTransmission = vehicule.getTypeTransmission();
 
-        // Conversion des photos supplémentaires en DTO
-        this.photosAdditionnelles = vehicule.getPhotosAdditionnelles().stream()
-                .map(PhotoVehiculeDTO::new)
-                .collect(Collectors.toList());
+        this.photosAdditionnelles = new ArrayList<>(vehicule.getPhotosAdditionnelles());
+
     }
 }
